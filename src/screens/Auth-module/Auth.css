@@ -1,0 +1,38 @@
+::placeholder {
+    color: #A0AAC5 !important;
+    font-size: 14px !important;
+}
+
+.input-field {
+    background-color: transparent;
+    border-radius: 10px !important;
+}
+
+.ForBG_Image {
+    background-image: url("../../assets/images/AuthRightBG.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgb(40, 38, 38);
+    background-size: auto;
+}
+
+@media screen and (max-width: 1440px) {
+    .ForBG_Image {
+        min-height: 100vh;
+    }
+}
+
+@media screen and (max-width: 769px) {
+    .ForBG_Image {
+        display: none;
+    }
+}
+
+.secondary_Div {
+    position: relative;
+    margin: 0%;
+    padding: 0%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
