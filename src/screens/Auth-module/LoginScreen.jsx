@@ -107,14 +107,13 @@ const LoginScreen = () => {
                                 </Box>
                                 {/*  */}
                                 <div className="flex justify-end mt-[10px]">
-
                                     <p className="forgotPass cursor-pointer text-[16px] text-lightGray" onClick={() => navigate("/forgot")}>Forgot password?</p>
-
                                 </div>
-
                                 {/*  */}
                                 <div className="mt-[40px]">
-                                    <button className="Login_Button py-[15px] text-center bg-darkGray text-white w-full rounded-[10px]">Login</button>
+                                    <button className="Login_Button py-[15px] text-center bg-darkGray text-white w-full rounded-[10px]"
+                                        onClick={() => navigate("/Dashboard")}
+                                    >Login</button>
                                 </div>
                             </form>
 

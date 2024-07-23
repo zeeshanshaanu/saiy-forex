@@ -1,0 +1,12 @@
+/* layout.css */
+.layout-container {
+    display: flex;
+  }
+  
+  .content-container {
+    flex: 1;
+    padding: 24px;
+    background-color: #f0f2f5;
+    min-height: 100vh; /* Ensure the content container takes the full height */
+  }
+  

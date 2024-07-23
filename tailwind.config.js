@@ -11,7 +11,7 @@ export default {
         darkGray: 'rgba(20, 20, 20, 0.5)',
         yellow1: '#E5B001',
         yellow2: '#C49412',
-
+        text1: "#A0AAC5"
       },
     },
   },
