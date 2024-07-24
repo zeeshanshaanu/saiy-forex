@@ -1,11 +1,11 @@
 import React from 'react'
 import SidebarHeader from '../../components/sidebar/Header';
-import {   Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
 import DashboardCards from "../../components/Dashboard-Parts/DashboardCards"
 import DashboardPortfolioTable from "../../components/Dashboard-Parts/DashboardPortfolioTable"
+import { Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
- 
+
 const items = [
     {
         label: <span>This Week</span>,
@@ -25,8 +25,11 @@ const items = [
 const Dashboard = () => {
     return (
         <div>
-            <SidebarHeader />
-            <div className="px-7 py-5 bg-[#ECF0F8]">
+            {/* sticky top-0 */}
+            <div className=" bg-white z-0">
+                <SidebarHeader />
+            </div>
+            <div className="p-5 bg-[#ECF0F8] max-h-[100vh] overflow-scroll">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Dashboard</h1>
@@ -38,15 +41,14 @@ const Dashboard = () => {
                             }}
                             trigger={['click']}
                         >
-                            <p className="border border-[#ECF0F8] rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
+                            <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
                                 <DownOutlined />&nbsp;This Month
                             </p>
                         </Dropdown>
-                        {/* DashboardCards */}
                     </div>
                 </div>
                 {/*  */}
-                <div className="mt-5">
+                <div className="">
                     <DashboardCards />
                 </div>
                 {/*  */}

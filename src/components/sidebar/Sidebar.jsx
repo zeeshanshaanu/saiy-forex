@@ -16,6 +16,7 @@ import LogoText from "../../assets/images/LogoText.svg";
 import searchIcon from "../../assets/Icons/searchIcon.svg";
 import Logo1 from "../../assets/images/Logo1.svg";
 import "./sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 const { Header, Sider } = Layout;
 
@@ -40,11 +41,12 @@ const profileMenuItems = [
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const navigate = useNavigate()
 
     return (
         <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}  >
-                <div className={`bg-dark ${collapsed ? "" : "w-[210px]"}`}>
+            <Sider trigger={null} collapsible collapsed={collapsed}>
+                <div className={`bg-dark ${collapsed ? "" : ""}`}>
                     <div className="flex justify-between bg-dark">
                         <div className="text-white py-[25px] pl-5">
                             {collapsed ?
@@ -65,13 +67,13 @@ const Sidebar = () => {
                         className='bg-dark min-h-[calc(100vh-80px)] flex flex-col justify-between mx-[15px]'
                         defaultSelectedKeys={['1']}
                     >
-                        <Menu.Item key="1" icon={<img src={nine} alt="Dashboard" className="" />}>
+                        <Menu.Item key="1" onClick={() => navigate("/Dashboard")} icon={<img src={nine} alt="Dashboard" className="" />}>
                             <span className='text-white'>Dashboard</span>
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<img src={one} alt="Portfolios" className="" />}>
+                        <Menu.Item key="2" onClick={() => navigate("/Portfolios")} icon={<img src={one} alt="Portfolios" className="" />}>
                             <span className='text-white'>Portfolios</span>
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<img src={two} alt="Investors" className="" />}>
+                        <Menu.Item key="3" onClick={() => navigate("/Investors")} icon={<img src={two} alt="Investors" className="" />}>
                             <span className='text-white'>Investors</span>
                         </Menu.Item>
                         <Menu.Item key="4" icon={<img src={three} alt="Main Associates" className="" />}>

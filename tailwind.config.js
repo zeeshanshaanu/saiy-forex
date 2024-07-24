@@ -11,7 +11,11 @@ export default {
         darkGray: 'rgba(20, 20, 20, 0.5)',
         yellow1: '#E5B001',
         yellow2: '#C49412',
-        text1: "#A0AAC5"
+        text1: "#A0AAC5",
+        textgreen: "#01B574",
+        lightgreen: "rgba(49, 159, 67, 0.1)",
+        textRed: "#E56101",
+        lightRed: "rgba(229, 97, 1, 0.1)",
       },
     },
   },

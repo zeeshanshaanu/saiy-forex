@@ -15,8 +15,8 @@ const DashboardCards = () => {
                 </div>
                 {/*  */}
                 <div className="rounded-[10px] bg-white p-5 mt-5">
-                    <img src={TotalAllocated} alt={TotalAllocated} />
-                    <h5 className="text-lightGray mt-[12px] text-[16px]">Total Allocated Funds</h5>
+                    <img src={TotalAllocated} alt={TotalAllocated} className='mt-2' />
+                    <h5 className="text-lightGray mt-[12px] text-[16px]">Total&nbsp;Allocated&nbsp;Funds</h5>
                     <h2 className="text-dark text-[20px] font-bold mt-[12px]">$50,322</h2>
                 </div>
                 {/*  */}
@@ -37,8 +37,6 @@ const DashboardCards = () => {
                     <h5 className="text-lightGray mt-[12px] text-[16px]">Total Withdrawals</h5>
                     <h2 className="text-dark text-[20px] font-bold mt-[12px]">$10,223</h2>
                 </div>
-
-
             </div>
         </div>
     )

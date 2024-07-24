@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import searchIcon from "../../assets/Icons/searchIcon.svg";
 import Logo1 from "../../assets/images/Logo1.svg";
 import "./sidebar.css";
@@ -10,8 +10,9 @@ const { Header } = Layout
 const profileMenuItems = [
     {
         label: (
-            <span>
-                Profile
+            <span className='flex gap-2'>
+                <img src={Logo1} alt="Logo1" className='my-auto w-[25px] h-[25px] rounded-[10px]' />
+                <span className='my-auto'>Profile</span>
             </span>
         ),
         key: '0',
@@ -19,7 +20,7 @@ const profileMenuItems = [
     {
         label: (
             <span>
-                Logout
+                <LogoutOutlined />&nbsp;Logout
             </span>
         ),
         key: '1',
@@ -28,9 +29,9 @@ const profileMenuItems = [
 
 const SidebarHeader = () => {
     return (
-        <Header className='bg-transparent px-7 h-[80px] border-b-[1px] border-[#ECF0F8]'>
+        <Header className='bg-transparent px-5 h-[80px] border-b-[1px] border-[#ECF0F8]'>
             <div className="flex text-white justify-between my-auto">
-                <div className="mt-[8px] relative">
+                <div className="mt-[8px] relative d-none">
                     <input
                         type="text"
                         placeholder='Search something...'
@@ -41,7 +42,7 @@ const SidebarHeader = () => {
                 <div className="mt-[8px]">
                     <div className="flex gap-5">
                         <div className="my-auto">
-                            <img src={Logo1} alt="Logo1" className='w-[40px] h-[40px] rounded-[10px]' />
+                            <img src={Logo1} alt="Logo1" className='w-[40px] h-[40px] rounded-[10px] border' />
                         </div>
                         <div className="my-auto">
                             <h4 className="text-dark text-[16px]">John&nbsp;Cena.</h4>
