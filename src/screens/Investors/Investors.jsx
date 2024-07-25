@@ -15,7 +15,7 @@ const Investors = () => {
             <div className=" bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 bg-[#ECF0F8] max-h-[100vh] overflow-scroll">
+            <div className="p-5 bg-[#ECF0F8]">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Investors</h1>
@@ -31,7 +31,7 @@ const Investors = () => {
                 {/*  */}
                 {/*  */}
                 <div className="overflow-x-auto mt-4">
-                    <table className="min-w-full bg-white">
+                    <table className="min-w-full bg-white rounded-[10px]">
                         <thead>
                             <tr>
                                 <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Name</th>

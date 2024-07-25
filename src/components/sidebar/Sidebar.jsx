@@ -76,22 +76,22 @@ const Sidebar = () => {
                         <Menu.Item key="3" onClick={() => navigate("/Investors")} icon={<img src={two} alt="Investors" className="" />}>
                             <span className='text-white'>Investors</span>
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<img src={three} alt="Main Associates" className="" />}>
-                            <span className='text-white'>Main Associates</span>
+                        <Menu.Item key="4" onClick={() => navigate("/MainAssociates")} icon={<img src={three} alt="Main Associates" className="" />}>
+                            <span className='text-white'>Associates</span>
                         </Menu.Item>
-                        <Menu.Item key="5" icon={<img src={four} alt="Withdrawals" className="" />}>
+                        <Menu.Item key="5" onClick={() => navigate("/WithDrawals")} icon={<img src={four} alt="Withdrawals" className="" />}>
                             <span className='text-white'>Withdrawals</span>
                         </Menu.Item>
-                        <Menu.Item key="6" icon={<img src={five} alt="User Management" className="" />}>
+                        <Menu.Item key="6" onClick={() => navigate("/UserManagement")} icon={<img src={five} alt="User Management" className="" />}>
                             <span className='text-white'>User Management</span>
                         </Menu.Item>
-                        <Menu.Item key="7" icon={<img src={six} alt="Notifications" className="" />}>
+                        <Menu.Item key="7" icon={<img src={six} alt="Notifications" />}>
                             <span className='text-white'>Notifications</span>
                         </Menu.Item>
-                        <Menu.Item key="8" icon={<img src={seven} alt="Activity & Logs" className="" />}>
+                        <Menu.Item key="8" onClick={() => navigate("/ActivityLogs")} icon={<img src={seven} alt="Activity & Logs" className="" />}>
                             <span className='text-white'>Activity & Logs</span>
                         </Menu.Item>
-                        <Menu.Item key="9" icon={<img src={eight} alt="Settings" className="" />}>
+                        <Menu.Item key="9" onClick={() => navigate("/Settings")} icon={<img src={eight} alt="Settings" className="" />}>
                             <span className='text-white'>Settings</span>
                         </Menu.Item>
                         <div className="flex-grow"></div>
