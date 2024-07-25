@@ -37,7 +37,7 @@ const top100Films = [
     { label: 'The Dark Knight' },
 ];
 
-const EditPortfolio = ({ openEdit, setOpenEdit }) => {
+const EditProfile = ({ openEdit, setOpenEdit }) => {
     const classes = useStyles();
     const onClose = () => {
         setOpenEdit(false);
@@ -158,4 +158,4 @@ const EditPortfolio = ({ openEdit, setOpenEdit }) => {
     );
 }
 
-export default EditPortfolio;
+export default EditProfile;

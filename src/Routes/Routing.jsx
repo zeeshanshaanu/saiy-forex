@@ -17,6 +17,7 @@ import UserManagement from '../screens/UserManagement/UserManagement';
 import UserPermissions from '../screens/UserManagement/UserPermissions';
 import ActivityLogs from '../screens/ActivityAndLogs/ActivityLogs';
 import Settings from '../screens/Settings/Settings';
+import Notifications from '../screens/Notifications/Notifications';
 
 const AppRouting = () => {
   return (
@@ -43,6 +44,8 @@ const AppRouting = () => {
           {/*  */}
           <Route path="UserManagement" element={<UserManagement />} />
           <Route path="UserPermissions" element={<UserPermissions />} />
+          {/*  */}
+          <Route path="Notifications" element={<Notifications />} />
           {/*  */}
           <Route path="ActivityLogs" element={<ActivityLogs />} />
           {/*  */}

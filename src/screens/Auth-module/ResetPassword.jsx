@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import AuthRightBG from "../../assets/images/AuthRightBG.svg"
-import Logo1 from "../../assets/images/Logo1.svg"
+ import Logo1 from "../../assets/images/Logo1.svg"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { makeStyles } from '@mui/styles';
@@ -36,17 +35,8 @@ const useStyles = makeStyles({
 const ResetPassword = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [passwordVisible2, setPasswordVisible2] = useState(false);
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [Show, setShow] = useState(false)
 
-    const [validation, setValidation] = useState({
-        length: false,
-        upperLower: false,
-        specialChar: false,
-        number: false,
-        match: false
-    });
 
     const classes = useStyles();
     const navigate = useNavigate();
@@ -59,30 +49,8 @@ const ResetPassword = () => {
         setPasswordVisible2(!passwordVisible2);
     };
 
-    const handlePasswordChange = (e) => {
-        const newPassword = e.target.value;
-        setPassword(newPassword);
 
-        setValidation({
-            length: newPassword.length >= 6,
-            upperLower: /[a-z]/.test(newPassword) && /[A-Z]/.test(newPassword),
-            specialChar: /[@#$%&*]/.test(newPassword),
-            number: /\d/.test(newPassword),
-            match: newPassword === confirmPassword
-        });
-    };
 
-    const handleConfirmPasswordChange = (e) => {
-        const newConfirmPassword = e.target.value;
-        setConfirmPassword(newConfirmPassword);
-
-        setValidation((prevState) => ({
-            ...prevState,
-            match: password === newConfirmPassword
-        }));
-    };
-
-    const allValid = Object.values(validation).every(Boolean);
 
     return (
         <div className='text-white Primary_Dev '>

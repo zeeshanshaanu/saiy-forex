@@ -85,7 +85,7 @@ const Sidebar = () => {
                         <Menu.Item key="6" onClick={() => navigate("/UserManagement")} icon={<img src={five} alt="User Management" className="" />}>
                             <span className='text-white'>User Management</span>
                         </Menu.Item>
-                        <Menu.Item key="7" icon={<img src={six} alt="Notifications" />}>
+                        <Menu.Item key="7" onClick={() => navigate("/Notifications")} icon={<img src={six} alt="Notifications" />}>
                             <span className='text-white'>Notifications</span>
                         </Menu.Item>
                         <Menu.Item key="8" onClick={() => navigate("/ActivityLogs")} icon={<img src={seven} alt="Activity & Logs" className="" />}>

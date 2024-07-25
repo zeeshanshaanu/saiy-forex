@@ -4,30 +4,32 @@ import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import searchIcon from "../../assets/Icons/searchIcon.svg";
 import Logo1 from "../../assets/images/Logo1.svg";
 import "./sidebar.css";
+import { useNavigate } from 'react-router-dom';
 
 const { Header } = Layout
 
-const profileMenuItems = [
-    {
-        label: (
-            <span className='flex gap-2'>
-                <img src={Logo1} alt="Logo1" className='my-auto w-[25px] h-[25px] rounded-[10px]' />
-                <span className='my-auto'>Profile</span>
-            </span>
-        ),
-        key: '0',
-    },
-    {
-        label: (
-            <span>
-                <LogoutOutlined />&nbsp;Logout
-            </span>
-        ),
-        key: '1',
-    },
-];
 
 const SidebarHeader = () => {
+    const navigate = useNavigate()
+    const profileMenuItems = [
+        {
+            label: (
+                <span className='flex gap-2' onClick={() => navigate("/Settings")}>
+                    <img src={Logo1} alt="Logo1" className='my-auto w-[25px] h-[25px] rounded-[10px]' />
+                    <span className='my-auto'>Profile</span>
+                </span>
+            ),
+            key: '0',
+        },
+        {
+            label: (
+                <span>
+                    <LogoutOutlined />&nbsp;Logout
+                </span>
+            ),
+            key: '1',
+        },
+    ];
     return (
         <Header className='bg-transparent px-5 h-[80px] border-b-[1px] border-[#ECF0F8]'>
             <div className="flex text-white justify-between my-auto">
