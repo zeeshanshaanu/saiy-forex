@@ -29,12 +29,11 @@ const AssociateDetails = () => {
     const navigate = useNavigate()
 
     return (
-        <div>
-            {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+        <div className="bg-[#F6F8FE]">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 bg-[#ECF0F8]">
+            <div className="p-5 max-h-[100vh] overflow-auto">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <Breadcrumb
@@ -346,7 +345,7 @@ const AssociateDetails = () => {
                             </thead>
                             <tbody>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">$500</td>
@@ -354,7 +353,7 @@ const AssociateDetails = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">$500</td>
@@ -362,7 +361,7 @@ const AssociateDetails = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">$500</td>
@@ -370,7 +369,7 @@ const AssociateDetails = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">$500</td>
@@ -378,7 +377,7 @@ const AssociateDetails = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">$500</td>
@@ -415,19 +414,19 @@ const AssociateDetails = () => {
                                 </thead>
                                 <tbody>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">$500</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">$500</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">$500</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
@@ -457,19 +456,19 @@ const AssociateDetails = () => {
                                 </thead>
                                 <tbody>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">$500</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">$500</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer' >
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">$500</td>
                                         <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
@@ -537,7 +536,6 @@ const AssociateDetails = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

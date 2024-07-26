@@ -29,10 +29,10 @@ const PortfolioDetails = () => {
     return (
         <div>
             {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 bg-[#ECF0F8]">
+            <div className="p-5 bg-[#F6F8FE]">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <Breadcrumb
@@ -118,7 +118,7 @@ const PortfolioDetails = () => {
                                 </thead>
                                 <tbody>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                             <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                             <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
@@ -127,7 +127,7 @@ const PortfolioDetails = () => {
                                         <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                             <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                             <span className='my-auto text-[16px]'>Theresa Webb</span></td>
@@ -136,7 +136,7 @@ const PortfolioDetails = () => {
                                         <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                             <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                             <span className='my-auto text-[16px]'>Kristin Watson</span></td>
@@ -145,7 +145,7 @@ const PortfolioDetails = () => {
                                         <td className="py-2 px-4 text-[16px] text-dark">37529 E. Pecan St.</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                             <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                             <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
@@ -154,7 +154,7 @@ const PortfolioDetails = () => {
                                         <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                             <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                             <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
@@ -163,7 +163,7 @@ const PortfolioDetails = () => {
                                         <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                             <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                             <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
@@ -172,7 +172,7 @@ const PortfolioDetails = () => {
                                         <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
                                     </tr>
                                     {/*  */}
-                                    <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                             <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                             <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>

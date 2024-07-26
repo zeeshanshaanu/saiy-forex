@@ -26,12 +26,11 @@ const items = [
 const ActivityLogs = () => {
     const [Show, setShow] = useState("Employee")
     return (
-        <div>
-            {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+        <div className="bg-[#F6F8FE] h-[100vh]">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5">
+            <div className="p-5 max-h-[100vh] overflow-auto">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Activity & Logs</h1>

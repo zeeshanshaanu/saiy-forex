@@ -12,10 +12,10 @@ const Investors = () => {
     return (
         <div>
             {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 bg-[#ECF0F8]">
+            <div className="p-5 bg-[#F6F8FE]">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Investors</h1>
@@ -43,7 +43,7 @@ const Investors = () => {
                         </thead>
                         <tbody>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Eleanor Pena</span></td>
@@ -53,7 +53,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">DE75500105171813784773</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Theresa Webb</span></td>
@@ -63,7 +63,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Kristin Watson</span></td>
@@ -73,7 +73,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Theresa Webb</span></td>
@@ -83,7 +83,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Kristin Watson</span></td>
@@ -93,7 +93,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Theresa Webb</span></td>
@@ -103,7 +103,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Kristin Watson</span></td>
@@ -113,7 +113,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Eleanor Pena</span></td>
@@ -123,7 +123,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">DE75500105171813784773</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Theresa Webb</span></td>
@@ -133,7 +133,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Kristin Watson</span></td>
@@ -143,7 +143,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Theresa Webb</span></td>
@@ -153,7 +153,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Kristin Watson</span></td>
@@ -163,7 +163,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Theresa Webb</span></td>
@@ -173,7 +173,7 @@ const Investors = () => {
                                 <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
                             </tr>
                             {/*  */}
-                            <tr className='hover:bg-[#ECF0F8] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
+                            <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Kristin Watson</span></td>

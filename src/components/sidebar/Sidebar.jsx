@@ -17,6 +17,7 @@ import searchIcon from "../../assets/Icons/searchIcon.svg";
 import Logo1 from "../../assets/images/Logo1.svg";
 import "./sidebar.css";
 import { useNavigate } from "react-router-dom";
+import LogoutModel from '../../screens/Auth-module/LogoutModel';
 
 const { Header, Sider } = Layout;
 
@@ -43,12 +44,17 @@ const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate()
 
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+
     return (
-        <Layout>
+        <Layout className=''>
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className={`bg-dark ${collapsed ? "" : ""}`}>
+                <div className='bg-dark'>
                     <div className="flex justify-between bg-dark">
-                        <div className="text-white py-[25px] pl-5">
+                        <div className="text-white my-[25px] pl-5">
                             {collapsed ?
                                 <img src={Logo1} alt="Logo1"
                                     onClick={() => setCollapsed(!collapsed)}
@@ -63,11 +69,8 @@ const Sidebar = () => {
                                 />}
                         </div>
                     </div>
-                    <Menu
-                        className='bg-dark min-h-[calc(100vh-80px)] flex flex-col justify-between mx-[15px]'
-                        defaultSelectedKeys={['1']}
-                    >
-                        <Menu.Item key="1" onClick={() => navigate("/Dashboard")} icon={<img src={nine} alt="Dashboard" className="" />}>
+                    <Menu className='bg-dark min-h-[calc(100vh-80px)] flex flex-col justify-between mx-[5px]' defaultSelectedKeys={['1']}>
+                        <Menu.Item className="mt-5" key="1" onClick={() => navigate("/Dashboard")} icon={<img src={nine} alt="Dashboard" />}>
                             <span className='text-white'>Dashboard</span>
                         </Menu.Item>
                         <Menu.Item key="2" onClick={() => navigate("/Portfolios")} icon={<img src={one} alt="Portfolios" className="" />}>
@@ -95,21 +98,23 @@ const Sidebar = () => {
                             <span className='text-white'>Settings</span>
                         </Menu.Item>
                         <div className="flex-grow"></div>
-                        <Menu.Item key="10" icon={<img src={logoutIcon} alt="Logout" className="" />}>
+                        <Menu.Item key="10" onClick={showDrawer}
+                            icon={<img src={logoutIcon} alt="Logout" className="" />}>
                             <span className='text-white'>Logout</span>
                         </Menu.Item>
                     </Menu>
                 </div>
-
+                <LogoutModel open={open} setOpen={setOpen} />
             </Sider>
 
-            {/* <Header className='bg-transparent px-10 h-[80px] border-b-[1px] border-[#ECF0F8]'>
+            {/* <Layout>
+            <Header className='bg-transparent px-10 h-[80px] border-b-[1px] border-[#F6F8FE]'>
                 <div className="flex text-white justify-between my-auto">
                     <div className="mt-[8px] relative">
                         <input
                             type="text"
                             placeholder='Search something...'
-                            className="h-[44px] lg:w-[300px] w-auto pl-10 pr-5 text-dark border border-[#ECF0F8] rounded-[10px]"
+                            className="h-[44px] lg:w-[300px] w-auto pl-10 pr-5 text-dark border border-[#F6F8FE] rounded-[10px]"
                         />
                         <img src={searchIcon} alt="searchIcon" className='absolute top-[23px] left-[10px]' />
                     </div>
@@ -128,14 +133,13 @@ const Sidebar = () => {
                                 }
                             >
                                 <div className='cursor-pointer'>
-                                    <DownOutlined className='text-[#828EB0] bg-[#ECF0F8] p-2 rounded-full' />
+                                    <DownOutlined className='text-[#828EB0] bg-[#F6F8FE] p-2 rounded-full' />
                                 </div>
                             </Dropdown>
                         </div>
                     </div>
                 </div>
-            </Header> */}
-            {/* <Layout>
+            </Header>
 
             </Layout> */}
         </Layout>

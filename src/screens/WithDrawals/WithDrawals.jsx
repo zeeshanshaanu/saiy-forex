@@ -55,13 +55,12 @@ const itemsPortfolios = [
 const WithDrawals = () => {
     const navigate = useNavigate()
     return (
-        <div>
-            {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+        <div className="bg-[#F6F8FE]">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 bg-[#ECF0F8]">
-                <div className="flex justify-between ">
+            <div className="max-h-[100vh] overflow-auto p-5">
+                <div className="flex justify-between">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Withdrawals</h1>
                     </div>
@@ -78,17 +77,17 @@ const WithDrawals = () => {
                                 <DownOutlined />&nbsp;This Month
                             </p>
                         </Dropdown>
-                                {/*  */}
-                                <Dropdown
-                                    menu={{
-                                        items,
-                                    }}
-                                    trigger={['click']}
-                                >
-                                    <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
-                                        <DownOutlined />&nbsp;All Portfolios
-                                    </p>
-                                </Dropdown>
+                        {/*  */}
+                        <Dropdown
+                            menu={{
+                                items,
+                            }}
+                            trigger={['click']}
+                        >
+                            <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
+                                <DownOutlined />&nbsp;All Portfolios
+                            </p>
+                        </Dropdown>
                         {/*  */}
                         <Dropdown
                             menu={{
@@ -115,86 +114,86 @@ const WithDrawals = () => {
                     <table className="min-w-full bg-white rounded-[10px] my-4">
                         <thead>
                             <tr>
-                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Investor</th>
-                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Email</th>
-                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Withdrawal&nbsp;Amount</th>
-                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Withdrawal&nbsp;Status</th>
-                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Request&nbsp;on</th>
-                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">KYC&nbsp;Status</th>
+                                <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">Investor</th>
+                                <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">Email</th>
+                                <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">Withdrawal&nbsp;Amount</th>
+                                <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">Withdrawal&nbsp;Status</th>
+                                <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">Request&nbsp;on</th>
+                                <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">KYC&nbsp;Status</th>
                             </tr>
                         </thead>
                         <tbody className="p-5">
                             <tr className="cursor-pointer">
-                                <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
                                 </td>
-                                <td className="py-1 px-10 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-10 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Processed</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">15&nbsp;June&nbsp;202</td>
-                                <td className="py-1 px-10 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Active</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
+                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Processed</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;June&nbsp;202</td>
+                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Active</td>
                             </tr>
                             <br />
                             <tr className="cursor-pointer">
-                                <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
                                 </td>
-                                <td className="py-1 px-10 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-10 text-[16px] text-textRed bg-lightRed rounded-full text-center font-semibold">Rejected</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">15&nbsp;March&nbsp;202</td>
-                                <td className="py-1 px-10 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
+                                <td className="py-1 px-5 text-[16px] text-textRed bg-lightRed rounded-full text-center font-semibold">Rejected</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;March&nbsp;202</td>
+                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
                             </tr>
                             <br />
                             <tr className="cursor-pointer">
-                                <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
                                 </td>
-                                <td className="py-0 px-10 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-0 px-10 text-[16px] text-dark">$1001</td>
-                                <td className="py-0 px-10 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Pending</td>
-                                <td className="py-0 px-10 text-[16px] text-dark">15&nbsp;April&nbsp;202 </td>
-                                <td className="py-0 px-10 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
-                             </tr>
-                            <br />
-                            <tr className="cursor-pointer">
-                                <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="py-1 px-10 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-10 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Processed</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">15&nbsp;June&nbsp;202</td>
-                                <td className="py-1 px-10 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Active</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
+                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Pending</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;April&nbsp;202 </td>
+                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
                             </tr>
                             <br />
                             <tr className="cursor-pointer">
-                                <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
                                 </td>
-                                <td className="py-1 px-10 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-10 text-[16px] text-textRed bg-lightRed rounded-full text-center font-semibold">Rejected</td>
-                                <td className="py-1 px-10 text-[16px] text-dark">15&nbsp;March&nbsp;202</td>
-                                <td className="py-1 px-10 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
+                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Processed</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;June&nbsp;202</td>
+                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Active</td>
                             </tr>
                             <br />
                             <tr className="cursor-pointer">
-                                <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
                                 </td>
-                                <td className="py-0 px-10 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-0 px-10 text-[16px] text-dark">$1001</td>
-                                <td className="py-0 px-10 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Pending</td>
-                                <td className="py-0 px-10 text-[16px] text-dark">15&nbsp;April&nbsp;202 </td>
-                                <td className="py-0 px-10 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
-                             </tr>
+                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
+                                <td className="py-1 px-5 text-[16px] text-textRed bg-lightRed rounded-full text-center font-semibold">Rejected</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;March&nbsp;202</td>
+                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
+                            </tr>
+                            <br />
+                            <tr className="cursor-pointer">
+                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
+                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
+                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
+                                </td>
+                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
+                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Pending</td>
+                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;April&nbsp;202 </td>
+                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
+                            </tr>
                             <br />
 
                         </tbody>

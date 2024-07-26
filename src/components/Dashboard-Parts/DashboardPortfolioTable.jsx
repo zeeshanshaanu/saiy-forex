@@ -44,7 +44,7 @@ const DashboardPortfolioTable = () => {
                             </thead>
                             <tbody>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2 w-[250px]">
                                         <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                         <span className='my-auto'>SAIY Forex Premium Plus</span></td>
@@ -54,7 +54,7 @@ const DashboardPortfolioTable = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">30 Days</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8]'>
+                                <tr className='hover:bg-[#F6F8FE]'>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2 w-[250px]">
                                         <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                         <span className='my-auto'>SAIY Forex Premium Plus</span></td>
@@ -64,7 +64,7 @@ const DashboardPortfolioTable = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">30 Days</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2 w-[250px]">
                                         <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                         <span className='my-auto'>SAIY Forex Premium Plus</span></td>
@@ -74,7 +74,7 @@ const DashboardPortfolioTable = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">30 Days</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2 w-[250px]">
                                         <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                         <span className='my-auto'>SAIY Forex Premium Plus</span></td>
@@ -84,7 +84,7 @@ const DashboardPortfolioTable = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">30 Days</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2 w-[250px]">
                                         <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                         <span className='my-auto'>SAIY Forex Premium Plus</span></td>
@@ -94,7 +94,7 @@ const DashboardPortfolioTable = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">30 Days</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2 w-[250px]">
                                         <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                         <span className='my-auto'>SAIY Forex Premium Plus</span></td>
@@ -104,7 +104,7 @@ const DashboardPortfolioTable = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">30 Days</td>
                                 </tr>
                                 {/*  */}
-                                <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                                <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2 w-[250px]">
                                         <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                         <span className='my-auto'>SAIY Forex Premium Plus</span></td>
@@ -282,7 +282,7 @@ const DashboardPortfolioTable = () => {
                 {/*  */}
                 <div className="mt-5 bg-white p-5 bg-white rounded-[10px]">
                     <div className="flex justify-between">
-                        <h5 className="text-[16px] text-dark my-auto">Investors</h5>
+                        <h5 className="text-[16px] text-dark my-auto">Main Associates</h5>
                         <div className="Dropdown cursor-pointer my-auto">
                             <Dropdown
                                 menu={{
@@ -345,7 +345,7 @@ const DashboardPortfolioTable = () => {
                 {/*  */}
                 <div className="mt-5 bg-white p-5 bg-white rounded-[10px]">
                     <div className="flex justify-between">
-                        <h5 className="text-[16px] text-dark my-auto">Investors</h5>
+                        <h5 className="text-[16px] text-dark my-auto">Sub Associates</h5>
                         <div className="Dropdown cursor-pointer my-auto">
                             <Dropdown
                                 menu={{

@@ -11,12 +11,11 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const UserPermissions = () => {
     const navigate = useNavigate()
     return (
-        <div>
-            {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+        <div className="bg-[#F6F8FE] h-[100vh]">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5">
+            <div className="p-5 max-h-[100vh] overflow-auto">
                 <div className="flex justify-between">
                     <div className=" my-auto">
                         <Breadcrumb
@@ -63,7 +62,7 @@ const UserPermissions = () => {
                 </div>
                 {/*  */}
 
-                <div className="p-5 bg-[#ECF0F8] overflow-x-auto mt-4 rounded-[10px] my-4">
+                <div className="p-5 bg-[#F6F8FE] overflow-x-auto mt-4 rounded-[10px] my-4">
                     <table className="min-w-full ">
                         <thead>
                             <tr>

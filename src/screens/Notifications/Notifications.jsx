@@ -11,12 +11,11 @@ const Notifications = () => {
         setOpen(true);
     };
     return (
-        <div>
-            {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+        <div className="">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5">
+            <div className="p-5 max-h-[100vh] overflow-auto">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Notifications</h1>
@@ -49,7 +48,7 @@ const Notifications = () => {
                     </thead>
                     <tbody>
                         {/*  */}
-                        <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                 <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                 <span className='my-auto'>EdTech</span></td>
@@ -58,7 +57,7 @@ const Notifications = () => {
                             <td className="py-2 px-4 text-[16px] text-dark"><PaperClipOutlined /></td>
                         </tr>
                         {/*  */}
-                        <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                 <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                 <span className='my-auto'>EdTech</span></td>
@@ -67,7 +66,7 @@ const Notifications = () => {
                             <td className="py-2 px-4 text-[16px] text-dark"><PaperClipOutlined /></td>
                         </tr>
                         {/*  */}
-                        <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                 <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                 <span className='my-auto'>EdTech</span></td>
@@ -76,7 +75,7 @@ const Notifications = () => {
                             <td className="py-2 px-4 text-[16px] text-dark"><PaperClipOutlined /></td>
                         </tr>
                         {/*  */}
-                        <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                 <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                 <span className='my-auto'>EdTech</span></td>
@@ -85,7 +84,7 @@ const Notifications = () => {
                             <td className="py-2 px-4 text-[16px] text-dark"><PaperClipOutlined /></td>
                         </tr>
                         {/*  */}
-                        <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                 <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                 <span className='my-auto'>EdTech</span></td>
@@ -94,7 +93,7 @@ const Notifications = () => {
                             <td className="py-2 px-4 text-[16px] text-dark"><PaperClipOutlined /></td>
                         </tr>
                         {/*  */}
-                        <tr className='hover:bg-[#ECF0F8] cursor-pointer'>
+                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                 <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                 <span className='my-auto'>EdTech</span></td>

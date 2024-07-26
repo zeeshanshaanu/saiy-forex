@@ -3,7 +3,7 @@ import { Button } from 'antd'
 import React, { useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import DummyImg from "../../assets/images/DummyImg1.png"
- import ChangePassword from './ChangePassword'
+import ChangePassword from './ChangePassword'
 import EditProfile from './EditProfile'
 
 
@@ -24,32 +24,29 @@ const Settings = () => {
                 <SidebarHeader />
             </div>
             <div className="m-5">
-
-                <div className="">
-                    <div className="flex justify-between ">
-                        <div className=" my-auto">
-                            <h1 className="text-[24px] font-bold">Settings</h1>
+                <div className="flex justify-between ">
+                    <div className=" my-auto">
+                        <h1 className="text-[24px] font-bold">Settings</h1>
+                    </div>
+                    <div className="Dropdown cursor-pointer my-auto flex gap-2">
+                        <div className="my-auto">
+                            <Button type="white"
+                                className='bg-transparent border border-lightGray text-dark h-[44px] rounded-[10px]'
+                                onClick={showDrawer}
+                                icon={<EditOutlined className='text-dark' />}>Change Password
+                            </Button>
                         </div>
-                        <div className="Dropdown cursor-pointer my-auto flex gap-2">
-                            <div className="my-auto">
-                                <Button type="white"
-                                    className='bg-transparent border border-lightGray text-dark h-[44px] rounded-[10px]'
-                                    onClick={showDrawer}
-                                    icon={<EditOutlined className='text-dark' />}>Change Password
-                                </Button>
-                            </div>
-                            <div className="my-auto">
-                                <Button type="dark"
-                                    className='bg-dark text-white h-[44px] rounded-[10px]'
-                                    onClick={showDrawer2}
-                                >Edit Profile
-                                </Button>
-                            </div>
+                        <div className="my-auto">
+                            <Button type="dark"
+                                className='bg-dark text-white h-[44px] rounded-[10px]'
+                                onClick={showDrawer2}
+                            >Edit Profile
+                            </Button>
                         </div>
                     </div>
                 </div>
                 {/*  */}
-                <div className="my-5 p-5 rounded-[10px] my-auto bg-white drop-shadow-md hover:drop-shadow-xl ">
+                <div className="mt-5 p-5 rounded-[10px] my-auto bg-white drop-shadow-md hover:drop-shadow-xl ">
                     <div className="my-5">
                         <div className="">
                             <img src={DummyImg} alt={DummyImg} className='w-[100px] h-[100px] rounded-full' />

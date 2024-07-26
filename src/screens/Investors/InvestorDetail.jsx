@@ -29,12 +29,11 @@ const InvestorDetail = () => {
     const navigate = useNavigate()
 
     return (
-        <div>
-            {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+        <div className="bg-[#F6F8FE]">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 bg-[#ECF0F8]">
+            <div className="p-5 max-h-[100vh] overflow-auto">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <Breadcrumb
@@ -114,7 +113,7 @@ const InvestorDetail = () => {
                                 </div>
                                 <div className="mt-4 max-w-full flex gap-5 w-full overflow-auto">
                                     {/*  */}
-                                    <div className="mb-3 text-center my-auto bg-[#ECF0F8] p-5 rounded-lg">
+                                    <div className="mb-3 text-center my-auto bg-[#F6F8FE] p-5 rounded-lg">
                                         <center>
                                             <img src={PDFicon} alt={PDFicon} className="text-center" />
                                         </center>
@@ -122,7 +121,7 @@ const InvestorDetail = () => {
                                         <p className='text-lightGray text-[12px] mt-3'> 200 KB</p>
                                     </div>
                                     {/*  */}
-                                    <div className="mb-3 text-center my-auto bg-[#ECF0F8] p-5 rounded-lg">
+                                    <div className="mb-3 text-center my-auto bg-[#F6F8FE] p-5 rounded-lg">
                                         <center>
                                             <img src={PDFicon} alt={PDFicon} className="text-center" />
                                         </center>
@@ -130,7 +129,7 @@ const InvestorDetail = () => {
                                         <p className='text-lightGray text-[12px] mt-3'> 200 KB</p>
                                     </div>
                                     {/*  */}
-                                    <div className="mb-3 text-center my-auto bg-[#ECF0F8] p-5 rounded-lg">
+                                    <div className="mb-3 text-center my-auto bg-[#F6F8FE] p-5 rounded-lg">
                                         <center>
                                             <img src={PDFicon} alt={PDFicon} className="text-center" />
                                         </center>
@@ -138,7 +137,7 @@ const InvestorDetail = () => {
                                         <p className='text-lightGray text-[12px] mt-3'> 200 KB</p>
                                     </div>
                                     {/*  */}
-                                    <div className="mb-3 text-center my-auto bg-[#ECF0F8] p-5 rounded-lg">
+                                    <div className="mb-3 text-center my-auto bg-[#F6F8FE] p-5 rounded-lg">
                                         <center>
                                             <img src={PDFicon} alt={PDFicon} className="text-center" />
                                         </center>
@@ -146,7 +145,7 @@ const InvestorDetail = () => {
                                         <p className='text-lightGray text-[12px] mt-3'> 200 KB</p>
                                     </div>
                                     {/*  */}
-                                    <div className="mb-3 text-center my-auto bg-[#ECF0F8] p-5 rounded-lg">
+                                    <div className="mb-3 text-center my-auto bg-[#F6F8FE] p-5 rounded-lg">
                                         <center>
                                             <img src={PDFicon} alt={PDFicon} className="text-center" />
                                         </center>
@@ -322,7 +321,6 @@ const InvestorDetail = () => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

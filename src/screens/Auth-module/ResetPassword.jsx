@@ -12,15 +12,15 @@ const useStyles = makeStyles({
     inputRoot: {
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
-                borderColor: '#ECF0F8',
+                borderColor: '#F6F8FE',
                 borderRadius: '10px', // Add border radius here
 
             },
             '&:hover fieldset': {
-                borderColor: '#ECF0F8',
+                borderColor: '#F6F8FE',
             },
             '&.Mui-focused fieldset': {
-                borderColor: '#ECF0F8',
+                borderColor: '#F6F8FE',
             },
         },
     },

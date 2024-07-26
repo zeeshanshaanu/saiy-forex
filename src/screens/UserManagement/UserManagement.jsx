@@ -6,36 +6,35 @@ import Logo1 from "../../assets/images/Logo1.svg"
 import Dot from "../../assets/Icons/Dot.svg"
 import { useNavigate } from 'react-router-dom';
 import CreateUser from './CreateUser'
-// 
-// 
-const items = [
-    {
-        label: <span><EyeOutlined /> &nbsp;View Details</span>,
-        key: '0',
-    },
-    {
-        label: <span><SettingOutlined /> &nbsp;Change Permissions</span>,
-        key: '1',
-    },
-    {
-        label: <span><CloseOutlined /> &nbsp;Deactivate Account</span>,
-        key: '3',
-    },
-];
 
 const UserManagement = () => {
+    // 
+    // 
+    const items = [
+        {
+            label: <span><EyeOutlined /> &nbsp;View Details</span>,
+            key: '0',
+        },
+        {
+            label: <span onClick={() => navigate("/UserPermissions")}><SettingOutlined /> &nbsp;Change Permissions</span>,
+            key: '1',
+        },
+        {
+            label: <span><CloseOutlined /> &nbsp;Deactivate Account</span>,
+            key: '3',
+        },
+    ];
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
     };
     return (
-        <div>
-            {/* sticky top-0 */}
-            <div className=" bg-white z-0">
+        <div className="bg-[#F6F8FE] h-[100vh]">
+            <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 bg-[#ECF0F8]">
+            <div className="p-5 max-h-[100vh] overflow-auto">
                 <div className="flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">User Management</h1>
@@ -73,7 +72,7 @@ const UserManagement = () => {
                         </thead>
                         <tbody className="p-5">
                             <br />
-                            <tr className="cursor-pointer" onClick={() => navigate("/UserPermissions")}>
+                            <tr className="cursor-pointer" >
                                 <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
@@ -95,7 +94,7 @@ const UserManagement = () => {
                                 </td>
                             </tr>
                             <br />
-                            <tr className="cursor-pointer" onClick={() => navigate("/UserPermissions")}>
+                            <tr className="cursor-pointer" >
                                 <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
@@ -117,7 +116,7 @@ const UserManagement = () => {
                                 </td>
                             </tr>
                             <br />
-                            <tr className="cursor-pointer" onClick={() => navigate("/UserPermissions")}>
+                            <tr className="cursor-pointer" >
                                 <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
@@ -139,7 +138,7 @@ const UserManagement = () => {
                                 </td>
                             </tr>
                             <br />
-                            <tr className="cursor-pointer" onClick={() => navigate("/UserPermissions")}>
+                            <tr className="cursor-pointer" >
                                 <td className="py-2 px-8 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
                                     <span className="my-auto">Eleanor&nbsp;Pena</span>
