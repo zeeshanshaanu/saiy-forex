@@ -39,7 +39,7 @@ const SidebarHeader = () => {
     return (
         <Header className='bg-transparent px-5 h-[80px] border-b-[1px] border-white'>
             <div className="flex text-white justify-between my-auto">
-                <div className="mt-[8px] relative d-none">
+                <div className="mt-[8px] relative d-none forMobileView">
                     <input
                         type="text"
                         placeholder='Search something...'

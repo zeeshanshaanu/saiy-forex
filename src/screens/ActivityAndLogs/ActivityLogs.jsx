@@ -48,7 +48,7 @@ const ActivityLogs = () => {
                         </Dropdown>
                     </div>
                 </div>
-                <div className="my-4 flex">
+                <div className="my-4 lg:flex md:flex">
                     <p className={`font-[500] p-3 cursor-pointer border rounded-l-lg ${Show === "Admin" ? "bg-yellow3" : ""}`}
                         onClick={() => setShow("Admin")}
                     >Admin</p>

@@ -7,16 +7,16 @@ import { DownOutlined } from '@ant-design/icons';
  
 const items = [
     {
-        label: <span>Most Recent</span>,
+        label: <span>Most&nbsp;Recent</span>,
         key: '0',
     },
     {
-        label: <span>This Month</span>,
+        label: <span>This&nbsp;Month</span>,
         key: '1',
     },
 
     {
-        label: <span>This Year</span>,
+        label: <span>This&nbsp;Year</span>,
         key: '3',
     },
 ];
@@ -214,11 +214,11 @@ const DashboardPortfolioTable = () => {
                 </div>
             </div>
             {/*  CARDS  */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-x-5">
                 {/*  */}
                 {/*  */}
                 <div className="mt-5 bg-white p-5 bg-white rounded-[10px]">
-                    <div className="flex justify-between">
+                    <div className="lg:flex md:flex justify-between">
                         <h5 className="text-[16px] text-dark my-auto">Investors</h5>
                         <div className="Dropdown cursor-pointer my-auto">
                             <Dropdown
@@ -228,7 +228,7 @@ const DashboardPortfolioTable = () => {
                                 trigger={['click']}
                             >
                                 <p className="border border-lightDray rounded-[10px] py-[10px] px-[16px]" onClick={(e) => e.preventDefault()}>
-                                    <DownOutlined />&nbsp;Most Recent
+                                    <DownOutlined />&nbsp;Most&nbsp;Recent
                                 </p>
                             </Dropdown>
                         </div>
@@ -281,7 +281,7 @@ const DashboardPortfolioTable = () => {
                 {/*  */}
                 {/*  */}
                 <div className="mt-5 bg-white p-5 bg-white rounded-[10px]">
-                    <div className="flex justify-between">
+                    <div className="lg:flex md:flex justify-between">
                         <h5 className="text-[16px] text-dark my-auto">Main Associates</h5>
                         <div className="Dropdown cursor-pointer my-auto">
                             <Dropdown
@@ -291,7 +291,7 @@ const DashboardPortfolioTable = () => {
                                 trigger={['click']}
                             >
                                 <p className="border border-lightDray rounded-[10px] py-[10px] px-[16px]" onClick={(e) => e.preventDefault()}>
-                                    <DownOutlined />&nbsp;Most Recent
+                                    <DownOutlined />&nbsp;Most&nbsp;Recent
                                 </p>
                             </Dropdown>
                         </div>
@@ -344,7 +344,7 @@ const DashboardPortfolioTable = () => {
                 {/*  */}
                 {/*  */}
                 <div className="mt-5 bg-white p-5 bg-white rounded-[10px]">
-                    <div className="flex justify-between">
+                    <div className="lg:flex md:flex justify-between">
                         <h5 className="text-[16px] text-dark my-auto">Sub Associates</h5>
                         <div className="Dropdown cursor-pointer my-auto">
                             <Dropdown
@@ -354,7 +354,7 @@ const DashboardPortfolioTable = () => {
                                 trigger={['click']}
                             >
                                 <p className="border border-lightDray rounded-[10px] py-[10px] px-[16px]" onClick={(e) => e.preventDefault()}>
-                                    <DownOutlined />&nbsp;Most Recent
+                                    <DownOutlined />&nbsp;Most&nbsp;Recent
                                 </p>
                             </Dropdown>
                         </div>
@@ -411,7 +411,7 @@ const DashboardPortfolioTable = () => {
                 {/*  */}
                 {/*  */}
                 <div className="mt-5 bg-white p-5 bg-white rounded-[10px]">
-                    <div className="flex justify-between mb-3">
+                    <div className="lg:flex md:flex justify-between mb-3">
                         <h5 className="text-[16px] text-dark my-auto">Investors Withdrawal Request</h5>
                         <div className="Dropdown cursor-pointer my-auto">
                             <Dropdown
@@ -421,7 +421,7 @@ const DashboardPortfolioTable = () => {
                                 trigger={['click']}
                             >
                                 <p className="border border-lightDray rounded-[10px] py-[10px] px-[16px]" onClick={(e) => e.preventDefault()}>
-                                    <DownOutlined />&nbsp;Most Recent
+                                    <DownOutlined />&nbsp;Most&nbsp;Recent
                                 </p>
                             </Dropdown>
                         </div>
@@ -430,45 +430,45 @@ const DashboardPortfolioTable = () => {
                     <table className="min-w-full bg-white">
                         <thead className=''>
                             <tr>
-                                <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Investor</th>
-                                <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Amount</th>
-                                <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Status</th>
+                                <th className="py-2 px-0 font-[400] tetx-[14px] text-lightGray text-left">Investor</th>
+                                <th className="py-2 px-0 font-[400] tetx-[14px] text-lightGray text-left">Amount</th>
+                                <th className="py-2 px-0 font-[400] tetx-[14px] text-lightGray text-left">Status</th>
 
                             </tr>
                         </thead>
                         <tbody className=''>
                             {/*  */}
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textgreen bg-lightgreen rounded-[100px] text-center">Processed</td>
                             </tr>
                             {/*  */}
                             <>&nbsp;</>
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textRed bg-lightRed rounded-[100px] text-center">Pending</td>
                             </tr>
                             <>&nbsp;</>
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textgreen bg-lightgreen rounded-[100px] text-center">Processed</td>
                             </tr>
                             {/*  */}
                             <>&nbsp;</>
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textRed bg-lightRed rounded-[100px] text-center">Pending</td>
                             </tr>
                         </tbody>
@@ -477,7 +477,7 @@ const DashboardPortfolioTable = () => {
                 {/*  */}
                 {/*  */}
                 <div className="mt-5 bg-white p-5 bg-white rounded-[10px]">
-                    <div className="flex justify-between mb-3">
+                    <div className="lg:flex md:flex justify-between mb-3">
                         <h5 className="text-[16px] text-dark my-auto">Main/Sub Associates Withdrawal Request</h5>
                         <div className="Dropdown cursor-pointer my-auto">
                             <Dropdown
@@ -487,7 +487,7 @@ const DashboardPortfolioTable = () => {
                                 trigger={['click']}
                             >
                                 <p className="border border-lightDray rounded-[10px] py-[10px] px-[16px]" onClick={(e) => e.preventDefault()}>
-                                    <DownOutlined />&nbsp;Most Recent
+                                    <DownOutlined />&nbsp;Most&nbsp;Recent
                                 </p>
                             </Dropdown>
                         </div>
@@ -496,45 +496,45 @@ const DashboardPortfolioTable = () => {
                     <table className="min-w-full bg-white">
                         <thead className=''>
                             <tr>
-                                <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Investor</th>
-                                <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Amount</th>
-                                <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Status</th>
+                                <th className="py-2 px-0 font-[400] tetx-[14px] text-lightGray text-left">Investor</th>
+                                <th className="py-2 px-0 font-[400] tetx-[14px] text-lightGray text-left">Amount</th>
+                                <th className="py-2 px-0 font-[400] tetx-[14px] text-lightGray text-left">Status</th>
 
                             </tr>
                         </thead>
                         <tbody className=''>
                             {/*  */}
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textgreen bg-lightgreen rounded-[100px] text-center">Processed</td>
                             </tr>
                             {/*  */}
                             <>&nbsp;</>
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textRed bg-lightRed rounded-[100px] text-center">Pending</td>
                             </tr>
                             <>&nbsp;</>
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textgreen bg-lightgreen rounded-[100px] text-center">Processed</td>
                             </tr>
                             {/*  */}
                             <>&nbsp;</>
                             <tr className=''>
-                                <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                <td className="py-2 px-0 text-[16px] text-dark flex gap-2">
                                     <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
                                     <span className='my-auto'>Brooklyn Simmons</span></td>
-                                <td className="py-2 px-4 text-[16px] text-dark">$500</td>
+                                <td className="py-2 px-0 text-[16px] text-dark">$500</td>
                                 <td className="py-[4px] px-[12px] text-[16px] font-semibold text-textRed bg-lightRed rounded-[100px] text-center">Pending</td>
                             </tr>
                         </tbody>

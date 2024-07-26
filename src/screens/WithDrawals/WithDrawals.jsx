@@ -60,51 +60,60 @@ const WithDrawals = () => {
                 <SidebarHeader />
             </div>
             <div className="max-h-[100vh] overflow-auto p-5">
-                <div className="flex justify-between">
+                <div className="lg:flex md:flex justify-between">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Withdrawals</h1>
                     </div>
                     {/* DROPWORN */}
                     <div className="Dropdown cursor-pointer my-auto flex gap-3">
                         {/*  */}
-                        <Dropdown
-                            menu={{
-                                items,
-                            }}
-                            trigger={['click']}
-                        >
-                            <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
-                                <DownOutlined />&nbsp;This Month
-                            </p>
-                        </Dropdown>
+                        <div className="lg:flex md:flex gap-x-5">
+                            <Dropdown
+                                className='mt-5'
+                                menu={{
+                                    items,
+                                }}
+                                trigger={['click']}
+                            >
+                                <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
+                                    <DownOutlined />&nbsp;This Month
+                                </p>
+                            </Dropdown>
+                            {/*  */}
+                            <Dropdown
+                                className='mt-5'
+                                menu={{
+                                    items,
+                                }}
+                                trigger={['click']}
+                            >
+                                <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
+                                    <DownOutlined />&nbsp;All Portfolios
+                                </p>
+                            </Dropdown>
+                        </div>
                         {/*  */}
-                        <Dropdown
-                            menu={{
-                                items,
-                            }}
-                            trigger={['click']}
-                        >
-                            <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
-                                <DownOutlined />&nbsp;All Portfolios
-                            </p>
-                        </Dropdown>
-                        {/*  */}
-                        <Dropdown
-                            menu={{
-                                items,
-                            }}
-                            trigger={['click']}
-                        >
-                            <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
-                                <DownOutlined />&nbsp;Status
-                            </p>
-                        </Dropdown>
-                        <div className="my-auto">
-                            <Button type="dark"
-                                className='bg-dark text-white h-[44px] rounded-[10px]'
-                                // onClick={showDrawer}
-                                icon={<DownloadOutlined className='text-white' />}>Export CSV
-                            </Button>
+                        <div className="lg:flex md:flex gap-x-5">
+
+                            <Dropdown
+                                className='mt-5'
+
+                                menu={{
+                                    items,
+                                }}
+                                trigger={['click']}
+                            >
+                                <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
+                                    <DownOutlined />&nbsp;Status
+                                </p>
+                            </Dropdown>
+                            <div className=" mt-4">
+                                <Button type="dark"
+                                    className='bg-dark text-white h-[44px] rounded-[10px]'
+                                    // onClick={showDrawer}
+                                    icon={<DownloadOutlined className='text-white' />}>Export CSV
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>

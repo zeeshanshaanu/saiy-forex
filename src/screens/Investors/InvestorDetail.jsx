@@ -34,7 +34,7 @@ const InvestorDetail = () => {
                 <SidebarHeader />
             </div>
             <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="flex justify-between ">
+                <div className="lg:flex md:flex justify-between ">
                     <div className=" my-auto">
                         <Breadcrumb
                             items={[
@@ -254,7 +254,7 @@ const InvestorDetail = () => {
                 {/*  */}
                 {/*  */}
                 <div className="mt-5 p-5 bg-white rounded-[10px]">
-                    <div className="flex justify-between ">
+                    <div className="lg:flex md:flex justify-between ">
                         <div className=" my-auto">
                             <h1 className="text-[24px] font-bold">Transaction History</h1>
                         </div>
@@ -290,7 +290,7 @@ const InvestorDetail = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">$69.99</td>
                                     <td className="py-2 px-4 text-[16px] text-textgreen bg-lightgreen 
                                     rounded-full  text-center font-semibold">Deposit</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
+                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022</td>
                                     <td className="py-2 px-4 text-[16px] text-dark text-yellow1 cursor-pointer"><DownloadOutlined />&nbsp;Download Invoice</td>
                                 </tr>
                                 <br />
@@ -300,7 +300,7 @@ const InvestorDetail = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">$69.99</td>
                                     <td className=" text-[16px] text-textRed bg-lightRed 
                                     rounded-full py-2 px-4 text-center font-semibold">Withdrawal</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
+                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022</td>
                                     <td className="py-2 px-4 text-[16px] text-dark text-yellow1 cursor-pointer"><DownloadOutlined />&nbsp;Download Invoice</td>
                                 </tr>
                                 <br />
@@ -310,7 +310,7 @@ const InvestorDetail = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">$69.99</td>
                                     <td className="py-2 px-4 text-[16px] text-textgreen bg-lightgreen 
                                     rounded-full py-2 px-4 text-center font-semibold">Deposit</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
+                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022</td>
                                     <td className="py-2 px-4 text-[16px] text-dark text-yellow1 cursor-pointer"><DownloadOutlined />&nbsp;Download Invoice</td>
                                 </tr>
                                 <br />

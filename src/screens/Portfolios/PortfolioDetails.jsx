@@ -33,7 +33,7 @@ const PortfolioDetails = () => {
                 <SidebarHeader />
             </div>
             <div className="p-5 bg-[#F6F8FE]">
-                <div className="flex justify-between ">
+                <div className="lg:flex md:flex justify-between ">
                     <div className=" my-auto">
                         <Breadcrumb
                             items={[
@@ -65,7 +65,7 @@ const PortfolioDetails = () => {
                         </div>
                     </div>
                 </div>
-                <div className='grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-5'>
+                <div className='grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-x-5'>
                     {/*  */}
                     <div className="rounded-[10px] bg-white p-5 mt-5">
                         <img src={CollectiveGrowthIcon} alt={CollectiveGrowthIcon} className='mt-2' />
