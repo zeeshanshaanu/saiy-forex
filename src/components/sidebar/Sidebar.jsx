@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { LeftOutlined } from '@ant-design/icons';
-import { Layout, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 import one from "../../assets/Icons/one.svg";
 import two from "../../assets/Icons/two.svg";
 import three from "../../assets/Icons/three.svg";
@@ -13,32 +12,13 @@ import eight from "../../assets/Icons/eight.svg";
 import nine from "../../assets/Icons/nine.svg";
 import logoutIcon from "../../assets/Icons/logoutIcon.svg";
 import LogoText from "../../assets/images/LogoText.svg";
-import searchIcon from "../../assets/Icons/searchIcon.svg";
 import Logo1 from "../../assets/images/Logo1.svg";
 import "./sidebar.css";
 import { useNavigate } from "react-router-dom";
 import LogoutModel from '../../screens/Auth-module/LogoutModel';
 
-const { Header, Sider } = Layout;
-
-const profileMenuItems = [
-    {
-        label: (
-            <span>
-                Profile
-            </span>
-        ),
-        key: '0',
-    },
-    {
-        label: (
-            <span>
-                Logout
-            </span>
-        ),
-        key: '1',
-    },
-];
+const {  Sider } = Layout;
+ 
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false);

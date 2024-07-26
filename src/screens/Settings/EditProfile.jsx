@@ -5,7 +5,7 @@ import { Box, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { Button, Typography } from '@mui/material';
+import { Button } from '@mui/material';
 import { CameraOutlined } from '@ant-design/icons';
 
 // **** //
@@ -32,13 +32,6 @@ const useStyles = makeStyles({
         },
     },
 });
-
-const top100Films = [
-    { label: 'The Shawshank Redemption' },
-    { label: 'The Godfather' },
-    { label: 'The Godfather: Part II' },
-    { label: 'The Dark Knight' },
-];
 
 const EditProfile = ({ openEdit, setOpenEdit }) => {
     const classes = useStyles();

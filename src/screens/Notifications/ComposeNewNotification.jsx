@@ -1,10 +1,10 @@
-import { Divider, Drawer } from 'antd';
+import {  Drawer } from 'antd';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import PDFicon from "../../assets/Icons/PDFicon.svg";
 import { makeStyles } from '@mui/styles';
 import Autocomplete from '@mui/material/Autocomplete';
 import React, { useState } from 'react';
-import { TextField, Box, Button, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { TextField, Box, Button } from '@mui/material';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 
 // **** //
@@ -33,7 +33,6 @@ const useStyles = makeStyles({
 });
 
 
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
 const top100Films = [
     { label: 'The Shawshank Redemption' },
     { label: 'The Godfather' },

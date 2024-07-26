@@ -1,7 +1,7 @@
 import React from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button } from 'antd'
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
+import {  PlusOutlined } from '@ant-design/icons';
 import Logo1 from "../../assets/images/Logo1.svg"
 import { useNavigate } from 'react-router-dom';
 

@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header';
-import DashboardCards from "../../components/Dashboard-Parts/DashboardCards"
-import DashboardPortfolioTable from "../../components/Dashboard-Parts/DashboardPortfolioTable"
 import { Button, Dropdown } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 import TotalPortfolios from "../../assets/Icons/DashboardCards/TotalPortfolios.svg"

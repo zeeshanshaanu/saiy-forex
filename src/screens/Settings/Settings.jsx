@@ -24,7 +24,7 @@ const Settings = () => {
                 <SidebarHeader />
             </div>
             <div className="m-5">
-                <div className="flex justify-between ">
+                <div className="lg:flex md:flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Settings</h1>
                     </div>

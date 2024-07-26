@@ -35,7 +35,7 @@ const UserManagement = () => {
                 <SidebarHeader />
             </div>
             <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="flex justify-between ">
+                <div className="lg:flex md:flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">User Management</h1>
                     </div>

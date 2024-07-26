@@ -4,9 +4,6 @@ import { Dropdown } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import Logo1 from "../../assets/images/Logo1.svg"
 
-
-
-
 const items = [
     {
         label: <span>This Week</span>,

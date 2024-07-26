@@ -1,10 +1,9 @@
 import React from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Dropdown, Button } from 'antd'
-import { DownOutlined, PlusOutlined, DownloadOutlined } from '@ant-design/icons'
+import { DownOutlined, DownloadOutlined } from '@ant-design/icons'
 import Logo1 from "../../assets/images/Logo1.svg"
-import { useNavigate } from 'react-router-dom';
-// 
+ // 
 
 // 
 const items = [
@@ -22,52 +21,21 @@ const items = [
         key: '3',
     },
 ];
-const itemsStatus = [
-    {
-        label: <span>Pending</span>,
-        key: '0',
-    },
-    {
-        label: <span>Processed</span>,
-        key: '1',
-    },
-
-    {
-        label: <span>Rejected</span>,
-        key: '3',
-    },
-];
-const itemsPortfolios = [
-    {
-        label: <span>All Portfolios</span>,
-        key: '0',
-    },
-    {
-        label: <span>Recent Portfolios</span>,
-        key: '1',
-    },
-
-    {
-        label: <span>This Month Portfolios</span>,
-        key: '3',
-    },
-];
 const WithDrawals = () => {
-    const navigate = useNavigate()
-    return (
+     return (
         <div className="bg-[#F6F8FE]">
             <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
             <div className="max-h-[100vh] overflow-auto p-5">
                 <div className="lg:flex md:flex justify-between">
-                    <div className=" my-auto">
+                    <div className="mt-5">
                         <h1 className="text-[24px] font-bold">Withdrawals</h1>
                     </div>
                     {/* DROPWORN */}
-                    <div className="Dropdown cursor-pointer my-auto flex gap-3">
+                    <div className="Dropdown cursor-pointer my-auto flex gap-x-3">
                         {/*  */}
-                        <div className="lg:flex md:flex gap-x-5">
+                        <div className="lg:flex md:flex gap-x-5 my-auto">
                             <Dropdown
                                 className='mt-5'
                                 menu={{
@@ -93,11 +61,8 @@ const WithDrawals = () => {
                             </Dropdown>
                         </div>
                         {/*  */}
-                        <div className="lg:flex md:flex gap-x-5">
-
-                            <Dropdown
-                                className='mt-5'
-
+                        <div className="lg:flex md:flex gap-x-5 my-auto">
+                            <Dropdown className='mt-5'
                                 menu={{
                                     items,
                                 }}
@@ -107,7 +72,7 @@ const WithDrawals = () => {
                                     <DownOutlined />&nbsp;Status
                                 </p>
                             </Dropdown>
-                            <div className=" mt-4">
+                            <div className="mt-5">
                                 <Button type="dark"
                                     className='bg-dark text-white h-[44px] rounded-[10px]'
                                     // onClick={showDrawer}

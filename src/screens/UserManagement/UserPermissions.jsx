@@ -1,4 +1,3 @@
-import { PlusOutlined } from '@ant-design/icons'
 import { Breadcrumb, Button } from 'antd'
 import React from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
@@ -16,7 +15,7 @@ const UserPermissions = () => {
                 <SidebarHeader />
             </div>
             <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="flex justify-between">
+                <div className="lg:flex md:flex justify-between">
                     <div className=" my-auto">
                         <Breadcrumb
                             items={[
@@ -44,7 +43,7 @@ const UserPermissions = () => {
                     </div>
                 </div>
                 {/*  */}
-                <div className="mt-[30px] flex justify-between">
+                <div className="mt-[30px] lg:flex justify-between">
                     <div className="">
                         <div className="flex gap-3">
                             <img src={DummyImg} alt="" className="w-[50px] h-[50px] rounded-full my-auto" />

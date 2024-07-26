@@ -6,8 +6,6 @@ import Logo1 from "../../assets/images/Logo1.svg"
 import TotalWithdrawals from "../../assets/Icons/DashboardCards/TotalWithdrawals.svg"
 import CollectiveGrowthIcon from "../../assets/Icons/DashboardCards/CollectiveGrowthIcon.svg"
 import DayInspection from "../../assets/Icons/DashboardCards/DayInspection.svg"
-
-
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button, Breadcrumb } from 'antd'
 import { EditOutlined } from '@ant-design/icons';

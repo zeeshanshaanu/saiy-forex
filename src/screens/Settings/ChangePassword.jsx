@@ -1,11 +1,10 @@
-import { Divider, Drawer } from 'antd';
+import { Drawer } from 'antd';
 import React, { useState } from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'; import { useNavigate } from 'react-router-dom';
-
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 // **** //
 // **** //
 const useStyles = makeStyles({
@@ -30,13 +29,7 @@ const useStyles = makeStyles({
         },
     },
 });
-
-const top100Films = [
-    { label: 'The Shawshank Redemption' },
-    { label: 'The Godfather' },
-    { label: 'The Godfather: Part II' },
-    { label: 'The Dark Knight' },
-];
+ 
 
 const ChangePassword = ({ open, setOpen }) => {
     const onClose = () => {
@@ -47,11 +40,9 @@ const ChangePassword = ({ open, setOpen }) => {
     const [OldpasswordVisible, setOldPasswordVisible] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [passwordVisible2, setPasswordVisible2] = useState(false);
-    const [Show, setShow] = useState(false)
-
+ 
     const classes = useStyles();
-    const navigate = useNavigate();
-
+ 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };

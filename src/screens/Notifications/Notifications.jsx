@@ -4,8 +4,7 @@ import { Button } from 'antd'
 import { PaperClipOutlined, PlusOutlined } from '@ant-design/icons'
 import ComposeNewNotification from './ComposeNewNotification'
 import Logo1 from "../../assets/images/Logo1.svg"
-import { useNavigate } from 'react-router-dom';
-const Notifications = () => {
+ const Notifications = () => {
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
@@ -16,7 +15,7 @@ const Notifications = () => {
                 <SidebarHeader />
             </div>
             <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="flex justify-between ">
+                <div className="lg:flex md:flex justify-between">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Notifications</h1>
                     </div>

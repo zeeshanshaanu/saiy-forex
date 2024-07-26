@@ -1,9 +1,8 @@
-import { Divider, Drawer } from 'antd';
+import { Drawer } from 'antd';
 import React from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { Box, Switch, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import Autocomplete from '@mui/material/Autocomplete';
 
 // **** //
 // **** //
@@ -29,13 +28,7 @@ const useStyles = makeStyles({
         },
     },
 });
-
-const top100Films = [
-    { label: 'The Shawshank Redemption' },
-    { label: 'The Godfather' },
-    { label: 'The Godfather: Part II' },
-    { label: 'The Dark Knight' },
-];
+ 
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 

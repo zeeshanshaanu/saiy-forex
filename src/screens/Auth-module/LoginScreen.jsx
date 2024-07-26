@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import AuthRightBG from "../../assets/images/AuthRightBG.svg"
 import Logo1 from "../../assets/images/Logo1.svg"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

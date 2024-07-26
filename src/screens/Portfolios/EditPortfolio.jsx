@@ -1,4 +1,4 @@
-import { Divider, Drawer } from 'antd';
+import { Drawer } from 'antd';
 import React from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { Box, TextField } from '@mui/material';
