@@ -4,7 +4,7 @@ import DashboardCards from "../../components/Dashboard-Parts/DashboardCards"
 import DashboardPortfolioTable from "../../components/Dashboard-Parts/DashboardPortfolioTable"
 import { Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-
+import "../../components/Dashboard-Parts/DashParts.css"
 
 const items = [
     {
@@ -28,7 +28,7 @@ const Dashboard = () => {
             <div className=" bg-white">
                 <SidebarHeader />
             </div>
-            <div className="p-5 max-h-[100vh] overflow-auto">
+            <div className="p-5 max-h-[100vh] overflow-auto ">
                 <div className="lg:flex md:flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Dashboard</h1>

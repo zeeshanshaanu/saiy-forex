@@ -2,3 +2,8 @@
 :where(.css-dev-only-do-not-override-1uq9j6g).ant-menu-light>.ant-menu .ant-menu-item-selected {
     background-color: #C49412 !important;
 }
+
+.sidebar {
+    /* background-color: #C49412 !important; */
+    /* padding-top: 80px; */
+}

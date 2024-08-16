@@ -11,9 +11,10 @@
 .ForBG_Image {
     background-image: url("../../assets/images/AuthRightBG.svg");
     background-position: center;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     background-color: rgb(40, 38, 38);
     background-size: auto;
+    min-height: 100vh !important;
 }
 
 @media screen and (max-width: 1440px) {

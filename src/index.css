@@ -39,6 +39,8 @@ body {
   border-radius: 10px;
 }
 
+
+
 /* Firefox */
 body {
   scrollbar-width: thin;
@@ -52,9 +54,12 @@ td {
   padding-left: 30px;
   padding-right: 40px;
 }
-:where(.css-1uq9j6g).ant-menu-light .ant-menu-item-selected, :where(.css-1uq9j6g).ant-menu-light>.ant-menu .ant-menu-item-selected {
+
+:where(.css-1uq9j6g).ant-menu-light .ant-menu-item-selected,
+:where(.css-1uq9j6g).ant-menu-light>.ant-menu .ant-menu-item-selected {
   background-color: #C49412 !important;
 }
+
 /* sidebar */
 
 

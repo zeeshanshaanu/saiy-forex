@@ -31,7 +31,7 @@ const DashboardPortfolioTable = () => {
                         <p className="text-[14px] text-lightGray cursor-pointer hover:text-darkGray">View all</p>
                     </div>
                     {/*  */}
-                    <div className="overflow-x-auto mt-4">
+                    <div className="overflow-x-auto mt-4 scrollbarStyle">
                         <table className="min-w-full bg-white">
                             <thead>
                                 <tr>
