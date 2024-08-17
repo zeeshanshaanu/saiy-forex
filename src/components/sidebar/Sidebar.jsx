@@ -31,7 +31,8 @@ const Sidebar = () => {
     return (
         <Layout className=''>
             <div className="">
-                <Sider trigger={null} collapsible collapsed={collapsed} >
+                <Sider trigger={null} collapsible collapsed={collapsed}
+                    className='min-h-[calc(100vh-0px)] bg-dark' style={{ backgroundColor: "#1A1A1A" }}>
                     <div className='bg-dark '>
                         <div className="flex justify-between bg-dark sidebar">
                             <div className="text-white my-[25px] pl-5">
@@ -45,12 +46,11 @@ const Sidebar = () => {
                             </div>
                             <div className="my-auto mr-4">
                                 {!collapsed &&
-                                    <LeftOutlined className='text-white' onClick={() => setCollapsed(!collapsed)}
-                                    />}
+                                    <LeftOutlined className='text-white' onClick={() => setCollapsed(!collapsed)} />}
                             </div>
                         </div>
-                        <div className="mt-10">
-                            <Menu className='bg-dark min-h-[calc(110vh-0px)] flex flex-col justify-between mx-[5px]' defaultSelectedKeys={['1']}>
+                        <div className="">
+                            <Menu className=' bg-dark flex flex-col justify-between mx-[5px]' defaultSelectedKeys={['1']}>
                                 <Menu.Item className="mt-10" key="1" onClick={() => navigate("/Dashboard")} icon={<img src={nine} alt="Dashboard" />}>
                                     <span className='text-white'>Dashboard</span>
                                 </Menu.Item>
@@ -78,53 +78,18 @@ const Sidebar = () => {
                                 <Menu.Item key="9" onClick={() => navigate("/Settings")} icon={<img src={eight} alt="Settings" className="" />}>
                                     <span className='text-white'>Settings</span>
                                 </Menu.Item>
-                                <div className="flex-grow"></div>
-                                <Menu.Item key="10" onClick={showDrawer}
-                                    icon={<img src={logoutIcon} alt="Logout" className="t" />}>
-                                    <span className='text-white'>Logout</span>
-                                </Menu.Item>
+                                <div className="mt-5">
+                                    <Menu.Item key="10" onClick={showDrawer}
+                                        icon={<img src={logoutIcon} alt="Logout" className="" />}>
+                                        <span className='text-white'>Logout</span>
+                                    </Menu.Item>
+                                </div>
                             </Menu>
                         </div>
                     </div>
                     <LogoutModel open={open} setOpen={setOpen} />
                 </Sider>
             </div>
-
-            {/* <Layout>
-            <Header className='bg-transparent px-10 h-[80px] border-b-[1px] border-[#F6F8FE]'>
-                <div className="flex text-white justify-between my-auto">
-                    <div className="mt-[8px] relative">
-                        <input
-                            type="text"
-                            placeholder='Search something...'
-                            className="h-[44px] lg:w-[300px] w-auto pl-10 pr-5 text-dark border border-[#F6F8FE] rounded-[10px]"
-                        />
-                        <img src={searchIcon} alt="searchIcon" className='absolute top-[23px] left-[10px]' />
-                    </div>
-                    <div className="mt-[8px]">
-                        <div className="flex gap-5">
-                            <div className="my-auto">
-                                <img src={Logo1} alt="Logo1" className='w-[40px] h-[40px] rounded-[10px]' />
-                            </div>
-                            <div className="my-auto">
-                                <h4 className="text-dark text-[16px]">John Cena.</h4>
-                            </div>
-                            <Dropdown
-                                className='my-auto'
-                                overlay={
-                                    <Menu items={profileMenuItems} />
-                                }
-                            >
-                                <div className='cursor-pointer'>
-                                    <DownOutlined className='text-[#828EB0] bg-[#F6F8FE] p-2 rounded-full' />
-                                </div>
-                            </Dropdown>
-                        </div>
-                    </div>
-                </div>
-            </Header>
-
-            </Layout> */}
         </Layout>
     );
 };

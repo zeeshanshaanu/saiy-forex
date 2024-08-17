@@ -25,11 +25,11 @@ const items = [
 const Dashboard = () => {
     return (
         <div className="bg-[#F6F8FE]">
-            <div className=" bg-white">
-                <SidebarHeader />
-            </div>
-            <div className="p-5 max-h-[100vh] overflow-auto ">
-                <div className="lg:flex md:flex justify-between ">
+            <div className="max-h-[100vh] overflow-auto">
+                <div className="bg-white sticky top-0">
+                    <SidebarHeader />
+                </div>
+                <div className="lg:flex md:flex justify-between px-5 pt-5">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Dashboard</h1>
                     </div>
@@ -47,11 +47,11 @@ const Dashboard = () => {
                     </div>
                 </div>
                 {/*  */}
-                <div className="">
+                <div className="px-5">
                     <DashboardCards />
                 </div>
                 {/*  */}
-                <div className="mt-5">
+                <div className="mt-5 px-5">
                     <DashboardPortfolioTable />
                 </div>
             </div>
