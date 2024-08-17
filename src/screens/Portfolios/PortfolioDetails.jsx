@@ -27,11 +27,11 @@ const PortfolioDetails = () => {
     return (
         <div>
             {/* sticky top-0 */}
-            <div className="sticky top-0 bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="p-5 bg-[#F6F8FE]">
-                <div className="lg:flex md:flex justify-between ">
+            <div className="bg-[#F6F8FE] h-[100vh]">
+                <div className="sticky top-0 bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="px-5 lg:flex md:flex justify-between mt-5">
                     <div className=" my-auto">
                         <Breadcrumb
                             items={[
@@ -63,7 +63,7 @@ const PortfolioDetails = () => {
                         </div>
                     </div>
                 </div>
-                <div className='grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-x-5'>
+                <div className='px-5 grid grid-cols-1 lg:grid-cols-5 md:grid-cols-3 gap-x-5'>
                     {/*  */}
                     <div className="rounded-[10px] bg-white p-5 mt-5">
                         <img src={CollectiveGrowthIcon} alt={CollectiveGrowthIcon} className='mt-2' />
@@ -97,7 +97,7 @@ const PortfolioDetails = () => {
                 </div>
                 {/*  */}
 
-                <div className="mt-5 grid grid-cols-1 lg:grid-cols-12 md:grid-cols-6 gap-5">
+                <div className="px-5 mt-5 grid grid-cols-1 lg:grid-cols-12 md:grid-cols-6 gap-x-5">
                     <div className='p-5 bg-white rounded-[10px] col-span-12 lg:col-span-8 md:col-span-6'>
                         <div className="flex justify-between">
                             <h5 className="text-[16px] text-dark">Investors</h5>

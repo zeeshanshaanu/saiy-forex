@@ -26,11 +26,11 @@ const AssociateEarningDetails = () => {
 
     return (
         <div className="bg-[#F6F8FE]">
-            <div className="sticky top-0 bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="lg:flex md:flex justify-between ">
+            <div className=" max-h-[100vh] overflow-auto">
+                <div className="sticky top-0 bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="mt-5 lg:flex md:flex justify-between px-5 ">
                     <div className=" my-auto">
                         <Breadcrumb
                             items={[
@@ -64,9 +64,7 @@ const AssociateEarningDetails = () => {
                     </div>
                 </div>
                 {/*  */}
-                {/*  */}
-                {/*  */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 md:grid-cols-6 gap-5 mt-5">
+                <div className="mx-5 grid grid-cols-1 lg:grid-cols-12 md:grid-cols-6 gap-5 mt-5">
                     <div className="col-span-1 lg:col-span-8 md:col-span-6">
                         <div className='p-5 bg-white rounded-[10px] col-span-1'>
                             {/*  */}
@@ -156,7 +154,7 @@ const AssociateEarningDetails = () => {
                     </div>
                 </div>
                 {/* TABLE */}
-                <div className="mt-5 p-5 bg-white rounded-[10px]">
+                <div className="mx-5 mt-5 p-5 bg-white rounded-[10px]">
                     <div className="flex justify-between ">
                         <div className=" my-auto">
                             <h1 className="text-[18px]">Earning Transactions </h1>
@@ -212,7 +210,7 @@ const AssociateEarningDetails = () => {
                     </div>
                 </div>
                 {/* TABLE 2 */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-5">
+                <div className="mx-5 mb-5 grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-5">
                     {/*  */}
                     <div className="mt-5 p-5 bg-white rounded-[10px]">
                         <div className="flex justify-between ">
@@ -302,7 +300,6 @@ const AssociateEarningDetails = () => {
 
                 </div>
             </div>
-
         </div>
     )
 }

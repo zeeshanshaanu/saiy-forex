@@ -4,18 +4,18 @@ import { Button } from 'antd'
 import { PaperClipOutlined, PlusOutlined } from '@ant-design/icons'
 import ComposeNewNotification from './ComposeNewNotification'
 import Logo1 from "../../assets/images/Logo1.svg"
- const Notifications = () => {
+const Notifications = () => {
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(true);
     };
     return (
-        <div className="">
+        <div className="bg-[#F6F8FE] h-[100vh]">
+            <div className=" max-h-[100vh] overflow-auto">
             <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="lg:flex md:flex justify-between">
+                <div className="mx-5 mt-5 lg:flex md:flex justify-between">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Notifications</h1>
                     </div>
@@ -35,7 +35,7 @@ import Logo1 from "../../assets/images/Logo1.svg"
             {/* TABLES */}
             {/*  */}
             {/*  */}
-            <div className="overflow-x-auto">
+            <div className="mx-5 mt-5 overflow-x-auto">
                 <table className="min-w-full bg-white rounded-[10px]">
                     <thead>
                         <tr>

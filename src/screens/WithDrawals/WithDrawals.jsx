@@ -3,7 +3,7 @@ import SidebarHeader from '../../components/sidebar/Header'
 import { Dropdown, Button } from 'antd'
 import { DownOutlined, DownloadOutlined } from '@ant-design/icons'
 import Logo1 from "../../assets/images/Logo1.svg"
- // 
+// 
 
 // 
 const items = [
@@ -22,13 +22,13 @@ const items = [
     },
 ];
 const WithDrawals = () => {
-     return (
-        <div className="bg-[#F6F8FE]">
-            <div className="sticky top-0 bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="max-h-[100vh] overflow-auto p-5">
-                <div className="lg:flex md:flex justify-between">
+    return (
+        <div className="bg-[#F6F8FE] h-[100vh]">
+            <div className="max-h-[100vh] overflow-auto">
+                <div className="sticky top-0 bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="px-5 lg:flex md:flex justify-between">
                     <div className="mt-5">
                         <h1 className="text-[24px] font-bold">Withdrawals</h1>
                     </div>
@@ -84,7 +84,7 @@ const WithDrawals = () => {
                 </div>
                 {/*  */}
                 {/*  */}
-                <div className="overflow-x-auto mt-4">
+                <div className="px-5 overflow-x-auto mt-4">
                     <table className="min-w-full bg-white rounded-[10px] my-4">
                         <thead>
                             <tr>
@@ -173,7 +173,6 @@ const WithDrawals = () => {
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
     )

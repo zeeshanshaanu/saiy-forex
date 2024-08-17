@@ -1,7 +1,7 @@
 import React from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button } from 'antd'
-import {  PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import Logo1 from "../../assets/images/Logo1.svg"
 import { useNavigate } from 'react-router-dom';
 
@@ -12,11 +12,11 @@ const Investors = () => {
     return (
         <div>
             {/* sticky top-0 */}
-            <div className="sticky top-0 bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="p-5 bg-[#F6F8FE]">
-                <div className="flex justify-between ">
+            <div className="h-[100vh] bg-[#F6F8FE]">
+                <div className="sticky top-0 bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="px-5 flex justify-between mt-5 ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Investors</h1>
                     </div>
@@ -30,7 +30,7 @@ const Investors = () => {
                 </div>
                 {/*  */}
                 {/*  */}
-                <div className="overflow-x-auto mt-4">
+                <div className="px-5 overflow-x-auto mt-4">
                     <table className="min-w-full bg-white rounded-[10px]">
                         <thead>
                             <tr>

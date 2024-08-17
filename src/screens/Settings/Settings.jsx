@@ -18,13 +18,13 @@ const Settings = () => {
         setOpenEdit(true);
     };
     return (
-        <div>
+        <div className='bg-[#F6F8FE] h-[100vh]'>
             {/* sticky top-0 */}
-            <div className=" bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="m-5">
-                <div className="lg:flex md:flex justify-between ">
+            <div className="">
+                <div className=" bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="mx-5 mt-5 lg:flex md:flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Settings</h1>
                     </div>
@@ -46,7 +46,7 @@ const Settings = () => {
                     </div>
                 </div>
                 {/*  */}
-                <div className="mt-5 p-5 rounded-[10px] my-auto bg-white drop-shadow-md hover:drop-shadow-xl ">
+                <div className="mx-5 mt-5 p-5 rounded-[10px] my-auto bg-white drop-shadow-md hover:drop-shadow-xl ">
                     <div className="my-5">
                         <div className="">
                             <img src={DummyImg} alt={DummyImg} className='w-[100px] h-[100px] rounded-full' />

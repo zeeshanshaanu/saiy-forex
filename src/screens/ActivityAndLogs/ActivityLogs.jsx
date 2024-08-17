@@ -24,11 +24,11 @@ const ActivityLogs = () => {
     const [Show, setShow] = useState("Employee")
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
-            <div className="sticky top-0 bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="flex justify-between ">
+            <div className=" max-h-[100vh] overflow-auto">
+                <div className="sticky top-0 bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="mx-5 mt-5 flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Activity & Logs</h1>
                     </div>
@@ -45,7 +45,7 @@ const ActivityLogs = () => {
                         </Dropdown>
                     </div>
                 </div>
-                <div className="my-4 lg:flex md:flex">
+                <div className="mx-5 my-4 lg:flex md:flex">
                     <p className={`font-[500] p-3 cursor-pointer border rounded-l-lg ${Show === "Admin" ? "bg-yellow3" : ""}`}
                         onClick={() => setShow("Admin")}
                     >Admin</p>
@@ -65,7 +65,7 @@ const ActivityLogs = () => {
 
                 {/*  */}
                 {/*  */}
-                <div className="overflow-x-auto mt-4">
+                <div className="mx-5 overflow-x-auto mt-4">
                     <table className="min-w-full bg-white rounded-[10px] my-4">
                         <thead>
                             <tr>

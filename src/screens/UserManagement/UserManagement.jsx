@@ -31,11 +31,11 @@ const UserManagement = () => {
     };
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
+            <div className=" max-h-[100vh] overflow-auto">
             <div className="sticky top-0 bg-white z-0">
                 <SidebarHeader />
             </div>
-            <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="lg:flex md:flex justify-between ">
+                <div className="mx-5 mt-5 lg:flex md:flex justify-between ">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">User Management</h1>
                     </div>
@@ -59,7 +59,7 @@ const UserManagement = () => {
                 </div>
                 {/*  */}
                 {/*  */}
-                <div className="overflow-x-auto mt-4">
+                <div className="mx-5 overflow-x-auto mt-4">
                     <table className="min-w-full bg-white rounded-[10px] my-4">
                         <thead>
                             <tr>

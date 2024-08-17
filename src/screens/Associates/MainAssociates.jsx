@@ -30,11 +30,11 @@ const MainAssociates = () => {
     const navigate = useNavigate()
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
-            <div className="sticky top-0 bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="lg:flex md:flex justify-between ">
+            <div className=" max-h-[100vh] overflow-auto">
+                <div className="sticky top-0 bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="px-5 lg:flex md:flex justify-between mt-5">
                     <div className=" my-auto">
                         <h1 className="text-[24px] font-bold">Main Associates</h1>
                     </div>
@@ -61,7 +61,7 @@ const MainAssociates = () => {
                     </div>
                 </div>
                 {/* CARDS */}
-                <div className='grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-5'>
+                <div className='px-5 grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-5'>
                     {/*  */}
                     <div className="rounded-[10px] bg-white p-5 mt-5">
                         <img src={SingleAssociate} alt={SingleAssociate} />
@@ -89,7 +89,7 @@ const MainAssociates = () => {
                 </div>
                 {/* TABLE AND RIGHT CARD DETAIL */}
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 md:grid-cols-6 gap-5 mt-5">
+                <div className="px-5 grid grid-cols-1 lg:grid-cols-12 md:grid-cols-6 gap-5 my-5">
                     <div className='p-5 bg-white rounded-[10px] col-span-12 lg:col-span-8 md:col-span-6'>
                         <div className="flex justify-between">
                             <h5 className="text-[16px] text-dark">Associates</h5>

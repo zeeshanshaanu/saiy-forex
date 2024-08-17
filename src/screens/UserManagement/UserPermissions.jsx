@@ -11,11 +11,11 @@ const UserPermissions = () => {
     const navigate = useNavigate()
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
-            <div className="sticky top-0 bg-white z-0">
-                <SidebarHeader />
-            </div>
-            <div className="p-5 max-h-[100vh] overflow-auto">
-                <div className="lg:flex md:flex justify-between">
+            <div className="max-h-[100vh] overflow-auto">
+                <div className="sticky top-0 bg-white z-0">
+                    <SidebarHeader />
+                </div>
+                <div className="mt-5 mx-5 lg:flex md:flex justify-between">
                     <div className=" my-auto">
                         <Breadcrumb
                             items={[
@@ -43,7 +43,7 @@ const UserPermissions = () => {
                     </div>
                 </div>
                 {/*  */}
-                <div className="mt-[30px] lg:flex justify-between">
+                <div className=" mx-5 mt-[30px] lg:flex justify-between">
                     <div className="">
                         <div className="flex gap-3">
                             <img src={DummyImg} alt="" className="w-[50px] h-[50px] rounded-full my-auto" />
@@ -60,8 +60,7 @@ const UserPermissions = () => {
                     <div className="text-lightGray text-[16ox]">Last Updated on: 15 May 2020 9:00 am</div>
                 </div>
                 {/*  */}
-
-                <div className="p-5 bg-[#F6F8FE] overflow-x-auto mt-4 rounded-[10px] my-4">
+                <div className=" mx-5 p-5 bg-[#F6F8FE] overflow-x-auto mt-4 rounded-[10px] my-4">
                     <table className="min-w-full ">
                         <thead>
                             <tr>
