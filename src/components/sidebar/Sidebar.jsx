@@ -78,7 +78,7 @@ const Sidebar = () => {
                                 <Menu.Item key="9" onClick={() => navigate("/Settings")} icon={<img src={eight} alt="Settings" className="" />}>
                                     <span className='text-white'>Settings</span>
                                 </Menu.Item>
-                                <div className="mt-5">
+                                <div className="">
                                     <Menu.Item key="10" onClick={showDrawer}
                                         icon={<img src={logoutIcon} alt="Logout" className="" />}>
                                         <span className='text-white'>Logout</span>
