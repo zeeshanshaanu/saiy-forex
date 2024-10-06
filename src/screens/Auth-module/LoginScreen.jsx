@@ -72,7 +72,6 @@ const LoginScreen = () => {
             }
         });
     };
-
     const closeAlert = () => {
         setAlertMessage(null);
         setAlertSeverity(null);
