@@ -25,7 +25,7 @@ const AppRouting = () => {
       <Routes>
         <Route path="/" element={<LoginScreen />} />
         <Route path="/forgot" element={<ForgotScreen />} />
-        <Route path="/ResetPassword" element={<ResetPassword />} />
+        <Route path="/ResetPassword/:id/:token" element={<ResetPassword />} />
         {/* //////////////******************** */}
         <Route path="/" element={<Layout />}>
           <Route path="Dashboard" element={<Dashboard />} />
