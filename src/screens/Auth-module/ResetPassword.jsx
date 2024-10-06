@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
- import Logo1 from "../../assets/images/Logo1.svg"
+import Logo1 from "../../assets/images/Logo1.svg"
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { makeStyles } from '@mui/styles';
-import { Box, TextField } from '@mui/material';
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { Box, CircularProgress, TextField } from '@mui/material';
+import { resetPassword } from '../../store/Auth-Slice/auth';
 import "./Auth.css"
-import { useNavigate } from "react-router-dom";
+import SimpleAlert from '../../components/Alert-notification/Alert';
 // **** //
 // **** //
 const useStyles = makeStyles({
@@ -32,14 +35,28 @@ const useStyles = makeStyles({
     },
 });
 
+const initialState = {
+    password: "",
+    confirm_password: ""
+};
+
 const ResetPassword = () => {
+    const classes = useStyles();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { id, token } = useParams();
+    // console.log(id);
+    // console.log(token);
+
+    // 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [passwordVisible2, setPasswordVisible2] = useState(false);
     const [Show, setShow] = useState(false)
-
-
-    const classes = useStyles();
-    const navigate = useNavigate();
+    // 
+    const [formData, setFormData] = useState(initialState);
+    const [alertMessage, setAlertMessage] = useState(null);
+    const [alertSeverity, setAlertSeverity] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
@@ -49,8 +66,42 @@ const ResetPassword = () => {
         setPasswordVisible2(!passwordVisible2);
     };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (formData.password !== formData.confirm_password) {
+            setAlertMessage("Passwords do not match!");
+            setAlertSeverity("error");
+            return;
+        }
 
+        setLoading(true);
+        const payload = {
+            formData,
+            id,
+            token
+        };
 
+        dispatch(resetPassword(payload)).then((data) => {
+            if (data?.payload?.status === 'success') {
+                setAlertMessage(data?.payload?.message);
+                setAlertSeverity(data?.payload?.status);
+                setTimeout(() => {
+                    setLoading(false);
+                    setShow(true)
+                }, 2000);
+            } else {
+                setAlertMessage(data?.payload?.message);
+                setAlertSeverity("error");
+                setLoading(false);
+            }
+        });
+    };
+
+    const closeAlert = () => {
+        setAlertMessage(null);
+        setAlertSeverity(null);
+    };
+    const isFormValid = formData.confirm_password !== "" && formData.password !== "";
 
     return (
         <div className='text-white Primary_Dev '>
@@ -65,7 +116,7 @@ const ResetPassword = () => {
                             <div className="Text">
                                 <h1 className="text-dark text-[32px] font-[700] pt-[40px]">Change Password</h1>
                                 <h3 className="text-lightGray text-[16px] pt-[16px] mb-[45px]">Please enter your new password</h3>
-                                <form className="">
+                                <form onSubmit={handleSubmit}>
 
                                     <Box component="form" noValidate autoComplete="off">
 
@@ -96,6 +147,13 @@ const ResetPassword = () => {
                                                         </div>
                                                     ),
                                                 }}
+                                                value={formData?.password}
+                                                onChange={(event) =>
+                                                    setFormData({
+                                                        ...formData,
+                                                        password: event.target.value,
+                                                    })
+                                                }
                                             />
                                         </div>
                                         <div className="relative mt-[30px] w-full">
@@ -125,6 +183,14 @@ const ResetPassword = () => {
                                                         </div>
                                                     ),
                                                 }}
+
+                                                value={formData?.confirm_password}
+                                                onChange={(event) =>
+                                                    setFormData({
+                                                        ...formData,
+                                                        confirm_password: event.target.value,
+                                                    })
+                                                }
                                             />
                                         </div>
                                         <div className="mt-[20px] text-text1 text-[12px]">
@@ -138,11 +204,19 @@ const ResetPassword = () => {
                                     </Box>
                                     {/*  */}
 
-                                    <div className="mt-[40px]">
+                                    {/* <div className="mt-[40px]">
                                         <button className="Login_Button py-[15px] text-center bg-darkGray text-white w-full rounded-[10px]"
                                             onClick={() => setShow(true)}
                                         >Reset Password</button>
-                                    </div>
+                                    </div> */}
+                                    <button
+                                        type='submit'
+                                        className={`mt-[40px] Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
+                                        disabled={!isFormValid || loading}
+                                    >
+                                        {loading ? <CircularProgress size={24} color="inherit" /> : 'Reset Password'}
+                                    </button>
+
                                     {/*  */}
                                     {/*  */}
                                     <div className=" mt-[20px]">
@@ -166,6 +240,14 @@ const ResetPassword = () => {
                             </div>
                         }
                     </div>
+                    {/* Show alert conditionally */}
+                    {alertMessage && (
+                        <SimpleAlert
+                            message={alertMessage}
+                            severity={alertSeverity}
+                            onClose={closeAlert}
+                        />
+                    )}
                 </div>
                 {/*  */}
                 {/*  */}

@@ -43,8 +43,8 @@ const LoginScreen = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState(initialState);
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [formData, setFormData] = useState(initialState);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -69,6 +69,8 @@ const LoginScreen = () => {
             } else {
                 setAlertMessage(data?.payload?.message);
                 setAlertSeverity("error");
+                setLoading(false);
+
             }
         });
     };
