@@ -1,25 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import searchIcon from "../../assets/Icons/searchIcon.svg";
-import Logo1 from "../../assets/images/Logo1.svg";
 import "./sidebar.css";
 import { useNavigate } from 'react-router-dom';
 import LogoutModel from '../../screens/Auth-module/LogoutModel';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 const { Header } = Layout
+// 
+// 
+// 
 const SidebarHeader = () => {
+    const token = useSelector((state) => state?.auth?.token);
+
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState({});
+
     const showDrawer = () => {
         setOpen(true);
     };
+
+
+    const GetUserProfile = async () => {
+        // setLoading(true)
+        try {
+            const response = await axios.get("user/loggeduser", {
+                headers: {
+                    Authorization: `Bearer ${token}` || localStorage.getItem('authToken'),
+                },
+                withCredentials: true
+            });
+            setUser(response.data.user);
+            // setLoading(false)
+
+
+        } catch (err) {
+            console.error(err.response);
+            // setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetUserProfile();
+    }, []);
+
     // 
     // 
     const profileMenuItems = [
         {
             label: (
                 <span className='flex gap-2' onClick={() => navigate("/Settings")}>
-                    <img src={Logo1} alt="Logo1" className='my-auto w-[25px] h-[25px] rounded-[10px]' />
+                    <img src={user?.image} alt={user?.image} className='object-cover my-auto w-[25px] h-[25px] rounded-[10px] border-[1px] border-yellow1' />
                     <span className='my-auto'>Profile</span>
                 </span>
             ),
@@ -28,12 +62,13 @@ const SidebarHeader = () => {
         {
             label: (
                 <span onClick={showDrawer}>
-                    <LogoutOutlined className='text-[22px]'/>&nbsp; Logout
+                    <LogoutOutlined className='text-[22px]' />&nbsp; Logout
                 </span>
             ),
             key: '1',
         },
     ];
+
     // 
     // 
     return (
@@ -50,10 +85,10 @@ const SidebarHeader = () => {
                 <div className="mt-[8px]">
                     <div className="flex gap-5">
                         <div className="my-auto">
-                            <img src={Logo1} alt="Logo1" className='w-[40px] h-[40px] rounded-[10px] border' />
+                            <img src={user?.image} alt="Logo1" className='object-cover w-[40px] h-[40px] rounded-[10px] border' />
                         </div>
                         <div className="my-auto">
-                            <h4 className="text-dark text-[16px]">John&nbsp;Cena.</h4>
+                            <h4 className="text-dark text-[16px]">{user?.name}</h4>
                         </div>
                         <Dropdown
                             className='my-auto'

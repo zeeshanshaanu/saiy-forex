@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import axios from "axios";
 
 
-axios.defaults.baseURL = "http://localhost:8000/api/user";
+axios.defaults.baseURL = "http://localhost:8000/api/";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

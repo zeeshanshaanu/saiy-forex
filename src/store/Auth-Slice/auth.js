@@ -14,7 +14,7 @@ export const loginUser = createAsyncThunk(
     "/auth/login",
     async (formData) => {
         const response = await axios.post(
-            "/login",
+            "user/login",
             formData,
             { withCredentials: true }
         );
@@ -29,7 +29,7 @@ export const logoutUser = createAsyncThunk(
 
     async () => {
         const response = await axios.post(
-            "/logout",
+            "user/logout",
             {},
             {
                 withCredentials: true,
@@ -45,7 +45,7 @@ export const forgotPassword = createAsyncThunk(
     "/auth/forgotPassword",
     async (formData) => {
         const response = await axios.post(
-            "/forgot-password",
+            "user/forgot-password",
             formData,
             { withCredentials: true }
         );
@@ -58,7 +58,7 @@ export const resetPassword = createAsyncThunk(
     "/auth/resetPassword",
     async ({ formData, id, token }) => {
         const response = await axios.post(
-            `/reset-password/${id}/${token}`,
+            `user/reset-password/${id}/${token}`,
             formData,
             { withCredentials: true }
         );

@@ -57,15 +57,10 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
     const [user, setUser] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
 
-    const [loading, setLoading] = useState(false);
     const [updateloading, setUpdateLoading] = useState(false);
     const [formData, setFormData] = useState(initialState);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
-
-    console.log(selectedImage);
-
-
     // 
     const onClose = () => {
         setOpenEdit(false);
@@ -84,9 +79,8 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
     // 
 
     const GetUserProfile = async () => {
-        setLoading(true)
         try {
-            const response = await axios.get("/loggeduser", {
+            const response = await axios.get("user/loggeduser", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -105,12 +99,10 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                 fa: userData.fa === "true",
                 image: userData.image
             });
-            setLoading(false)
 
 
         } catch (err) {
             console.error(err.response);
-            setLoading(false)
         }
     };
 
@@ -156,6 +148,7 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                             <h2 className='text-dark font-bold my-auto text-[18px]'>Edit Profile</h2>
                             <img src={CloseIcon} alt="Close" onClick={onClose} className='my-auto cursor-pointer' />
                         </div>
+
                         <form onSubmit={handleSubmit}>
                             <div className="flex-grow overflow-auto">
                                 <div className="mt-[20px]">
@@ -348,6 +341,7 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </Drawer>
             }

@@ -1,13 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import Logo1 from "../../assets/images/Logo1.svg"
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 const Investors = () => {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
+    const [investor, setInvestor] = useState([]);
+
+    const token = useSelector((state) => state?.auth?.token);
+
+    console.log("This is investor data-->>", investor);
+
+    const GetUserProfile = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get("/investor", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            setInvestor(response.data.data);
+            setLoading(false)
+
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetUserProfile();
+    }, []);
+
 
     return (
         <div>
@@ -44,147 +76,29 @@ const Investors = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Eleanor Pena</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(907) 555-0101 </td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">debbie.baker@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">3890 Poplar Dr.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">DE75500105171813784773</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Theresa Webb</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(252) 555-0126</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">tim.jennings@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Kristin Watson</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(480) 555-0103</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">sara.cruz@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">8558 Green Rd.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Theresa Webb</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(252) 555-0126</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">tim.jennings@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Kristin Watson</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(480) 555-0103</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">sara.cruz@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">8558 Green Rd.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Theresa Webb</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(252) 555-0126</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">tim.jennings@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Kristin Watson</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(480) 555-0103</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">sara.cruz@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">8558 Green Rd.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Eleanor Pena</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(907) 555-0101 </td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">debbie.baker@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">3890 Poplar Dr.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">DE75500105171813784773</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Theresa Webb</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(252) 555-0126</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">tim.jennings@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Kristin Watson</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(480) 555-0103</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">sara.cruz@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">8558 Green Rd.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Theresa Webb</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(252) 555-0126</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">tim.jennings@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Kristin Watson</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(480) 555-0103</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">sara.cruz@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">8558 Green Rd.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Theresa Webb</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(252) 555-0126</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">tim.jennings@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">FI7373123834799152</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                        <span className='my-auto'>Kristin Watson</span></td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">(480) 555-0103</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">sara.cruz@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">8558 Green Rd.</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">AT642060431459252857</td>
-                                </tr>
-
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="5" className="text-center my-10">Loading...</td>
+                                    </tr>
+                                ) : investor?.length > 0 ? (
+                                    investor.map((item, index) => (
+                                        <tr key={index} className='hover:bg-[#F6F8FE] cursor-pointer'
+                                            onClick={() => navigate(`/InvestorDetail/${item?._id}`)}>
+                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                                <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
+                                                <span className='my-auto'>{item?.name}</span>
+                                            </td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">{item?.phone}</td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">{item?.email}</td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">{item?.address}</td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">{item?.iban}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="5" className="text-center">No Investor Found.!</td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>

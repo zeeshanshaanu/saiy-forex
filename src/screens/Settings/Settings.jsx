@@ -27,7 +27,7 @@ const Settings = () => {
     const GetUserProfile = async () => {
         setLoading(true)
         try {
-            const response = await axios.get("/loggeduser", {
+            const response = await axios.get("user/loggeduser", {
                 headers: {
                     Authorization: `Bearer ${token}` || localStorage.getItem('authToken'),
                 },
@@ -46,6 +46,7 @@ const Settings = () => {
     useEffect(() => {
         GetUserProfile();
     }, []);
+
     const refreshUserProfile = () => {
         GetUserProfile(); // This will refresh the user profile
     };

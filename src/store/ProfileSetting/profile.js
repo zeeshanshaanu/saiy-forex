@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useSelector } from 'react-redux';
-
 
 const initialState = {
     user: null,
@@ -17,7 +15,7 @@ export const changePassword = createAsyncThunk(
         const token = thunkAPI.getState().auth.token;
         console.log(token);
         const response = await axios.post(
-            `/changepassword`,
+            `user/changepassword`,
             formData,
             {
                 headers: {
@@ -35,7 +33,7 @@ export const updateProfile = createAsyncThunk(
         console.log("Thunk Update data -->>>", formData);
         const token = thunkAPI.getState().auth.token;
         const response = await axios.put(
-            `/update-user-profile`,
+            `user/update-user-profile`,
             formData,
             {
                 headers: {

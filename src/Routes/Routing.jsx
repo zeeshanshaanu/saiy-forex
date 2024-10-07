@@ -26,7 +26,7 @@ const AppRouting = () => {
         <Route path="/" element={<LoginScreen />} />
         <Route path="/forgot" element={<ForgotScreen />} />
         <Route path="/ResetPassword/:id/:token" element={<ResetPassword />} />
-        {/* //////////////******************** */}
+        {/* /////////////////////  ********************   //////////////////////////// */}
         <Route path="/" element={<Layout />}>
           <Route path="Dashboard" element={<Dashboard />} />
           {/*  */}
@@ -34,7 +34,7 @@ const AppRouting = () => {
           <Route path="PortfolioDetails" element={<PortfolioDetails />} />
           {/*  */}
           <Route path="Investors" element={<Investors />} />
-          <Route path="InvestorDetail" element={<InvestorDetail />} />
+          <Route path="InvestorDetail/:id" element={<InvestorDetail />} />
           {/*  */}
           <Route path="MainAssociates" element={<MainAssociates />} />
           <Route path="AssociateDetails" element={<AssociateDetails />} />
