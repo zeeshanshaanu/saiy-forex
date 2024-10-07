@@ -203,12 +203,6 @@ const ResetPassword = () => {
                                         </div>
                                     </Box>
                                     {/*  */}
-
-                                    {/* <div className="mt-[40px]">
-                                        <button className="Login_Button py-[15px] text-center bg-darkGray text-white w-full rounded-[10px]"
-                                            onClick={() => setShow(true)}
-                                        >Reset Password</button>
-                                    </div> */}
                                     <button
                                         type='submit'
                                         className={`mt-[40px] Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}

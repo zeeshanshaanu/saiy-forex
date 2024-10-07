@@ -5,7 +5,7 @@ import { Box, CircularProgress, TextField } from '@mui/material';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { makeStyles } from '@mui/styles';
-import { loginUser } from '../../store/Auth-Slice/auth';
+import { authToken, loginUser } from '../../store/Auth-Slice/auth';
 import SimpleAlert from '../../components/Alert-notification/Alert';
 import Logo1 from "../../assets/images/Logo1.svg"
 import "./Auth.css";
@@ -59,6 +59,9 @@ const LoginScreen = () => {
         setLoading(true);
 
         dispatch(loginUser(formData)).then((data) => {
+            const token = data?.payload?.token;
+            dispatch((authToken(token)));
+            localStorage.setItem('authToken', token);
             if (data?.payload?.status === 'success') {
                 setAlertMessage(data?.payload?.message);
                 setAlertSeverity(data?.payload?.status);

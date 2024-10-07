@@ -1,15 +1,19 @@
 import { EditOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import DummyImg from "../../assets/images/DummyImg1.png"
 import ChangePassword from './ChangePassword'
 import EditProfile from './EditProfile'
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios'
 
 
 const Settings = () => {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
+    const [user, setUser] = useState({});
 
     const showDrawer = () => {
         setOpen(true);
@@ -17,6 +21,35 @@ const Settings = () => {
     const showDrawer2 = () => {
         setOpenEdit(true);
     };
+    const token = useSelector((state) => state?.auth?.token);
+
+
+    const GetUserProfile = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get("http://localhost:8000/api/user/loggeduser", {
+                headers: {
+                    Authorization: `Bearer ${token}` || localStorage.getItem('authToken'),
+                },
+                withCredentials: true
+            });
+            setUser(response.data.user);
+            setLoading(false)
+
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetUserProfile();
+    }, []);
+
+
+
+
     return (
         <div className='bg-[#F6F8FE] h-[100vh]'>
             {/* sticky top-0 */}
@@ -47,53 +80,56 @@ const Settings = () => {
                 </div>
                 {/*  */}
                 <div className="mx-5 mt-5 p-5 rounded-[10px] my-auto bg-white drop-shadow-md hover:drop-shadow-xl ">
-                    <div className="my-5">
-                        <div className="">
-                            <img src={DummyImg} alt={DummyImg} className='w-[100px] h-[100px] rounded-full' />
+                    {loading ?
+                        <div className="text-center my-10">Loading...</div> :
+                        <div className="my-5">
+                            <div className="">
+                                <img src={user?.image || DummyImg} alt={user?.image || DummyImg} className='w-[100px] h-[100px] rounded-full' />
+                            </div>
+                            <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2">
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">Name</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">{user?.name}</p>
+                                </div>
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">Phone</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">{user?.phone}</p>
+                                </div>
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">Email</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">{user?.email}</p>
+                                </div>
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">Address</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">{user?.address}</p>
+                                </div>
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">Username</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">{user?.name}</p>
+                                </div>
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">Password</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">****123</p>
+                                </div>
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">Recovery Email</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">{user?.recoveryEmail}</p>
+                                </div>
+                                {/*  */}
+                                <div className="mt-5">
+                                    <p className="text-lightGray text-[14px]">2FA</p>
+                                    <p className="text-dark text-[16px] mt-[5px]">{user?.fa === "false" ? "NO" : "YES"}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2">
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">Name</p>
-                                <p className="text-dark text-[16px] mt-[5px]">DummyXYZ</p>
-                            </div>
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">Phone</p>
-                                <p className="text-dark text-[16px] mt-[5px]">000 147 222</p>
-                            </div>
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">Email</p>
-                                <p className="text-dark text-[16px] mt-[5px]">XYZ123@gmail.com</p>
-                            </div>
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">Address</p>
-                                <p className="text-dark text-[16px] mt-[5px]">Pakistan, USA, XYZ</p>
-                            </div>
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">Username</p>
-                                <p className="text-dark text-[16px] mt-[5px]">DummyXYZ</p>
-                            </div>
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">Password</p>
-                                <p className="text-dark text-[16px] mt-[5px]">****123</p>
-                            </div>
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">Recovery Email</p>
-                                <p className="text-dark text-[16px] mt-[5px]">XYZ123@gmail.com</p>
-                            </div>
-                            {/*  */}
-                            <div className="mt-5">
-                                <p className="text-lightGray text-[14px]">2FA</p>
-                                <p className="text-dark text-[16px] mt-[5px]">Yes</p>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ const initialState = {
     isAuthenticated: false,
     isLoading: true,
     user: null,
+    token: localStorage.getItem('authToken') || null,
     link: ""
 };
 
@@ -56,7 +57,6 @@ export const forgotPassword = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
     "/auth/resetPassword",
     async ({ formData, id, token }) => {
-
         const response = await axios.post(
             `http://localhost:8000/api/user/reset-password/${id}/${token}`,
             formData,
@@ -73,6 +73,14 @@ const authSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action) => { },
+        authToken: (state, action) => {
+            state.token = action.payload;
+        },
+        logout: (state) => {
+            state.token = null;
+            state.user = null;
+        }
+
     },
     extraReducers: (builder) => {
         builder
@@ -86,6 +94,7 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.user = action.payload.success ? action.payload.user : null;
                 state.isAuthenticated = action.payload.success;
+                state.user = action.payload.user;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false;
@@ -130,5 +139,5 @@ const authSlice = createSlice({
     },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, authToken, logout } = authSlice.actions;
 export default authSlice.reducer;
