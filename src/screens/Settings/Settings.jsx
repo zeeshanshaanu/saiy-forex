@@ -5,14 +5,14 @@ import SidebarHeader from '../../components/sidebar/Header'
 import DummyImg from "../../assets/images/DummyImg1.png"
 import ChangePassword from './ChangePassword'
 import EditProfile from './EditProfile'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, } from 'react-redux';
 import axios from 'axios'
 
 
 const Settings = () => {
     const [open, setOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [user, setUser] = useState({});
 
     const showDrawer = () => {
@@ -27,7 +27,7 @@ const Settings = () => {
     const GetUserProfile = async () => {
         setLoading(true)
         try {
-            const response = await axios.get("http://localhost:8000/api/user/loggeduser", {
+            const response = await axios.get("/loggeduser", {
                 headers: {
                     Authorization: `Bearer ${token}` || localStorage.getItem('authToken'),
                 },
@@ -46,8 +46,9 @@ const Settings = () => {
     useEffect(() => {
         GetUserProfile();
     }, []);
-
-
+    const refreshUserProfile = () => {
+        GetUserProfile(); // This will refresh the user profile
+    };
 
 
     return (
@@ -84,7 +85,7 @@ const Settings = () => {
                         <div className="text-center my-10">Loading...</div> :
                         <div className="my-5">
                             <div className="">
-                                <img src={user?.image || DummyImg} alt={user?.image || DummyImg} className='w-[100px] h-[100px] rounded-full' />
+                                <img src={user?.image || DummyImg} alt={user?.image || DummyImg} className='w-[100px] h-[100px] rounded-full border-[1px] border-yellow1 object-cover ' />
                             </div>
                             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2">
                                 {/*  */}
@@ -135,7 +136,7 @@ const Settings = () => {
 
             {/* ADD DRAWER */}
             <ChangePassword open={open} setOpen={setOpen} />
-            <EditProfile openEdit={openEdit} setOpenEdit={setOpenEdit} />
+            <EditProfile openEdit={openEdit} setOpenEdit={setOpenEdit} onProfileUpdate={refreshUserProfile} />
         </div>
     )
 }

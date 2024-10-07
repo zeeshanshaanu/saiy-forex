@@ -13,12 +13,29 @@ const initialState = {
 export const changePassword = createAsyncThunk(
     "/auth/ChangePassword",
     async (formData, thunkAPI) => {
-        console.log(formData);
-
+        // console.log(formData);
         const token = thunkAPI.getState().auth.token;
         console.log(token);
         const response = await axios.post(
-            `http://localhost:8000/api/user/changepassword`,
+            `/changepassword`,
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }, withCredentials: true
+            }
+        );
+        return response.data;
+    }
+);
+//   updateProfile 
+export const updateProfile = createAsyncThunk(
+    "/auth/updateProfile",
+    async (formData, thunkAPI) => {
+        console.log("Thunk Update data -->>>", formData);
+        const token = thunkAPI.getState().auth.token;
+        const response = await axios.put(
+            `/update-user-profile`,
             formData,
             {
                 headers: {
@@ -49,6 +66,20 @@ const profileSlice = createSlice({
                 state.isAuthenticated = action.payload.success;
             })
             .addCase(changePassword.rejected, (state, action) => {
+                console.log(action);
+                state.isLoading = false;
+                state.isAuthenticated = false;
+            })
+            // updateProfile 
+            // updateProfile 
+            .addCase(updateProfile.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isAuthenticated = action.payload.success;
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
                 console.log(action);
                 state.isLoading = false;
                 state.isAuthenticated = false;
