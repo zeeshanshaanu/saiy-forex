@@ -6,16 +6,16 @@ import Logo1 from "../../assets/images/Logo1.svg"
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import AddInvestor from './AddInvestor';
 
 
 const Investors = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [investor, setInvestor] = useState([]);
+    const [openEdit, setOpenEdit] = useState(false);
 
     const token = useSelector((state) => state?.auth?.token);
-
-    console.log("This is investor data-->>", investor);
 
     const GetUserProfile = async () => {
         setLoading(true)
@@ -40,6 +40,13 @@ const Investors = () => {
         GetUserProfile();
     }, []);
 
+    const showDrawer2 = () => {
+        setOpenEdit(true);
+    };
+
+    const RefreshInvestorlist = () => {
+        GetUserProfile(); // This will refresh the user profile
+    };
 
     return (
         <div>
@@ -57,7 +64,7 @@ const Investors = () => {
                         <div className="my-auto">
                             <Button type="dark"
                                 className='bg-dark text-white h-[44px] rounded-[10px]'
-                                // onClick={showDrawer}
+                                onClick={showDrawer2}
                                 icon={<PlusOutlined className='text-white' />}>Add New
                             </Button>
                         </div>
@@ -69,7 +76,7 @@ const Investors = () => {
                             <thead>
                                 <tr>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Name</th>
-                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left"> Number</th>
+                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Phone</th>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Email</th>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Address </th>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Bank Details </th>
@@ -85,7 +92,7 @@ const Investors = () => {
                                         <tr key={index} className='hover:bg-[#F6F8FE] cursor-pointer'
                                             onClick={() => navigate(`/InvestorDetail/${item?._id}`)}>
                                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
+                                                <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
                                                 <span className='my-auto'>{item?.name}</span>
                                             </td>
                                             <td className="py-2 px-4 text-[16px] text-dark">{item?.phone}</td>
@@ -105,6 +112,7 @@ const Investors = () => {
                 </div>
             </div>
             {/*  */}
+            <AddInvestor openEdit={openEdit} setOpenEdit={setOpenEdit} onlistUpdate={RefreshInvestorlist} />
 
         </div>
     )

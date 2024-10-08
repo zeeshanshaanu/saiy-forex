@@ -162,10 +162,10 @@ const LoginScreen = () => {
                                 </div>
                                 <button
                                     type='submit'
-                                    className={`Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
+                                    className={`mt-[40px] Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
                                     disabled={!isFormValid || loading}
                                 >
-                                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'}
+                                    {loading ? <CircularProgress size={22} color="inherit" /> : 'Login'}
                                 </button>
                             </form>
                         </div>

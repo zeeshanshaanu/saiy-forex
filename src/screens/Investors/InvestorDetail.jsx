@@ -107,7 +107,7 @@ const InvestorDetail = () => {
                             {/*  */}
                             <div className="flex justify-between">
                                 <div>
-                                    <img src={investor?.image || DummyImg1} alt={investor?.image || DummyImg1} className="w-[100px] h-[100px] rounded-[100px]" />
+                                    <img src={investor?.image || DummyImg1} alt={investor?.image || DummyImg1} className="w-[120px] object-cover h-[120px] rounded-[100px]" />
                                 </div>
                                 <div className="flex gap-5 rounded-[10px] h-[50px] px-5 border border-silver bg-silver ">
                                     <p className="my-auto text-lightGray text-[14px]">KYC Status</p>
@@ -153,7 +153,7 @@ const InvestorDetail = () => {
                                                         <img src={PDFicon} alt={PDFicon} className="text-center" />
                                                     </center>
                                                     <p className="truncate text-ellipsis overflow-hidden mt-2 truncate">{docs?.fileName || "N/A"}...</p>
-                                                    <p className='text-lightGray text-[12px] mt-3'> {docs?.fileType || "N/A"} 200 KB</p>
+                                                    <p className='text-lightGray text-[12px] mt-3'> {docs?.fileName?.split(".")[1] === "pdf" ? "PDF" : "N/A"}</p>
                                                     <small className='text-lightGray text-[10px] mt-3'> {docs?.dateOfCreation.slice(0, 10) || "N/A"}</small>
                                                 </div>
                                             ))
