@@ -70,6 +70,8 @@ const ChangePassword = ({ open, setOpen }) => {
         if (formData.password !== formData.confirm_password) {
             setAlertMessage("Passwords do not match!");
             setAlertSeverity("error");
+            setOpen(false);
+
             return;
         }
         setLoading(true);

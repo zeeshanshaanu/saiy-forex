@@ -20,6 +20,8 @@ const Investors = () => {
 
     const token = useSelector((state) => state?.auth?.token);
 
+    console.log(investor);
+
     const GetUserProfile = async () => {
         setLoading(true)
         try {

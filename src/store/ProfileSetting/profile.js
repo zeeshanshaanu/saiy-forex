@@ -30,7 +30,7 @@ export const changePassword = createAsyncThunk(
 export const updateProfile = createAsyncThunk(
     "/auth/updateProfile",
     async (formData, thunkAPI) => {
-        console.log("Thunk Update data -->>>", formData);
+        console.log("Update User profile data -->>>", formData);
         const token = thunkAPI.getState().auth.token;
         const response = await axios.put(
             `user/update-user-profile`,

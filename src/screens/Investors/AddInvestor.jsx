@@ -254,30 +254,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                             <div className="flex-grow overflow-auto">
                                 <div className="mt-[20px]">
                                     <div className="my-5 relative">
-
-                                        {/* {selectedFile.filepreview &&
-                                            <Box mt={2} textAlign="center">
-                                                <img
-                                                    src={selectedFile.filepreview}
-                                                    alt="Selected"
-                                                    className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
-                                                />
-
-                                                {investor?.image ?
-                                                    <img
-                                                        src={investor?.image}
-                                                        alt="Selected"
-                                                        className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
-                                                    />
-                                                    :
-                                                    <img
-                                                        src={selectedFile.filepreview || selectedFile.file}
-                                                        alt="Selected"
-                                                        className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
-                                                    />
-                                                }
-                                            </Box>
-                                        } */}
+ 
 
                                         <Box mt={2} textAlign="center">
                                             {selectedFile.filepreview ? (

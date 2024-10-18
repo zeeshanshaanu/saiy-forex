@@ -38,15 +38,6 @@ const useStyles = makeStyles({
 });
 
 
-const initialState = {
-    image: "",
-    name: "",
-    phone: "",
-    email: "",
-    recoveryEmail: "",
-    address: "",
-    fa: false,
-};
 
 const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
     const classes = useStyles();
@@ -55,10 +46,28 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
     const token = useSelector((state) => state?.auth?.token);
     // 
     const [user, setUser] = useState({});
-    const [selectedImage, setSelectedImage] = useState(null);
+    // const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedFile, setSelectedFile] = useState({
+        file: "",
+        filepreview: null,
+    });
+
+    const initialState = {
+        image: "",
+        name: "",
+        phone: "",
+        email: "",
+        recoveryEmail: "",
+        address: "",
+        fa: false,
+    };
+
+    // console.log("selectedImage-->>", selectedFile?.filepreview);
 
     const [updateloading, setUpdateLoading] = useState(false);
     const [formData, setFormData] = useState(initialState);
+    console.log("formData-->>>>", formData);
+
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
     // 
@@ -66,15 +75,25 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
         setOpenEdit(false);
     };
 
+    // const handleImageChange = (event) => {
+    //     const file = event.target.files[0];
+    //     if (file) {
+    //         const reader = new FileReader();
+    //         reader.onloadend = () => {
+    //             setSelectedImage(reader.result);
+    //         };
+    //         reader.readAsDataURL(file);
+    //     }
+    // }
+
     const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setSelectedImage(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
+        if (event?.target?.files[0]) {
+            setSelectedFile({
+                ...selectedFile,
+                file: event.target.files[0],
+                filepreview: URL.createObjectURL(event?.target?.files[0]),
+            });
+        };
     }
     // 
 
@@ -89,7 +108,11 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
             const userData = response.data.user;
 
             setUser(userData);
-            setSelectedImage(userData.image)
+
+            setSelectedFile({
+                ...selectedFile,
+                filepreview: userData.image
+            })
             setFormData({
                 name: userData.name,
                 phone: userData.phone,
@@ -111,25 +134,48 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
     }, []);
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setUpdateLoading(true);
-        dispatch(updateProfile(formData)).then((data) => {
 
-            if (data?.payload?.status === 'success') {
-                setAlertMessage(data?.payload?.message);
-                setAlertSeverity(data?.payload?.status);
+        const formDataToSend = new FormData();
+        formDataToSend.append("name", formData.name);
+        formDataToSend.append("phone", formData.phone);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("recoveryEmail", formData.recoveryEmail);
+        formDataToSend.append("address", formData.address);
+        formDataToSend.append("fa", formData.fa);
+
+        if (selectedFile.file) {
+            formDataToSend.append("image", selectedFile.file); // Include the image file if selected
+        }
+
+        try {
+            const response = await axios.put('user/update-user-profile', formDataToSend, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data', // Make sure the request is of type multipart/form-data
+                },
+            });
+
+            if (response?.data?.status === 'success') {
+                setAlertMessage(response?.data?.message);
+                setAlertSeverity('success');
                 setTimeout(() => {
                     setOpenEdit(false);
                     setUpdateLoading(false);
                     onProfileUpdate();
                 }, 2000);
             } else {
-                setAlertMessage(data?.payload?.message);
-                setAlertSeverity("error");
+                setAlertMessage(response?.data?.message);
+                setAlertSeverity('error');
                 setUpdateLoading(false);
             }
-        });
+        } catch (error) {
+            setAlertMessage("Failed to update profile");
+            setAlertSeverity("error");
+            setUpdateLoading(false);
+        }
     };
 
     const closeAlert = () => {
@@ -152,29 +198,47 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                         <form onSubmit={handleSubmit}>
                             <div className="flex-grow overflow-auto">
                                 <div className="mt-[20px]">
-                                    <div className="my-5">
+                                    <div className="my-5 relative">
 
-                                        {selectedImage && (
-                                            <Box mt={2} textAlign="center">
+
+                                        <Box mt={2} textAlign="center">
+                                            {selectedFile.filepreview ? (
                                                 <img
-                                                    src={selectedImage}
+                                                    src={selectedFile.filepreview}
                                                     alt="Selected"
-                                                    className='w-full h-[200px] rounded-[10px] object-cover border-[1px] border-yellow1'
+                                                    className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1' />
+                                            ) : (
+                                                user?.image ? (
+                                                    <img
+                                                        src={user?.image}
+                                                        alt="Selected"
+                                                        className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
+                                                    />
+                                                ) : (
+                                                    <Box className='w-full h-[150px] rounded-[10px] border-[1px] border-yellow1 flex justify-center items-center'>
+                                                        <p>No Image Available</p>
+                                                    </Box>
+                                                )
+                                            )}
+                                        </Box>
+
+                                        <div className={`mt-5 ${selectedFile?.file ? "absolute top-[2.3rem] left-[40%]" : ""}`}>
+                                            <Button component="label" className=''>
+                                                <CameraOutlined className='text-[30px] text-dark' />
+                                                <input
+                                                    type="file"
+                                                    hidden
+                                                    accept="image/*"
+                                                    onChange={handleImageChange}
                                                 />
-                                            </Box>
-                                        )}
+                                            </Button>
+                                            <div className="mb-5 mt-0">
+                                                <small className='text-dark font-bold'>Upload image </small>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div className={`mt-5 ${selectedImage ? "absolute top-[8rem] left-[8rem]" : ""}`}>
-                                        <Button component="label" className=''>
-                                            <CameraOutlined className='text-[100px] text-dark' />
-                                            <input
-                                                type="file"
-                                                hidden
-                                                accept="image/*"
-                                                onChange={handleImageChange}
-                                            />
-                                        </Button>
-                                    </div>
+
                                     <div className="mb-5 mt-0">
                                         <small className='text-lightGray'>Update profile Image </small>
                                     </div>
