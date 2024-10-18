@@ -36,7 +36,7 @@ const useStyles = makeStyles({
     },
 });
 
-const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
+const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const token = useSelector((state) => state?.auth?.token);
@@ -58,6 +58,9 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
     const [pdfFiles, setPdfFiles] = useState([]);
+    const [investor, setInvestor] = useState({});
+    const [loading, setLoading] = useState(false);
+
     const [selectedFile, setSelectedFile] = useState({
         file: "",
         filepreview: null,
@@ -66,6 +69,30 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
     const onClose = () => {
         setOpenEdit(false);
     };
+
+
+    const GetUserProfile = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`/investor/${InvestorID}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            setInvestor(response.data.data);
+            setLoading(false)
+
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetUserProfile();
+    }, []);
 
     const handleImageChange = (event) => {
         if (event?.target?.files[0]) {
@@ -84,6 +111,20 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
         } else {
             alert('Please upload a valid PDF file.');
         }
+    };
+
+    const handleRemoveDoc = (index) => {
+        // Create a copy of the existing investor documents
+        const updatedDocuments = [...investor.documents];
+
+        // Remove the document at the specified index
+        updatedDocuments.splice(index, 1);
+
+        // Update the investor state (if you are using useState for investor data)
+        setInvestor((prevInvestor) => ({
+            ...prevInvestor,
+            documents: updatedDocuments,
+        }));
     };
 
     const handleRemovePdf = (index) => {
@@ -196,13 +237,16 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
 
     const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview;
 
+    console.log("specific investor-->>>>", investor);
+
+
     return (
         <div>
             {openEdit &&
                 <Drawer className="p-0 m-0 rounded-l-[10px]" header={false} open={openEdit} onClose={onClose} closeIcon={null}>
                     <div className="flex flex-col h-full">
                         <div className="flex justify-between border-b pb-[20px]">
-                            <h2 className='text-dark font-bold my-auto text-[18px]'>Add investor</h2>
+                            <h2 className='text-dark font-bold my-auto text-[18px]'>{InvestorID ? "Edit investor" : "Add investor"}</h2>
                             <img src={CloseIcon} alt="Close" onClick={onClose} className='my-auto cursor-pointer' />
                         </div>
 
@@ -211,15 +255,51 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                 <div className="mt-[20px]">
                                     <div className="my-5 relative">
 
-                                        {selectedFile.filepreview &&
+                                        {/* {selectedFile.filepreview &&
                                             <Box mt={2} textAlign="center">
                                                 <img
-                                                    src={selectedFile.filepreview || selectedFile.file}
+                                                    src={selectedFile.filepreview}
                                                     alt="Selected"
                                                     className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
                                                 />
+
+                                                {investor?.image ?
+                                                    <img
+                                                        src={investor?.image}
+                                                        alt="Selected"
+                                                        className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
+                                                    />
+                                                    :
+                                                    <img
+                                                        src={selectedFile.filepreview || selectedFile.file}
+                                                        alt="Selected"
+                                                        className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
+                                                    />
+                                                }
                                             </Box>
-                                        }
+                                        } */}
+
+                                        <Box mt={2} textAlign="center">
+                                            {selectedFile.filepreview ? (
+                                                <img
+                                                    src={selectedFile.filepreview}
+                                                    alt="Selected"
+                                                    className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1' />
+                                            ) : (
+                                                investor?.image ? (
+                                                    <img
+                                                        src={investor?.image}
+                                                        alt="Selected"
+                                                        className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
+                                                    />
+                                                ) : (
+                                                    <Box className='w-full h-[150px] rounded-[10px] border-[1px] border-yellow1 flex justify-center items-center'>
+                                                        <p>No Image Available</p>
+                                                    </Box>
+                                                )
+                                            )}
+                                        </Box>
+
                                         <div className={`mt-5 ${selectedFile?.file ? "absolute top-[2.3rem] left-[40%]" : ""}`}>
                                             <Button component="label" className=''>
                                                 <CameraOutlined className='text-[30px] text-dark' />
@@ -253,7 +333,8 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                                     },
                                                 },
                                             }}
-                                            value={formData?.name}
+                                            defaultValue={investor?.name || formData?.name}
+
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -278,7 +359,8 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                                     },
                                                 },
                                             }}
-                                            value={formData?.phone}
+
+                                            defaultValue={investor?.phone || formData?.phone}
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -290,6 +372,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                     <div className="mt-5">
                                         <TextField
                                             required
+                                            disabled={investor?.email}
                                             id="outlined-required"
                                             label="Email"
                                             placeholder='Ex: john.doe05@gmail.com'
@@ -303,7 +386,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                                     },
                                                 },
                                             }}
-                                            value={formData?.email}
+                                            defaultValue={investor?.email || formData?.email}
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -328,7 +411,8 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                                     },
                                                 },
                                             }}
-                                            value={formData?.address}
+                                            defaultValue={investor?.address || formData?.address}
+
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -353,7 +437,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                                     },
                                                 },
                                             }}
-                                            value={formData?.iban}
+                                            defaultValue={investor?.iban || formData?.iban}
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -364,30 +448,54 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                     </div>
                                     {/* DOCUMENTS */}
                                     <div className="mt-5">
-                                        {pdfFiles.length > 0 && (
+                                        {(pdfFiles.length > 0 || investor?.documents?.length > 0) && (
                                             <div>
-                                                {pdfFiles.map((file, index) => (
-                                                    <div key={index} className="my-5 border-dashed border-lightGray border-[1px] py-3 px-4 bg-[#FAFCFE] rounded-[10px]">
-                                                        <div className="flex justify-between">
-                                                            <div className="my-auto">
-                                                                <div className="flex gap-2">
-                                                                    <div className="">
-                                                                        <img src={PDFicon} alt={PDFicon} className='w-[50px] h-[50px]' />
-                                                                    </div>
-                                                                    <div className="">
-                                                                        <h6 className="text-[16px] text-dark">{file.name}</h6>
-                                                                        <h6 className="text-[16px] text-lightGray">200 KB</h6>
+                                                {pdfFiles.length > 0 ? (
+                                                    pdfFiles.map((file, index) => (
+                                                        <div key={index} className="my-5 border-dashed border-lightGray border-[1px] py-3 px-4 bg-[#FAFCFE] rounded-[10px]">
+                                                            <div className="flex justify-between">
+                                                                <div className="my-auto">
+                                                                    <div className="flex gap-2">
+                                                                        <div>
+                                                                            <img src={PDFicon} alt="PDF Icon" className="w-[50px] h-[50px]" />
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 className="text-[16px] text-dark">{file.name}</h6>
+                                                                            <h6 className="text-[16px] text-lightGray">200 KB</h6>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                                <div className="my-auto cursor-pointer" onClick={() => handleRemovePdf(index)}>
+                                                                    <CloseOutlined />
+                                                                </div>
                                                             </div>
-                                                            <div className="my-auto cursor-pointer" onClick={() => handleRemovePdf(index)}><CloseOutlined /></div>
                                                         </div>
-                                                    </div>
-
-                                                ))}
+                                                    ))
+                                                ) : (
+                                                    // Display investor documents if pdfFiles are not available but investor's documents are present
+                                                    investor?.documents.map((doc, index) => (
+                                                        <div key={index} className="my-5 border-dashed border-lightGray border-[1px] py-3 px-4 bg-[#FAFCFE] rounded-[10px]">
+                                                            <div className="flex justify-between">
+                                                                <div className="my-auto">
+                                                                    <div className="flex gap-2">
+                                                                        <div>
+                                                                            <img src={PDFicon} alt="PDF Icon" className="w-[50px] h-[50px]" />
+                                                                        </div>
+                                                                        <div>
+                                                                            <h6 className="text-[16px] text-dark">{doc.fileName}</h6>
+                                                                            <h6 className="text-[16px] text-lightGray">200 KB</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="my-auto cursor-pointer" onClick={() => handleRemoveDoc(index)}>
+                                                                    <CloseOutlined />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                )}
                                             </div>
                                         )}
-
 
                                         {pdfFiles.length > 2 ?
                                             null :

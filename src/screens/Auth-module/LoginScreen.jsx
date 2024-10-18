@@ -82,8 +82,6 @@ const LoginScreen = () => {
         setAlertSeverity(null);
     };
     const isFormValid = formData.email !== "" && formData.password !== "";
-
-
     return (
         <div className='text-white Primary_Dev'>
             <div className="Main grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1">

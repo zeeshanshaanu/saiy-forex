@@ -11,6 +11,8 @@ import { DownOutlined, DownloadOutlined } from '@ant-design/icons';
 
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import NoDataFound from '../../components/NoData/NodataFound';
+import AddInvestor from './AddInvestor';
 
 const items = [
     {
@@ -33,11 +35,12 @@ const InvestorDetail = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [investor, setInvestor] = useState([]);
-
+    const [openEdit, setOpenEdit] = useState(false);
     const token = useSelector((state) => state?.auth?.token);
-
     console.log("This is investor data-->>", investor);
-
+    const showDrawer2 = () => {
+        setOpenEdit(true);
+    };
     const GetUserProfile = async () => {
         setLoading(true)
         try {
@@ -87,7 +90,7 @@ const InvestorDetail = () => {
                         <div className="my-auto">
                             <Button type="white"
                                 className='bg-transparent border border-lightGray text-dark h-[44px] rounded-[10px]'
-                                // onClick={showDrawer2}
+                                onClick={showDrawer2}
                                 icon={<EditOutlined className='text-dark' />}>Edit
                             </Button>
                         </div>
@@ -158,15 +161,11 @@ const InvestorDetail = () => {
                                                 </div>
                                             ))
                                         ) : (
-                                            <div>
-                                                <h3 className="text-center">No Investor Found.!</h3>
+                                            <div className='text-center flex justify-center w-full'>
+                                                <NoDataFound />
                                             </div>
-                                        )
-
-                                    }
-
+                                        )}
                                     {/*  */}
-
                                 </div>
                             </div>
                         </div>
@@ -296,18 +295,6 @@ const InvestorDetail = () => {
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Invoice</th>
                                 </tr>
                             </thead>
-                            {/* <tbody>
-                                 <tr className='' onClick={() => navigate('/InvestorDetail')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">7480343</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$69.99</td>
-                                    <td className="py-2 px-4 text-[16px] text-textgreen bg-lightgreen 
-                                    rounded-full  text-center font-semibold">Deposit</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark text-yellow1 cursor-pointer"><DownloadOutlined />&nbsp;Download Invoice</td>
-                                </tr>
-                                <br />
-                            </tbody> */}
-
                             <tbody>
                                 {loading ? (
                                     <tr>
@@ -321,7 +308,7 @@ const InvestorDetail = () => {
                                                 <td className="py-2 px-4 text-[16px] text-dark flex gap-2">{item?.transactionId || "N/A"}</td>
                                                 <td className="py-2 px-4 text-[16px] text-dark">${item?.amount || "N/A"}</td>
                                                 <td className="py-2 px-4 text-[16px] text-textgreen bg-lightgreen 
-                                                     rounded-full  text-center font-semibold">{item?.type || "N/A"}</td>
+                                                    rounded-full text-center font-semibold">{item?.type || "N/A"}</td>
                                                 <td className="py-2 px-4 text-[16px] text-dark">{item?.date.slice(0, 10) || "N/A"}</td>
                                                 <td className="py-2 px-4 text-[16px] text-dark text-yellow1 cursor-pointer"><DownloadOutlined />&nbsp;Download Invoice</td>
                                             </tr>
@@ -330,7 +317,7 @@ const InvestorDetail = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" className="text-center">No Investor Found.!</td>
+                                        <td colSpan="5" className="text-center"><NoDataFound /></td>
                                     </tr>
                                 )}
                             </tbody>
@@ -339,6 +326,8 @@ const InvestorDetail = () => {
                     </div>
                 </div>
             </div>
+            {/*  */}
+            <AddInvestor openEdit={openEdit} setOpenEdit={setOpenEdit} InvestorID={id} />
         </div>
     )
 }

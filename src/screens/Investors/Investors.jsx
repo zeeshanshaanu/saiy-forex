@@ -7,8 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import AddInvestor from './AddInvestor';
-
-
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CustomizedDialogs from '../../components/Dialog/Dialog';
+import NoDataFound from '../../components/NoData/NodataFound';
+import Loader from '../../components/Loader/Loader';
 const Investors = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
@@ -80,17 +83,18 @@ const Investors = () => {
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Email</th>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Address </th>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Bank Details </th>
+                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Status </th>
+                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Actions </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan="5" className="text-center my-10">Loading...</td>
+                                        <td colSpan="6" className="text-center my-10"><Loader /></td>
                                     </tr>
                                 ) : investor?.length > 0 ? (
                                     investor.map((item, index) => (
-                                        <tr key={index} className='hover:bg-[#F6F8FE] cursor-pointer'
-                                            onClick={() => navigate(`/InvestorDetail/${item?._id}`)}>
+                                        <tr key={index} className='hover:bg-[#F6F8FE]'>
                                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                                 <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
                                                 <span className='my-auto'>{item?.name}</span>
@@ -99,11 +103,22 @@ const Investors = () => {
                                             <td className="py-2 px-4 text-[16px] text-dark">{item?.email}</td>
                                             <td className="py-2 px-4 text-[16px] text-dark">{item?.address}</td>
                                             <td className="py-2 px-4 text-[16px] text-dark">{item?.iban}</td>
+                                            <td className="py-2 px-4 text-[16px] text-dark text-[16px]font-semibold text-textRed text-center">{item?.status}</td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">
+                                                <span className='cursor-pointer my-auto'
+                                                    onClick={() => navigate(`/InvestorDetail/${item?._id}`)}><RemoveRedEyeIcon /></span>
+                                                <span className='cursor-pointer my-auto'>
+                                                    <CustomizedDialogs
+                                                        deleteID={item?._id}
+                                                        onlistUpdate={RefreshInvestorlist}
+                                                    />
+                                                </span>
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="5" className="text-center">No Investor Found.!</td>
+                                        <td colSpan="6" className="text-center"><NoDataFound /></td>
                                     </tr>
                                 )}
                             </tbody>
