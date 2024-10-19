@@ -155,8 +155,8 @@ const InvestorDetail = () => {
                                                     <center>
                                                         <img src={PDFicon} alt={PDFicon} className="text-center" />
                                                     </center>
-                                                    <p className="truncate text-ellipsis overflow-hidden mt-2 truncate">{docs?.fileName || "N/A"}...</p>
-                                                    <p className='text-lightGray text-[12px] mt-3'> {docs?.fileName?.split(".")[1] === "pdf" ? "PDF" : "N/A"}</p>
+                                                    <p className="truncate text-ellipsis overflow-hidden mt-2 truncate">{docs?.fileName?.split("_")[1]?.slice(0, 7) || "N/A"}...</p>
+                                                    <p className='text-lightGray text-[12px] mt-3'> {docs?.fileUrl?.split("_")[1]}</p>
                                                     <small className='text-lightGray text-[10px] mt-3'> {docs?.dateOfCreation.slice(0, 10) || "N/A"}</small>
                                                 </div>
                                             ))

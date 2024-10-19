@@ -41,10 +41,8 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
     const dispatch = useDispatch();
     const token = useSelector((state) => state?.auth?.token);
     // 
-    const [imageurl, setImageurl] = useState("");
-
     const initialState = {
-        image: imageurl,
+        image: "",
         name: "",
         phone: "",
         email: "",
@@ -69,7 +67,6 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
     const onClose = () => {
         setOpenEdit(false);
     };
-
 
     const GetUserProfile = async () => {
         setLoading(true)
@@ -131,103 +128,47 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         setPdfFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
 
-    const uploadDocs = async (updatedFormDataImage) => {
-        const FormdataDocs = new FormData();
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setUpdateLoading(true);
+        const formDataToSend = new FormData();
+        formDataToSend.append("image", selectedFile.file);
+        formDataToSend.append("name", formData.name);
+        formDataToSend.append("phone", formData.phone);
+        formDataToSend.append("email", formData.email);
+        formDataToSend.append("address", formData.address);
+        formDataToSend.append("iban", formData.iban);
+
         pdfFiles.forEach((file) => {
-            FormdataDocs.append("documents", file);
+            formDataToSend.append("documents", file);
         });
 
         try {
-            const response = await axios.post("/investor/upload-document", FormdataDocs, {
+            const response = await axios.post('investor', formDataToSend, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            if (response.data.status === "success") {
-                const uploadedDocsUrls = response.data.documentUrls;
 
-                const documents = pdfFiles.map((file, index) => ({
-                    fileName: file.name,
-                    fileUrl: uploadedDocsUrls[index]
-                }));
-
-                const updatedFormData = {
-                    ...formData,
-                    documents,
-                    image: updatedFormDataImage
-                };
-                dispatch(createInvestor(updatedFormData)).then((data) => {
-                    if (data?.payload?.status === 'success') {
-                        setAlertMessage(data?.payload?.message);
-                        setAlertSeverity(data?.payload?.status);
-                        setTimeout(() => {
-                            setOpenEdit(false);
-                            setUpdateLoading(false);
-                            onlistUpdate();
-                            setFormData("")
-                        }, 2000);
-                    } else {
-                        setAlertMessage(data?.payload?.message);
-                        setAlertSeverity("error");
-                        setUpdateLoading(false);
-                    }
-                });
-            }
-            console.log("Documents uploaded successfully:", response.data);
-        } catch (error) {
-            console.error("Error uploading documents:", error);
-        }
-    };
-
-    // Image upload function
-    const CreateInvestorWithImage = async () => {
-        setUpdateLoading(true);
-        const Formdata = new FormData();
-        Formdata.append("image", selectedFile?.file);
-        const response = await axios.post("investor/upload-image", Formdata, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (response.data.status === "success") {
-            const uploadedImageUrl = response?.data.imageUrl;
-            setImageurl(uploadedImageUrl);
-            const updatedFormDataImage = { ...formData, image: uploadedImageUrl };
-
-            if (pdfFiles.length > 0) {
-                uploadDocs(uploadedImageUrl);
+            if (response?.data?.status === 'success') {
+                setAlertMessage(response?.data?.message);
+                setAlertSeverity('success');
+                setTimeout(() => {
+                    setOpenEdit(false);
+                    setUpdateLoading(false);
+                    onlistUpdate()
+                }, 2000);
             } else {
-                dispatch(createInvestor(updatedFormDataImage)).then((data) => {
-                    if (data?.payload?.status === 'success') {
-                        setAlertMessage(data?.payload?.message);
-                        setAlertSeverity(data?.payload?.status);
-                        setTimeout(() => {
-                            setOpenEdit(false);
-                            setUpdateLoading(false);
-                            onlistUpdate();
-                            setFormData("")
-                        }, 2000);
-                    } else {
-                        setAlertMessage(data?.payload?.message);
-                        setAlertSeverity("error");
-                        setUpdateLoading(false);
-                    }
-                });
+                setAlertMessage(response?.data?.message);
+                setAlertSeverity('error');
+                setUpdateLoading(false);
             }
-
-
-        } else {
-            console.log(response.data.message);
+        } catch (error) {
+            setAlertMessage("Failed to update profile");
+            setAlertSeverity("error");
             setUpdateLoading(false);
         }
-
-
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        CreateInvestorWithImage();
     };
 
     const closeAlert = () => {
@@ -235,10 +176,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         setAlertSeverity(null);
     };
 
-    const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview;
-
-    console.log("specific investor-->>>>", investor);
-
+    const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview && pdfFiles?.length > 0;
 
     return (
         <div>
@@ -254,7 +192,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                             <div className="flex-grow overflow-auto">
                                 <div className="mt-[20px]">
                                     <div className="my-5 relative">
- 
+
 
                                         <Box mt={2} textAlign="center">
                                             {selectedFile.filepreview ? (
