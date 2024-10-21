@@ -75,17 +75,6 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
         setOpenEdit(false);
     };
 
-    // const handleImageChange = (event) => {
-    //     const file = event.target.files[0];
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setSelectedImage(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // }
-
     const handleImageChange = (event) => {
         if (event?.target?.files[0]) {
             setSelectedFile({

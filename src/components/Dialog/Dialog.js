@@ -21,7 +21,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-export default function CustomizedDialogs({ deleteID, onlistUpdate }) {
+export default function CustomizedDialogs({ deleteID, onlistUpdate, PortfolioDeleteID }) {
     const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
@@ -53,13 +53,27 @@ export default function CustomizedDialogs({ deleteID, onlistUpdate }) {
     const handleDelete = async () => {
         setLoading(true)
         try {
-            const response = await axios.delete(`/investor/${deleteID}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true
-            });
+            let response;
 
+            if (deleteID) {
+                response = await axios.delete(`/investor/${deleteID}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true
+                });
+            } else {
+                response = await axios.delete(`/portfolio/${PortfolioDeleteID}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true
+                });
+            }
+
+            // 
+            // 
+            // 
             if (response?.data?.status === 'success') {
                 setTimeout(() => {
                     setAlertMessage(response?.data?.message);

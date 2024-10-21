@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header';
 import { Button, Dropdown } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
@@ -10,6 +10,12 @@ import AddPortfolio from './AddPortfolio';
 import { useNavigate } from "react-router-dom";
 import Logo1 from "../../assets/images/Logo1.svg"
 import { AreaChart, Area } from "recharts";
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import Loader from '../../components/Loader/Loader';
+import NoDataFound from '../../components/NoData/NodataFound';
+import CustomizedDialogs from '../../components/Dialog/Dialog';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 
 const items = [
@@ -31,53 +37,66 @@ const items = [
 const data = [
     {
         name: "Page A",
-        uv: 4000,
-        pv: 2400,
+        uv: 41000,
+        pv: 200,
         amt: 2400
     },
     {
         name: "Page B",
-        uv: 3000,
-        pv: 1398,
+        uv: 1000,
+        pv: 10398,
+        amt: 2210
+    },
+    {
+        name: "Page B",
+        uv: 102000,
+        pv: 10398,
         amt: 2210
     },
     {
         name: "Page C",
-        uv: 2000,
-        pv: 9800,
+        uv: 5000,
+        pv: 90800,
         amt: 2290
     },
-    {
-        name: "Page D",
-        uv: 2780,
-        pv: 3908,
-        amt: 2000
-    },
-    {
-        name: "Page E",
-        uv: 1890,
-        pv: 4800,
-        amt: 2181
-    },
-    {
-        name: "Page F",
-        uv: 2390,
-        pv: 3800,
-        amt: 2500
-    },
-    {
-        name: "Page G",
-        uv: 3490,
-        pv: 4300,
-        amt: 2100
-    }
 ];
 
 const Portfolios = () => {
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [portfolio, setPortfolio] = useState([]);
+
     const showDrawer = () => {
         setOpen(true);
+    };
+    const token = useSelector((state) => state?.auth?.token);
+
+    const GetData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get("/portfolio", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            console.warn(response.data?.data);
+            setPortfolio(response?.data?.data);
+            setLoading(false)
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetData();
+    }, []);
+
+    const RefreshInvestorlist = () => {
+        GetData();
     };
 
     return (
@@ -140,281 +159,80 @@ const Portfolios = () => {
                 {/*  */}
                 <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-x-5 px-5 mb-5'>
                     {/*  */}
-                    <div onClick={() => navigate("/PortfolioDetails")} className="rounded-[10px] bg-white p-5 mt-5 cursor-pointer drop-shadow-md hover:drop-shadow-xl">
-                        <div className="py-2 text-[16px] text-dark flex gap-2 w-[250px]">
-                            <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
-                            <p className='my-auto text-[16px] font-semibold'>SAIY Forex Premium Plus</p>
+                    {loading ? (
+                        <div className='col-span-3'>
+                            <center className="text-center my-20"><Loader /></center>
                         </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Minimum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$400</h5>
+                    ) : portfolio?.length > 0 ? (
+                        portfolio?.map((item, index) => (
+                            <div key={index} className="rounded-[10px] bg-white p-5 mt-5 drop-shadow-md hover:drop-shadow-xl">
+                                <div className="pb-2 text-[16px] text-dark flex justify-between">
+                                    <div className="flex gap-x-2 ">
+                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
+                                        <p className='my-auto text-[16px] font-semibold'>{item?.name || "N/A"}</p>
+                                    </div>
+                                    <div className="flex gap-x-2">
+                                        <span className='cursor-pointer my-auto'
+                                            onClick={() => navigate(`/PortfolioDetails/${item?._id}`)}><RemoveRedEyeIcon /></span>
+                                        <span className='cursor-pointer my-auto'>
+                                            <CustomizedDialogs
+                                                PortfolioDeleteID={item?._id}
+                                                onlistUpdate={RefreshInvestorlist}
+                                            />
+                                        </span>
+                                    </div>
+                                </div>
+                                {/*  */}
+                                <div className="flex justify-between">
+                                    <div className="my-auto">
+                                        <h5 className="text-lightGray mt-[12px] text-[14px]">Minimum Investment</h5>
+                                        <h5 className="text-dark text-[16px] mt-[4px]">${item?.min_investment || "N/A"}</h5>
+                                    </div>
+                                    <div className="my-auto">
+                                        <h5 className="text-lightGray mt-[12px] text-[14px]">Maximum Investment</h5>
+                                        <h5 className="text-dark text-[16px] mt-[4px]">${item?.max_investment || "N/A"}</h5>
+                                    </div>
+                                </div>
+                                {/*  */}
+                                <div className="flex justify-between">
+                                    <div className="my-auto">
+                                        <h5 className="text-lightGray mt-[12px] text-[14px]">Investors</h5>
+                                        <h5 className="text-dark text-[16px] mt-[4px]">{item?.investors?.length > 0 ? item?.investors?.length : 0}</h5>
+                                    </div>
+                                    <div className="my-auto">
+                                        <h5 className="text-lightGray mt-[12px] text-[14px]">Withdrawal Period</h5>
+                                        <h5 className="text-dark text-[16px] mt-[4px]">{item?.withdrawal_Period || "N/A"}</h5>
+                                    </div>
+                                </div>
+                                {/*  */}
+                                <div className="mt-4 w-full">
+                                    <AreaChart
+                                        width={280}
+                                        height={100}
+                                        data={data}
+                                        margin={{
+                                            top: 5,
+                                            right: 0,
+                                            left: 0,
+                                            bottom: 5
+                                        }}
+                                    >
+                                        <Area type="monotone" dataKey="uv" stroke="#E5B001" fill="#E5B001" />
+                                    </AreaChart>
+                                </div>
                             </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Maximum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$10,000</h5>
-                            </div>
+                        ))
+                    ) : (
+                        <div className='col-span-3'>
+                            <div className="text-center my-20"><NoDataFound /></div>
                         </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Investors</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">40</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Withdrawal Period</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">30 Days</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 w-full">
-                            <AreaChart
-                                width={280}
-                                height={100}
-                                data={data}
-                                margin={{
-                                    top: 5,
-                                    right: 0,
-                                    left: 0,
-                                    bottom: 5
-                                }}
-                            >
-                                <Area type="monotone" dataKey="uv" stroke="#E5B001" fill="#E5B001" />
-                            </AreaChart>
-                        </div>
-                    </div>
-                    {/*  */}
-                    <div onClick={() => navigate("/PortfolioDetails")} className="rounded-[10px] bg-white p-5 mt-5 cursor-pointer drop-shadow-md hover:drop-shadow-xl">
-                        <div className="py-2 text-[16px] text-dark flex gap-2 w-[250px]">
-                            <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
-                            <p className='my-auto text-[16px] font-semibold'>SAIY Forex Premium Plus</p>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Minimum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$400</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Maximum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$10,000</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Investors</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">40</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Withdrawal Period</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">30 Days</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 w-full">
-                            <AreaChart
-                                width={280}
-                                height={100}
-                                data={data}
-                                margin={{
-                                    top: 5,
-                                    right: 0,
-                                    left: 0,
-                                    bottom: 5
-                                }}
-                            >
-                                <Area type="monotone" dataKey="uv" stroke="#E5B001" fill="#E5B001" />
-                            </AreaChart>
-                        </div>
-                    </div>
-                    {/*  */}
-                    <div onClick={() => navigate("/PortfolioDetails")} className="rounded-[10px] bg-white p-5 mt-5 cursor-pointer drop-shadow-md hover:drop-shadow-xl">
-                        <div className="py-2 text-[16px] text-dark flex gap-2 w-[250px]">
-                            <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
-                            <p className='my-auto text-[16px] font-semibold'>SAIY Forex Premium Plus</p>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Minimum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$400</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Maximum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$10,000</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Investors</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">40</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Withdrawal Period</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">30 Days</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 w-full">
-                            <AreaChart
-                                width={280}
-                                height={100}
-                                data={data}
-                                margin={{
-                                    top: 5,
-                                    right: 0,
-                                    left: 0,
-                                    bottom: 5
-                                }}
-                            >
-                                <Area type="monotone" dataKey="uv" stroke="#E5B001" fill="#E5B001" />
-                            </AreaChart>
-                        </div>
-                    </div>
-                    {/*  */}
-                    <div onClick={() => navigate("/PortfolioDetails")} className="rounded-[10px] bg-white p-5 mt-5 cursor-pointer drop-shadow-md hover:drop-shadow-xl">
-                        <div className="py-2 text-[16px] text-dark flex gap-2 w-[250px]">
-                            <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
-                            <p className='my-auto text-[16px] font-semibold'>SAIY Forex Premium Plus</p>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Minimum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$400</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Maximum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$10,000</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Investors</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">40</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Withdrawal Period</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">30 Days</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 w-full">
-                            <AreaChart
-                                width={280}
-                                height={100}
-                                data={data}
-                                margin={{
-                                    top: 5,
-                                    right: 0,
-                                    left: 0,
-                                    bottom: 5
-                                }}
-                            >
-                                <Area type="monotone" dataKey="uv" stroke="#E5B001" fill="#E5B001" />
-                            </AreaChart>
-                        </div>
-                    </div>
-                    {/*  */}
-                    <div onClick={() => navigate("/PortfolioDetails")} className="rounded-[10px] bg-white p-5 mt-5 cursor-pointer drop-shadow-md hover:drop-shadow-xl">
-                        <div className="py-2 text-[16px] text-dark flex gap-2 w-[250px]">
-                            <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
-                            <p className='my-auto text-[16px] font-semibold'>SAIY Forex Premium Plus</p>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Minimum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$400</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Maximum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$10,000</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Investors</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">40</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Withdrawal Period</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">30 Days</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 w-full">
-                            <AreaChart
-                                width={280}
-                                height={100}
-                                data={data}
-                                margin={{
-                                    top: 5,
-                                    right: 0,
-                                    left: 0,
-                                    bottom: 5
-                                }}
-                            >
-                                <Area type="monotone" dataKey="uv" stroke="#E5B001" fill="#E5B001" />
-                            </AreaChart>
-                        </div>
-                    </div>
-                    {/*  */}
-                    <div onClick={() => navigate("/PortfolioDetails")} className="rounded-[10px] bg-white p-5 mt-5 cursor-pointer drop-shadow-md hover:drop-shadow-xl">
-                        <div className="py-2 text-[16px] text-dark flex gap-2 w-[250px]">
-                            <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
-                            <p className='my-auto text-[16px] font-semibold'>SAIY Forex Premium Plus</p>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Minimum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$400</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Maximum Investment</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">$10,000</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="flex justify-between">
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Investors</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">40</h5>
-                            </div>
-                            <div className="my-auto">
-                                <h5 className="text-lightGray mt-[12px] text-[14px]">Withdrawal Period</h5>
-                                <h5 className="text-dark text-[16px] mt-[4px]">30 Days</h5>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 w-full">
-                            <AreaChart
-                                width={280}
-                                height={100}
-                                data={data}
-                                margin={{
-                                    top: 5,
-                                    right: 0,
-                                    left: 0,
-                                    bottom: 5
-                                }}
-                            >
-                                <Area type="monotone" dataKey="uv" stroke="#E5B001" fill="#E5B001" />
-                            </AreaChart>
-                        </div>
-                    </div>
 
+                    )}
                 </div>
                 {/*  */}
             </div>
             {/* ADD DRAWER */}
-            <AddPortfolio open={open} setOpen={setOpen} />
+            <AddPortfolio open={open} setOpen={setOpen} onlistUpdate={RefreshInvestorlist} />
         </div>
     )
 }

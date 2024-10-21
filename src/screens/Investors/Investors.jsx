@@ -8,10 +8,12 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import AddInvestor from './AddInvestor';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CustomizedDialogs from '../../components/Dialog/Dialog';
 import NoDataFound from '../../components/NoData/NodataFound';
 import Loader from '../../components/Loader/Loader';
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 const Investors = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
@@ -19,8 +21,6 @@ const Investors = () => {
     const [openEdit, setOpenEdit] = useState(false);
 
     const token = useSelector((state) => state?.auth?.token);
-
-    console.log(investor);
 
     const GetUserProfile = async () => {
         setLoading(true)
@@ -33,7 +33,6 @@ const Investors = () => {
             });
             setInvestor(response.data.data);
             setLoading(false)
-
 
         } catch (err) {
             console.error(err.response);
@@ -50,7 +49,7 @@ const Investors = () => {
     };
 
     const RefreshInvestorlist = () => {
-        GetUserProfile(); // This will refresh the user profile
+        GetUserProfile();
     };
 
     return (
@@ -130,7 +129,6 @@ const Investors = () => {
             </div>
             {/*  */}
             <AddInvestor openEdit={openEdit} setOpenEdit={setOpenEdit} onlistUpdate={RefreshInvestorlist} />
-
         </div>
     )
 }

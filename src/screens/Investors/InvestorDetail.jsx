@@ -37,7 +37,6 @@ const InvestorDetail = () => {
     const [investor, setInvestor] = useState([]);
     const [openEdit, setOpenEdit] = useState(false);
     const token = useSelector((state) => state?.auth?.token);
-    console.log("This is investor data-->>", investor);
     const showDrawer2 = () => {
         setOpenEdit(true);
     };

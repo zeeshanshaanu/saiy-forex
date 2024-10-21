@@ -31,7 +31,7 @@ const AppRouting = () => {
           <Route path="Dashboard" element={<Dashboard />} />
           {/*  */}
           <Route path="Portfolios" element={<Portfolios />} />
-          <Route path="PortfolioDetails" element={<PortfolioDetails />} />
+          <Route path="PortfolioDetails/:id" element={<PortfolioDetails />} />
           {/*  */}
           <Route path="Investors" element={<Investors />} />
           <Route path="InvestorDetail/:id" element={<InvestorDetail />} />

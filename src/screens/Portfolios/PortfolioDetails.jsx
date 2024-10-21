@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TotalAllocated from "../../assets/Icons/DashboardCards/TotalAllocated.svg"
 import TotalInvestors from "../../assets/Icons/DashboardCards/TotalInvestors.svg"
 import SetRoi from "../../assets/Icons/DashboardCards/SetRoi.svg"
@@ -9,21 +9,57 @@ import DayInspection from "../../assets/Icons/DashboardCards/DayInspection.svg"
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button, Breadcrumb } from 'antd'
 import { EditOutlined } from '@ant-design/icons';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PortfolioSetRoi from './PortfolioSetRoi'
 import EditPortfolio from './EditPortfolio'
+import AddPortfolio from './AddPortfolio'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
+import Loader from '../../components/Loader/Loader'
+import NoDataFound from '../../components/NoData/NodataFound'
 
 const PortfolioDetails = () => {
+    const { id } = useParams()
     const navigate = useNavigate()
+    const token = useSelector((state) => state?.auth?.token);
+    // 
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [portfolio, setPortfolio] = useState([]);
 
     const showDrawer = () => {
-        setOpen(true);
-    };
-    const showDrawer2 = () => {
         setOpenEdit(true);
     };
+    const showDrawer2 = () => {
+        setOpen(true);
+    };
+
+    const GetData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`/portfolio/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            console.warn(response.data?.data);
+            setPortfolio(response?.data?.data);
+            setLoading(false)
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetData();
+    }, []);
+
+
+
     return (
         <div>
             {/* sticky top-0 */}
@@ -40,7 +76,7 @@ const PortfolioDetails = () => {
                                         title: <span className="hover:text-dark cursor-pointer font-bold" onClick={() => navigate(-1)}>Portfolios</span>,
                                     },
                                     {
-                                        title: <span className="hover:text-dark font-bold">SAIY Forex Premium Plus</span>,
+                                        title: <span className="hover:text-dark font-bold">{portfolio?.name}</span>,
                                     },
                                 ]}
                             />
@@ -75,13 +111,13 @@ const PortfolioDetails = () => {
                         <div className="rounded-[10px] bg-white p-5 mt-5">
                             <img src={TotalAllocated} alt={TotalAllocated} className='mt-2' />
                             <h5 className="text-lightGray mt-[12px] text-[16px]">Allocated Funds</h5>
-                            <h2 className="text-dark text-[20px] font-bold mt-[12px]">$50,322</h2>
+                            <h2 className="text-dark text-[20px] font-bold mt-[12px]">${portfolio?.max_investment}</h2>
                         </div>
                         {/*  */}
                         <div className="rounded-[10px] bg-white p-5 mt-5">
                             <img src={TotalInvestors} alt={TotalInvestors} />
                             <h5 className="text-lightGray mt-[12px] text-[16px]">Investors</h5>
-                            <h2 className="text-dark text-[20px] font-bold mt-[12px]">13</h2>
+                            <h2 className="text-dark text-[20px] font-bold mt-[12px]">{portfolio?.investors?.length}</h2>
                         </div>
                         {/*  */}
                         <div className="rounded-[10px] bg-white p-5 mt-5">
@@ -93,7 +129,7 @@ const PortfolioDetails = () => {
                         <div className="rounded-[10px] bg-white p-5 mt-5">
                             <img src={DayInspection} alt={DayInspection} />
                             <h5 className="text-lightGray mt-[12px] text-[16px]">Days since Inception</h5>
-                            <h2 className="text-dark text-[20px] font-bold mt-[12px]">23</h2>
+                            <h2 className="text-dark text-[20px] font-bold mt-[12px]">{portfolio?.withdrawal_Period}</h2>
                         </div>
                     </div>
                     {/*  */}
@@ -115,69 +151,26 @@ const PortfolioDetails = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/*  */}
-                                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">+78794545234</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">debbie.baker@example.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
-                                        </tr>
-                                        {/*  */}
-                                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto text-[16px]'>Theresa Webb</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">+3435345</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">tim.jennings@example.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">7529 E. Pecan St.</td>
-                                        </tr>
-                                        {/*  */}
-                                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto text-[16px]'>Kristin Watson</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">+12354568</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">kenzi.lawson@example.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">37529 E. Pecan St.</td>
-                                        </tr>
-                                        {/*  */}
-                                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">+567681212</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">debbie.baker@example.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
-                                        </tr>
-                                        {/*  */}
-                                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">+908907645</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">john.baker@example.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
-                                        </tr>
-                                        {/*  */}
-                                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">+12334365678</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">khkuku.baker@ghjg.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
-                                        </tr>
-                                        {/*  */}
-                                        <tr className='hover:bg-[#F6F8FE] cursor-pointer'>
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto text-[16px]'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">+78956756</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">sdtrer.baker@example.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">3890&nbsp;Poplar&nbsp;Dr.</td>
-                                        </tr>
+                                        {loading ? (
+                                            <tr>
+                                                <td colSpan="7" className="text-center pt-20"><Loader /></td>
+                                            </tr>
+                                        ) : portfolio?.investors?.length > 0 ? (
+                                            portfolio?.investors?.map((item, index) => (
+                                                <tr key={index} className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate(`/InvestorDetail/${item?.id}`)}>
+                                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                                        <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
+                                                        <span className='my-auto text-[16px]'>{item?.name || "N/A"}</span></td>
+                                                    <td className="py-2 px-4 text-[16px] text-dark">{item?.phone || "N/A"}</td>
+                                                    <td className="py-2 px-4 text-[16px] text-dark">{item?.email || "N/A"}</td>
+                                                    <td className="py-2 px-4 text-[16px] text-dark">{item?.address || "N/A"}</td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="7" className="text-center pt-20"><NoDataFound /></td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
@@ -280,8 +273,9 @@ const PortfolioDetails = () => {
                 </div>
             </div>
             {/* ADD DRAWER */}
-            <PortfolioSetRoi open={open} setOpen={setOpen} />
-            <EditPortfolio openEdit={openEdit} setOpenEdit={setOpenEdit} />
+            {/* <PortfolioSetRoi open={open} setOpen={setOpen} /> */}
+            <AddPortfolio open={open} setOpen={setOpen} PortfolioID={id} />
+            {/* <EditPortfolio openEdit={openEdit} setOpenEdit={setOpenEdit} /> */}
         </div>
     )
 }

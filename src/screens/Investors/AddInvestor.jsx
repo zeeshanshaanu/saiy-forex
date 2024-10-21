@@ -10,6 +10,7 @@ import SimpleAlert from '../../components/Alert-notification/Alert';
 import PDFicon from "../../assets/Icons/PDFicon.svg";
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { createInvestor } from '../../store/Investors/Investor';
+import { useNavigate } from 'react-router-dom';
 
 // **** //
 // **** //
@@ -37,8 +38,11 @@ const useStyles = makeStyles({
 });
 
 const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
+    console.log(InvestorID);
+
     const classes = useStyles();
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const token = useSelector((state) => state?.auth?.token);
     // 
     const initialState = {
@@ -50,20 +54,17 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         iban: "",
         documents: []
     };
-
     const [updateloading, setUpdateLoading] = useState(false);
     const [formData, setFormData] = useState(initialState);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
     const [pdfFiles, setPdfFiles] = useState([]);
-    const [investor, setInvestor] = useState({});
     const [loading, setLoading] = useState(false);
-
     const [selectedFile, setSelectedFile] = useState({
         file: "",
         filepreview: null,
     });
-
+    console.log("pdfFiles--->>>>", pdfFiles);
     const onClose = () => {
         setOpenEdit(false);
     };
@@ -77,10 +78,21 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                 },
                 withCredentials: true
             });
-            setInvestor(response.data.data);
+            setSelectedFile({
+                ...selectedFile,
+                filepreview: response?.data?.data?.image
+            })
+            setFormData({
+                name: response?.data?.data?.name,
+                phone: response?.data?.data?.phone,
+                email: response?.data?.data?.email,
+                iban: response?.data?.data?.iban,
+                address: response?.data?.data?.address,
+                image: response?.data?.data?.image,
+                documents: response?.data?.data?.documents
+            });
+
             setLoading(false)
-
-
         } catch (err) {
             console.error(err.response);
             setLoading(false)
@@ -89,7 +101,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
 
     useEffect(() => {
         GetUserProfile();
-    }, []);
+    }, [InvestorID]);
 
     const handleImageChange = (event) => {
         if (event?.target?.files[0]) {
@@ -104,30 +116,35 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
     const handlePdfChange = (event) => {
         const file = event.target.files[0];
         if (file && file.type === 'application/pdf') {
-            setPdfFiles((prevFiles) => [...prevFiles, file]);
+            setPdfFiles((prevFiles) => {
+                // Update formData.documents with the new file
+                setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    documents: [...prevFormData.documents, file],
+                }));
+                return [...prevFiles, file];
+            });
+
         } else {
             alert('Please upload a valid PDF file.');
         }
     };
 
     const handleRemoveDoc = (index) => {
-        // Create a copy of the existing investor documents
-        const updatedDocuments = [...investor.documents];
-
-        // Remove the document at the specified index
-        updatedDocuments.splice(index, 1);
-
-        // Update the investor state (if you are using useState for investor data)
-        setInvestor((prevInvestor) => ({
-            ...prevInvestor,
-            documents: updatedDocuments,
-        }));
+        setFormData((prevInvestor) => {
+            const updatedDocuments = [...prevInvestor.documents];
+            updatedDocuments.splice(index, 1);
+            return {
+                ...prevInvestor,
+                documents: updatedDocuments,
+            };
+        });
+        setPdfFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
 
     const handleRemovePdf = (index) => {
         setPdfFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -139,17 +156,31 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         formDataToSend.append("email", formData.email);
         formDataToSend.append("address", formData.address);
         formDataToSend.append("iban", formData.iban);
-
+        // formDataToSend.append("documents", formData.documents);
         pdfFiles.forEach((file) => {
             formDataToSend.append("documents", file);
         });
 
         try {
-            const response = await axios.post('investor', formDataToSend, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            let response;
+
+            if (!InvestorID) {
+                console.log("POST is calling...");
+                response = await axios.post('investor', formDataToSend, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+            } else {
+                console.log("PUT is calling...");
+                console.log("PUT is calling...>>>>", formDataToSend);
+
+                response = await axios.put(`investor/${InvestorID}`, formDataToSend, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+            }
 
             if (response?.data?.status === 'success') {
                 setAlertMessage(response?.data?.message);
@@ -157,7 +188,11 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                 setTimeout(() => {
                     setOpenEdit(false);
                     setUpdateLoading(false);
-                    onlistUpdate()
+                    {
+                        InvestorID ?
+                            navigate("/Investors") :
+                            onlistUpdate();
+                    }
                 }, 2000);
             } else {
                 setAlertMessage(response?.data?.message);
@@ -176,7 +211,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         setAlertSeverity(null);
     };
 
-    const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview && pdfFiles?.length > 0;
+    const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview || formData.image;
 
     return (
         <div>
@@ -201,9 +236,9 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                                     alt="Selected"
                                                     className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1' />
                                             ) : (
-                                                investor?.image ? (
+                                                formData?.image ? (
                                                     <img
-                                                        src={investor?.image}
+                                                        src={formData?.image}
                                                         alt="Selected"
                                                         className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
                                                     />
@@ -248,8 +283,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                                     },
                                                 },
                                             }}
-                                            defaultValue={investor?.name || formData?.name}
-
+                                            defaultValue={formData?.name}
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -275,7 +309,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                                 },
                                             }}
 
-                                            defaultValue={investor?.phone || formData?.phone}
+                                            defaultValue={formData?.phone}
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -287,7 +321,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                     <div className="mt-5">
                                         <TextField
                                             required
-                                            disabled={investor?.email}
+                                            // disabled={investor?.email}
                                             id="outlined-required"
                                             label="Email"
                                             placeholder='Ex: john.doe05@gmail.com'
@@ -301,7 +335,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                                     },
                                                 },
                                             }}
-                                            defaultValue={investor?.email || formData?.email}
+                                            defaultValue={formData?.email}
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -326,7 +360,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                                     },
                                                 },
                                             }}
-                                            defaultValue={investor?.address || formData?.address}
+                                            defaultValue={formData?.address}
 
                                             onChange={(event) =>
                                                 setFormData({
@@ -352,7 +386,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                                     },
                                                 },
                                             }}
-                                            defaultValue={investor?.iban || formData?.iban}
+                                            defaultValue={formData?.iban}
                                             onChange={(event) =>
                                                 setFormData({
                                                     ...formData,
@@ -363,7 +397,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                     </div>
                                     {/* DOCUMENTS */}
                                     <div className="mt-5">
-                                        {(pdfFiles.length > 0 || investor?.documents?.length > 0) && (
+                                        {(pdfFiles.length > 0 || formData?.documents?.length > 0) && (
                                             <div>
                                                 {pdfFiles.length > 0 ? (
                                                     pdfFiles.map((file, index) => (
@@ -388,7 +422,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                                     ))
                                                 ) : (
                                                     // Display investor documents if pdfFiles are not available but investor's documents are present
-                                                    investor?.documents.map((doc, index) => (
+                                                    formData?.documents.map((doc, index) => (
                                                         <div key={index} className="my-5 border-dashed border-lightGray border-[1px] py-3 px-4 bg-[#FAFCFE] rounded-[10px]">
                                                             <div className="flex justify-between">
                                                                 <div className="my-auto">
@@ -428,11 +462,6 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                             </Button>
                                         }
                                     </div>
-
-
-
-
-
                                 </div>
                             </div>
                             <div className="my-5 flex gap-5 w-full">
