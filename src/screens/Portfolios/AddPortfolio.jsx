@@ -68,7 +68,7 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
     const [loading, setLoading] = useState(false);
     const [Investors, setInvestors] = useState([]);
 
-    console.log("formData-->>>>", formData);
+    // console.log("formData-->>>>", formData);
     // 
     const GetData = async () => {
         setLoading(true)
@@ -98,9 +98,6 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                 },
                 withCredentials: true
             });
-
-            // const InvestorsList = response?.data?.data?.map((items) => (items))
-            // setInvestors(InvestorsList);
             setFormData({
                 name: response?.data?.data?.name,
                 min_investment: response?.data?.data?.min_investment,
@@ -194,7 +191,6 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                         <img src={CloseIcon} alt="Close" onClick={onClose} className='my-auto cursor-pointer' />
                     </div>
                     <form onSubmit={handleSubmit}>
-
                         <div className="flex-grow overflow-auto py-4">
                             <Box component="form" noValidate autoComplete="off">
                                 <div className="mt-[20px]">
@@ -273,6 +269,7 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                                             }
                                         />
                                     </div>
+
                                     <div className="mt-5 w-full">
                                         <FormControl className="mt-5 w-full">
                                             <InputLabel id="demo-multiple-name-label">Investment Term</InputLabel>
@@ -306,6 +303,7 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                                             </Select>
                                         </FormControl>
                                     </div>
+                                    
                                     <div className="mt-5 w-full">
                                         <Autocomplete
                                             disablePortal

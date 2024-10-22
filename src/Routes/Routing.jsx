@@ -37,7 +37,7 @@ const AppRouting = () => {
           <Route path="InvestorDetail/:id" element={<InvestorDetail />} />
           {/*  */}
           <Route path="MainAssociates" element={<MainAssociates />} />
-          <Route path="AssociateDetails" element={<AssociateDetails />} />
+          <Route path="AssociateDetails/:id" element={<AssociateDetails />} />
           <Route path="AssociateEarningDetails" element={<AssociateEarningDetails />} />
           {/*  */}
           <Route path="WithDrawals" element={<WithDrawals />} />

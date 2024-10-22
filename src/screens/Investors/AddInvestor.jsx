@@ -226,9 +226,8 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                         <form onSubmit={handleSubmit}>
                             <div className="flex-grow overflow-auto">
                                 <div className="mt-[20px]">
+
                                     <div className="my-5 relative">
-
-
                                         <Box mt={2} textAlign="center">
                                             {selectedFile.filepreview ? (
                                                 <img
@@ -464,6 +463,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                     </div>
                                 </div>
                             </div>
+                            
                             <div className="my-5 flex gap-5 w-full">
                                 <div className="my-auto w-2/4">
 
