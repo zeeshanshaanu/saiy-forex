@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
-import { Breadcrumb, Dropdown } from 'antd'
+import { Breadcrumb, Dropdown, Button } from 'antd'
 import Logo1 from "../../assets/images/Logo1.svg"
 import DummyImg1 from "../../assets/images/DummyImg1.png"
-import { useNavigate } from 'react-router-dom';
-import { DownOutlined } from '@ant-design/icons';
+import { useNavigate, useParams } from 'react-router-dom';
+import { DownOutlined, EditOutlined } from '@ant-design/icons';
+import axios from 'axios'
+import { useSelector } from 'react-redux'
+import AddAssociate from './AddAssociate'
+import NoDataFound from '../../components/NoData/NodataFound'
+import Loader from '../../components/Loader/Loader'
 
 const items = [
     {
@@ -24,6 +29,38 @@ const items = [
 // 
 const AssociateDetails = () => {
     const navigate = useNavigate()
+    const { id } = useParams()
+    const token = useSelector((state) => state?.auth?.token);
+    // 
+    const [loading, setLoading] = useState(false);
+    const [Associate, setAssociate] = useState([]);
+    const [open, setOpen] = useState(false);
+
+    const showDrawer2 = () => {
+        setOpen(true);
+    };
+
+    const GetData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`/Associate/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            setAssociate(response?.data?.data);
+            setLoading(false)
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetData();
+    }, []);
 
     return (
         <div className="bg-[#F6F8FE]">
@@ -47,17 +84,29 @@ const AssociateDetails = () => {
 
                     </div>
                     {/* DROPWORN */}
-                    <div className="Dropdown cursor-pointer my-auto flex gap-3">
-                        <Dropdown
-                            menu={{
-                                items,
-                            }}
-                            trigger={['click']}
-                        >
-                            <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
-                                <DownOutlined />&nbsp;This Month
-                            </p>
-                        </Dropdown>
+                    <div className="Dropdown cursor-pointer my-auto flex gap-2">
+
+                        <div className="my-auto">
+                            <Dropdown
+                                menu={{
+                                    items,
+                                }}
+                                trigger={['click']}
+                            >
+                                <p className="border border-lightDray rounded-[10px] py-[10px] px-[20px]" onClick={(e) => e.preventDefault()}>
+                                    <DownOutlined />&nbsp;This Month
+                                </p>
+                            </Dropdown>
+                        </div>
+
+                        <div className="my-auto">
+                            <Button type="white"
+                                className='bg-transparent border border-lightGray text-dark h-[44px] rounded-[10px]'
+                                onClick={showDrawer2}
+                                icon={<EditOutlined className='text-dark' />}>Edit
+                            </Button>
+                        </div>
+
                     </div>
                 </div>
                 {/*  */}
@@ -69,7 +118,7 @@ const AssociateDetails = () => {
                             {/*  */}
                             <div className="flex justify-between">
                                 <div>
-                                    <img src={DummyImg1} alt={DummyImg1} className="w-[100px] h-[100px] rounded-[100px]" />
+                                    <img src={Associate?.image || DummyImg1} alt={Associate?.image || DummyImg1} className="w-[100px] h-[100px] rounded-[100px]" />
                                 </div>
                                 <div className="flex gap-5 rounded-[10px] h-[50px] px-5 border border-silver bg-silver ">
                                     <p className="my-auto text-lightGray text-[14px]">KYC Status</p>
@@ -79,19 +128,19 @@ const AssociateDetails = () => {
                             <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-5">
                                 <div className="">
                                     <h5 className="text-lightGray mt-[8px] text-[14px]">Name</h5>
-                                    <h5 className="text-dark text-[16px] ">Eleanor Pena</h5>
+                                    <h5 className="text-dark text-[16px] ">{Associate?.name || "N/A"}</h5>
                                 </div>
                                 <div className="">
                                     <h5 className="text-lightGray mt-[8px] text-[14px]">Role</h5>
-                                    <h5 className="text-dark text-[16px] mt-[4px]">Main Associate</h5>
+                                    <h5 className="text-dark text-[16px] mt-[4px]">{Associate?.level || "N/A"}</h5>
                                 </div>
                                 <div className="">
                                     <h5 className="text-lightGray mt-[8px] text-[14px]">Email</h5>
-                                    <h5 className="text-dark text-[16px] mt-[4px]">debbie.baker@example.com</h5>
+                                    <h5 className="text-dark text-[16px] mt-[4px]">{Associate?.email || "N/A"}</h5>
                                 </div>
                                 <div className="">
                                     <h5 className="text-lightGray mt-[8px] text-[14px]">Profit Splits Earned</h5>
-                                    <h5 className="text-dark text-[16px] mt-[4px]">$2,000</h5>
+                                    <h5 className="text-dark text-[16px] mt-[4px]">${Associate?.earn || "N/A"}</h5>
                                 </div>
                                 <div className="">
                                     <h5 className="text-lightGray mt-[8px] text-[14px]">Current Withdrawal Balance</h5>
@@ -99,7 +148,7 @@ const AssociateDetails = () => {
                                 </div>
                                 <div className="">
                                     <h5 className="text-lightGray mt-[8px] text-[14px]">Paid to Sub Associates</h5>
-                                    <h5 className="text-dark text-[16px] mt-[4px]">$10,213</h5>
+                                    <h5 className="text-dark text-[16px] mt-[4px]">${Associate?.paid_out || "N/A"}</h5>
                                 </div>
                             </div>
                         </div>
@@ -125,49 +174,14 @@ const AssociateDetails = () => {
                                     </thead>
                                     <tbody>
                                         {/*  */}
-                                        <tr className='' >
+                                        <br />
+                                        <tr className=''>
                                             <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
+                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
                                                 <span className='my-auto'>Eleanor&nbsp;Pena</span></td>
                                             <td className="py-2 px-4 text-[16px] text-dark w-[200px]">debbie.baker@example.com</td>
                                             <td className="py-2 px-4 text-[16px] text-textgreen bg-lightgreen 
                                             rounded-full text-center font-semibold">Main&nbsp;Associate</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark cursor-pointer">$500</td>
-                                        </tr>
-                                        <br />
-                                        {/*  */}
-                                        <tr className='' >
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark w-[200px]">debbie.baker@example.com</td>
-                                            <td className=" text-[16px] text-textYellow bg-lightYellow 
-                                            rounded-full py-2 px-4 text-center font-semibold">Sub&nbsp;Associate</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark cursor-pointer">$500</td>
-                                        </tr>
-                                        <br />
-                                        {/*  */}
-                                        <tr className='' >
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark w-[200px]">debbie.baker@example.com</td>
-                                            <td className="py-2 px-4 text-[16px] text-textgreen bg-lightgreen 
-                                            rounded-full text-center font-semibold">Main&nbsp;Associate</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                            <td className="py-2 px-4 text-[16px] text-dark cursor-pointer">$500</td>
-                                        </tr>
-                                        <br />
-                                        {/*  */}
-                                        <tr className='' >
-                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
-                                                <img src={Logo1} alt={Logo1} className='rounded-full w-[22px] h-[22px] cover my-auto' />
-                                                <span className='my-auto'>Eleanor&nbsp;Pena</span></td>
-                                            <td className="py-2 px-4 text-[16px] text-dark w-[200px]">debbie.baker@example.com</td>
-                                            <td className=" text-[16px] text-textYellow bg-lightYellow 
-                                            rounded-full py-2 px-4 text-center font-semibold">Sub&nbsp;Associate</td>
                                             <td className="py-2 px-4 text-[16px] text-dark">$500</td>
                                             <td className="py-2 px-4 text-[16px] text-dark cursor-pointer">$500</td>
                                         </tr>
@@ -217,22 +231,7 @@ const AssociateDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        {/*  */}
-                        <div className="mt-4 border-l-2 pl-2 border-yellow1">
-                            <h2 className="text-dark text-[16px] ">
-                                QA Checklists Approval</h2>
-                            <div className="flex justify-between mt-1">
 
-                                {/* <div className="">
-                                    <h3 className="text-lightGray text-[14px] flex gap-[12px]">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[16px] h-[16px] cover my-auto' />
-                                        Esther Howard</h3>
-                                </div> */}
-                                <div className="">
-                                    <p className="text-lightGray text-[12px]">4 minutes ago</p>
-                                </div>
-                            </div>
-                        </div>
                         {/*  */}
                         <div className="mt-4">
                             <p className="text-[14px] text-lightGray cursor-pointer hover:text-darkGray">Yesterday</p>
@@ -254,7 +253,7 @@ const AssociateDetails = () => {
                         </div>
                         {/*  */}
                         <div className="mt-4 border-l-2 pl-2 border-yellow1">
-                            <h2 className="text-dark text-[16px] ">
+                            <h2 className="text-dark text-[16px]">
                                 NHS Approval</h2>
                             <div className="flex justify-between mt-1">
 
@@ -268,55 +267,6 @@ const AssociateDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        {/*  */}
-                        <div className="mt-4 border-l-2 pl-2 border-yellow1">
-                            <h2 className="text-dark text-[16px] ">
-                                NHS Approval</h2>
-                            <div className="flex justify-between mt-1">
-
-                                {/* <div className="">
-                                    <h3 className="text-lightGray text-[14px] flex gap-[12px]">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[16px] h-[16px] cover my-auto' />
-                                        Esther Howard</h3>
-                                </div> */}
-                                <div className="">
-                                    <p className="text-lightGray text-[12px]">4 minutes ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 border-l-2 pl-2 border-yellow1">
-                            <h2 className="text-dark text-[16px] ">
-                                NHS Approval</h2>
-                            <div className="flex justify-between mt-1">
-
-                                {/* <div className="">
-                                    <h3 className="text-lightGray text-[14px] flex gap-[12px]">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[16px] h-[16px] cover my-auto' />
-                                        Esther Howard</h3>
-                                </div> */}
-                                <div className="">
-                                    <p className="text-lightGray text-[12px]">4 minutes ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        {/*  */}
-                        <div className="mt-4 border-l-2 pl-2 border-yellow1">
-                            <h2 className="text-dark text-[16px] ">
-                                NHS Approval</h2>
-                            <div className="flex justify-between mt-1">
-
-                                {/* <div className="">
-                                    <h3 className="text-lightGray text-[14px] flex gap-[12px]">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[16px] h-[16px] cover my-auto' />
-                                        Esther Howard</h3>
-                                </div> */}
-                                <div className="">
-                                    <p className="text-lightGray text-[12px]">4 minutes ago</p>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 {/* TABLE */}
@@ -334,62 +284,39 @@ const AssociateDetails = () => {
                             <thead>
                                 <tr>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Name</th>
+                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Number</th>
                                     <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Email</th>
-                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Capital</th>
-                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Brought In by</th>
-                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Joined on</th>
+                                    <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Address</th>
                                 </tr>
+                                <br />
                             </thead>
                             <tbody>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">Sub Associate</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">Sub Associate</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">Sub Associate</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">Sub Associate</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                </tr>
-                                {/*  */}
-                                <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">Jacob Jones</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">jackson.graham@example.com</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">Sub Associate</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                </tr>
-
-
-
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="7" className="text-center pt-20"><Loader /></td>
+                                    </tr>
+                                ) : Associate?.investors?.length > 0 ? (
+                                    Associate?.investors?.map((item, index) => (
+                                        <tr key={index} className='hover:bg-[#F6F8FE] cursor-pointer' onClick={() => navigate(`/InvestorDetail/${item?.id}`)}>
+                                            <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
+                                                <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
+                                                <span className='my-auto text-[16px]'>{item?.name || "N/A"}</span></td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">{item?.phone || "N/A"}</td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">{item?.email || "N/A"}</td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">{item?.address || "N/A"}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="7" className="text-center pt-20"><NoDataFound /></td>
+                                    </tr>
+                                )}
                             </tbody>
                         </table>
                     </div>
                 </div>
                 {/* TABLE 2 */}
-                <div className="mx-5 grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-5">
+                <div className="mx-5 mb-5 grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-5">
                     {/*  */}
                     <div className="mt-5 p-5 bg-white rounded-[10px]">
                         <div className="flex justify-between ">
@@ -410,18 +337,6 @@ const AssociateDetails = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/*  */}
-                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                        <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                    </tr>
-                                    {/*  */}
-                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                        <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                    </tr>
                                     {/*  */}
                                     <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
@@ -452,18 +367,6 @@ const AssociateDetails = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/*  */}
-                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                        <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                    </tr>
-                                    {/*  */}
-                                    <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
-                                        <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                        <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                    </tr>
                                     {/*  */}
                                     <tr className='hover:bg-[#F6F8FE] cursor-pointer' >
                                         <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
@@ -477,7 +380,7 @@ const AssociateDetails = () => {
 
                 </div>
                 {/* TABLE */}
-                <div className="m-5 p-5 bg-white rounded-[10px]">
+                {/* <div className="m-5 p-5 bg-white rounded-[10px]">
                     <div className="flex justify-between ">
                         <div className=" my-auto">
                             <h1 className="text-[18px]">Earning Transactions </h1>
@@ -498,7 +401,7 @@ const AssociateDetails = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/*  */}
+                             
                                 <tr className='cursor-pointer' onClick={() => navigate('/AssociateEarningDetails')}>
                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
                                     <td className="py-2 px-4 text-[16px] text-dark">$500</td>
@@ -508,31 +411,12 @@ const AssociateDetails = () => {
                                     <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
                                 </tr>
                                 <br />
-                                {/*  */}
-                                <tr className='cursor-pointer' onClick={() => navigate('/AssociateEarningDetails')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">Payouts</td>
-                                    <td className="py-2 px-0 text-[16px] text-textgreen bg-lightgreen 
-                                    rounded-full text-center font-semibold">Processed</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                </tr>
-                                <br />
-                                {/*  */}
-                                <tr className='cursor-pointer' onClick={() => navigate('/AssociateEarningDetails')}>
-                                    <td className="py-2 px-4 text-[16px] text-dark flex gap-2">5czi9fdfs5czi9fdfs</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">$500</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">Payouts</td>
-                                    <td className="py-2 px-0 text-[16px] text-textgreen bg-lightgreen 
-                                    rounded-full text-center font-semibold">Processed</td>
-                                    <td className="py-2 px-4 text-[16px] text-dark">27 Oct 2022 12:05 PM</td>
-                                </tr>
-
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> */}
             </div>
+            <AddAssociate open={open} setOpen={setOpen} AssociateID={id} />
         </div>
     )
 }

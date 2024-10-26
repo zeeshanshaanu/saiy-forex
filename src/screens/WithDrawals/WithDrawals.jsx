@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Dropdown, Button } from 'antd'
 import { DownOutlined, DownloadOutlined } from '@ant-design/icons'
 import Logo1 from "../../assets/images/Logo1.svg"
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import NoDataFound from '../../components/NoData/NodataFound'
+import Loader from '../../components/Loader/Loader'
+import CustomizedDialogs from '../../components/Dialog/Dialog'
 // 
-
 // 
 const items = [
     {
@@ -22,6 +26,39 @@ const items = [
     },
 ];
 const WithDrawals = () => {
+
+    const [loading, setLoading] = useState(false);
+    const [Withdrawal, setWithdrawal] = useState([]);
+    const token = useSelector((state) => state?.auth?.token);
+
+    const GetData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get("/Withdrawal", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            console.warn(response.data?.data);
+            setWithdrawal(response?.data?.data);
+
+            setLoading(false)
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetData();
+    }, []);
+
+    const RefreshInvestorlist = () => {
+        GetData();
+    };
+
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
             <div className="max-h-[100vh] overflow-auto">
@@ -94,83 +131,57 @@ const WithDrawals = () => {
                                 <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">Withdrawal&nbsp;Status</th>
                                 <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">Request&nbsp;on</th>
                                 <th className="py-3 px-5 font-[400] text-[14px] text-lightGray text-left">KYC&nbsp;Status</th>
+                                <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="p-5">
-                            <tr className="cursor-pointer">
-                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Processed</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;June&nbsp;202</td>
-                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Active</td>
-                            </tr>
-                            <br />
-                            <tr className="cursor-pointer">
-                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-5 text-[16px] text-textRed bg-lightRed rounded-full text-center font-semibold">Rejected</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;March&nbsp;202</td>
-                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
-                            </tr>
-                            <br />
-                            <tr className="cursor-pointer">
-                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Pending</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;April&nbsp;202 </td>
-                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
-                            </tr>
-                            <br />
-                            <tr className="cursor-pointer">
-                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Processed</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;June&nbsp;202</td>
-                                <td className="py-1 px-5 text-[16px] text-textgreen bg-lightgreen rounded-full text-center font-semibold">Active</td>
-                            </tr>
-                            <br />
-                            <tr className="cursor-pointer">
-                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-5 text-[16px] text-textRed bg-lightRed rounded-full text-center font-semibold">Rejected</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;March&nbsp;202</td>
-                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
-                            </tr>
-                            <br />
-                            <tr className="cursor-pointer">
-                                <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="py-1 px-5 text-[16px] text-dark">debbie.baker@example.com</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">$1001</td>
-                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Pending</td>
-                                <td className="py-1 px-5 text-[16px] text-dark">15&nbsp;April&nbsp;202 </td>
-                                <td className="py-1 px-5 text-[16px] text-textYellow bg-lightYellow rounded-full text-center font-semibold">Inactive</td>
-                            </tr>
+                            {loading ? (
+                                <tr>
+                                    <td colSpan="6" className="text-center pt-20"><Loader /></td>
+                                </tr>
+                            ) : Withdrawal?.length > 0 ? (
+                                Withdrawal.map((item, index) => (
+                                    <>
+                                        <br />
+                                        <tr key={index}>
+                                            <td className="py-2 px-5 text-[16px] text-dark flex gap-2">
+                                                <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
+                                                <span className="my-auto">{item?.name || "N/A"}a</span>
+                                            </td>
+                                            <td className="py-1 px-5 text-[16px] text-dark">{item?.email || "N/A"}</td>
+                                            <td className="py-1 px-5 text-[16px] text-dark">${item?.withdrawal_amount || "N/A"}</td>
+                                             <td className={`py-0 px-4 text-[16px] rounded-full text-center font-semibold 
+                                                ${item?.withdrawal_status === "processed" ? "text-textgreen bg-lightgreen" :
+                                                    item?.withdrawal_status === "rejected" ? "text-textRed bg-lightRed" :
+                                                        item?.withdrawal_status === "pending" ? "text-textYellow bg-lightYellow" : null}`}>
+                                                {item?.withdrawal_status}
+                                            </td>
+                                            <td className="py-1 px-5 text-[16px] text-dark">{item?.Request_date || "N/A"}</td>
+                                            <td className={`py-1 px-5 text-[16px] rounded-full text-center font-semibold
+                                                        ${item?.KYC_status === "active" ? "text-textgreen bg-lightgreen" :
+                                                    item?.KYC_status === "inactive" ? "text-textYellow bg-lightYellow" : null} `}>
+                                                {item?.KYC_status}
+                                            </td>
+                                            <td className="py-2 px-4 text-[16px] text-dark">
+                                                <span className='cursor-pointer my-auto'>
+                                                    <CustomizedDialogs
+                                                        WithdrawalID={item?._id}
+                                                        onlistUpdate={RefreshInvestorlist}
+                                                    />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="6" className="text-center pt-20"><NoDataFound /></td>
+                                </tr>
+                            )}
                             <br />
 
-                        </tbody>
+
+                        </tbody >
                     </table>
                 </div>
             </div>

@@ -14,6 +14,8 @@ import Loader from '../../components/Loader/Loader';
 import NoDataFound from '../../components/NoData/NodataFound';
 import AddAssociate from './AddAssociate';
 import AddPortfolio from '../Portfolios/AddPortfolio.jsx';
+import CustomizedDialogs from '../../components/Dialog/Dialog.js';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 // 
 // 
@@ -37,9 +39,10 @@ const MainAssociates = () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [Associate, setAssociate] = useState([]);
-    const [openEdit, setOpenEdit] = useState(false);
+    const [TotalAssociate, setTotalAssociate] = useState([]);
+    const [TotalSubAssociate, setTotalSubAssociate] = useState([]);
     const token = useSelector((state) => state?.auth?.token);
-
+    
     const GetData = async () => {
         setLoading(true)
         try {
@@ -49,8 +52,14 @@ const MainAssociates = () => {
                 },
                 withCredentials: true
             });
-            console.warn(response.data?.data);
+            // console.warn(response.data?.data);
             setAssociate(response?.data?.data);
+            // 
+            const mainAssociatesCount = response?.data?.data?.filter((associate) => associate?.level === "main associate")?.length;
+            setTotalAssociate(mainAssociatesCount > 0 ? [mainAssociatesCount] : []);
+            // 
+            const SubAssociatesCount = response?.data?.data?.filter((associate) => associate?.level === "sub associate")?.length;
+            setTotalSubAssociate(SubAssociatesCount > 0 ? [SubAssociatesCount] : []);
             setLoading(false)
 
         } catch (err) {
@@ -107,13 +116,13 @@ const MainAssociates = () => {
                     <div className="rounded-[10px] bg-white p-5 mt-5">
                         <img src={SingleAssociate} alt={SingleAssociate} />
                         <h5 className="text-lightGray mt-[12px] text-[16px]">Main Associates</h5>
-                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">42</h2>
+                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">{TotalAssociate}</h2>
                     </div>
                     {/*  */}
                     <div className="rounded-[10px] bg-white p-5 mt-5">
                         <img src={TotalInvestors} alt={TotalInvestors} />
                         <h5 className="text-lightGray mt-[12px] text-[16px]">Sub Associates</h5>
-                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">$50,322</h2>
+                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">{TotalSubAssociate}</h2>
                     </div>
                     {/*  */}
                     <div className="rounded-[10px] bg-white p-5 mt-5">
@@ -146,6 +155,7 @@ const MainAssociates = () => {
                                         <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Level</th>
                                         <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Earned</th>
                                         <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Paid Out</th>
+                                        <th className="py-2 px-4 font-[400] tetx-[14px] text-lightGray text-left">Actions</th>
                                     </tr>
                                 </thead>
                                 <br />
@@ -157,17 +167,32 @@ const MainAssociates = () => {
                                     ) : Associate?.length > 0 ? (
                                         Associate.map((item, index) => (
                                             <>
-                                                <tr key={index} className='cursor-pointer' onClick={() => navigate(`/AssociateDetails/${item?._id}`)}>
+                                                <tr key={index} className=''>
                                                     <td className="py-2 px-4 text-[16px] text-dark flex gap-2">
                                                         <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
                                                         <span className='my-auto'>{item?.name || "N/A"}</span></td>
                                                     <td className="py-2 px-4 text-[16px] text-dark">{item?.email || "N/A"}</td>
-                                                    <td className={`py-0 px-1 text-[16px] rounded-full text-center font-semibold 
-                                                        ${item?.level === "Main Associate" ? "text-textgreen bg-lightgreen" : "text-textYellow bg-lightYellow"}                                                        `}>
+                                                    <td className={`py-0 px-4 text-[16px] rounded-full text-center font-semibold 
+                                                        ${item?.level === "main associate" ? "text-textgreen bg-lightgreen" :
+                                                            item?.level === "investor" ? "text-textRed bg-lightRed" :
+                                                                item?.level === "admin" ? "text-white bg-lightGray" :
+                                                                    item?.level === "sub associate" ? "text-textYellow bg-lightYellow" : null}                                 
+                                                                                 `}>
 
                                                         {item?.level || "N/A"}</td>
                                                     <td className="py-2 px-4 text-[16px] text-dark">${item?.earn || "N/A"}</td>
                                                     <td className="py-2 px-4 text-[16px] text-dark">${item?.paid_out || "N/A"}</td>
+                                                    <td className="py-2 px-4 text-[16px] text-dark">
+                                                        <span className='cursor-pointer my-auto'
+                                                            onClick={() => navigate(`/AssociateDetails/${item?._id}`)}><RemoveRedEyeIcon /></span>
+                                                        <span className='cursor-pointer my-auto'>
+                                                            <CustomizedDialogs
+                                                                AssociateID={item?._id}
+                                                                onlistUpdate={RefreshInvestorlist}
+                                                            />
+                                                        </span>
+                                                    </td>
+
                                                 </tr>
                                                 <br />
                                             </>

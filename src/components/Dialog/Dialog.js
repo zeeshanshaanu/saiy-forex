@@ -21,7 +21,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-export default function CustomizedDialogs({ deleteID, onlistUpdate, PortfolioDeleteID }) {
+export default function CustomizedDialogs({ deleteID, onlistUpdate, PortfolioDeleteID, AssociateID, WithdrawalID, UserID }) {
     const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
@@ -62,7 +62,35 @@ export default function CustomizedDialogs({ deleteID, onlistUpdate, PortfolioDel
                     },
                     withCredentials: true
                 });
-            } else {
+            }
+            else if (AssociateID) {
+                response = await axios.delete(`/Associate/${AssociateID}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true
+                });
+
+            }
+            else if (WithdrawalID) {
+                response = await axios.delete(`/Withdrawal/${WithdrawalID}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true
+                });
+
+            }
+            else if (UserID) {
+                response = await axios.delete(`/user/delete-user/${UserID}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    withCredentials: true
+                });
+
+            }
+            else {
                 response = await axios.delete(`/portfolio/${PortfolioDeleteID}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,

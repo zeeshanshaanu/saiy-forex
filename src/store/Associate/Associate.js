@@ -29,8 +29,9 @@ export const createAssociate = createAsyncThunk(
 //   Update-Associate 
 export const UpdateAssociate = createAsyncThunk(
     'Associate/UpdateAssociate',
-    async ({ AssociateID, formData }, thunkAPI) => {
+    async ({ formData, AssociateID }, thunkAPI) => {
         console.log("Update is calling with AssociateID...>>>", AssociateID)
+        console.log("Update is calling with formData...>>>", formData)
         const token = thunkAPI.getState().auth.token;
         const response = await axios.put(
             `Associate/${AssociateID}`,

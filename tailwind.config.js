@@ -19,6 +19,8 @@ export default {
         lightRed: "rgba(229, 97, 1, 0.1)",
         textYellow: "#E5B001",
         lightYellow: "rgba(229, 176, 1, 0.1)",
+        textGray: "#828EB0",
+        lightGray: "rgba(20, 20, 20, 0.5)",
       },
     },
   },

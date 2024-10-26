@@ -11,7 +11,6 @@ import { Button, Breadcrumb } from 'antd'
 import { EditOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from "react-router-dom";
 import PortfolioSetRoi from './PortfolioSetRoi'
-import EditPortfolio from './EditPortfolio'
 import AddPortfolio from './AddPortfolio'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
@@ -31,6 +30,7 @@ const PortfolioDetails = () => {
     const showDrawer = () => {
         setOpenEdit(true);
     };
+    
     const showDrawer2 = () => {
         setOpen(true);
     };
@@ -69,7 +69,7 @@ const PortfolioDetails = () => {
                         <SidebarHeader />
                     </div>
                     <div className="px-5 lg:flex md:flex justify-between mt-5">
-                        <div className=" my-auto">
+                        <div className="my-auto">
                             <Breadcrumb
                                 items={[
                                     {

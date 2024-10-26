@@ -158,8 +158,7 @@ const LoginScreen = () => {
                                 <div className="flex justify-end mt-[10px]">
                                     <p className="forgotPass cursor-pointer text-[16px] text-lightGray" onClick={() => navigate("/forgot")}>Forgot password?</p>
                                 </div>
-                                <button
-                                    type='submit'
+                                <button type='submit'
                                     className={`mt-[40px] Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
                                     disabled={!isFormValid || loading}
                                 >

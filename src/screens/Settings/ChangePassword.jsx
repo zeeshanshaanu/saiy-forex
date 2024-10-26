@@ -221,21 +221,15 @@ const ChangePassword = ({ open, setOpen }) => {
                             </Box>
                         </div>
                         <div className="my-5 flex gap-5 w-full">
-                            <div className="my-auto w-2/4">
-                                <button
-                                    type='submit'
-                                    className={` Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
-                                    disabled={!isFormValid || loading}
-                                >
-                                    {loading ? <CircularProgress size={24} color="inherit" /> : 'Update'}
-                                </button>
-                            </div>
-                            <div className="my-auto w-2/4">
-                                <button onClick={onClose} className="Login_Button py-[15px] px-[30px] text-center bg-white text-dark w-full rounded-[10px] border border-lightGray">
-                                    Cancel
-                                </button>
-                            </div>
+                            <button
+                                type='submit'
+                                className={` Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
+                                disabled={!isFormValid || loading}
+                            >
+                                {loading ? <CircularProgress size={24} color="inherit" /> : 'Update'}
+                            </button>
                         </div>
+
                     </form>
                 </div>
             </Drawer>

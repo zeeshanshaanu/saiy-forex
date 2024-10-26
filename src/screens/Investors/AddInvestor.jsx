@@ -156,25 +156,19 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         formDataToSend.append("email", formData.email);
         formDataToSend.append("address", formData.address);
         formDataToSend.append("iban", formData.iban);
-        // formDataToSend.append("documents", formData.documents);
         pdfFiles.forEach((file) => {
             formDataToSend.append("documents", file);
         });
 
         try {
             let response;
-
             if (!InvestorID) {
-                console.log("POST is calling...");
                 response = await axios.post('investor', formDataToSend, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
             } else {
-                console.log("PUT is calling...");
-                console.log("PUT is calling...>>>>", formDataToSend);
-
                 response = await axios.put(`investor/${InvestorID}`, formDataToSend, {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -463,24 +457,15 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div className="my-5 flex gap-5 w-full">
-                                <div className="my-auto w-2/4">
 
-                                    <button
-                                        type='submit'
-                                        className={`Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
-                                        disabled={!isFormValid || updateloading}
-                                    >
-                                        {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Create'}
-                                    </button>
-                                </div>
-                                <div className="my-auto w-2/4">
-                                    <button onClick={onClose}
-                                        className="Login_Button py-[15px] px-[30px] text-center bg-white text-dark w-full rounded-[10px] border border-lightGray">
-                                        Cancel
-                                    </button>
-                                </div>
+                            <div className="my-5">
+                                <button
+                                    type='submit'
+                                    className={`Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
+                                    disabled={!isFormValid || updateloading}
+                                >
+                                    {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Submit'}
+                                </button>
                             </div>
                         </form>
 

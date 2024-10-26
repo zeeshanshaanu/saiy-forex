@@ -68,8 +68,6 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
     const [loading, setLoading] = useState(false);
     const [Investors, setInvestors] = useState([]);
 
-    // console.log("formData-->>>>", formData);
-    // 
     const GetData = async () => {
         setLoading(true)
         try {
@@ -303,7 +301,7 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                                             </Select>
                                         </FormControl>
                                     </div>
-                                    
+
                                     <div className="mt-5 w-full">
                                         <Autocomplete
                                             disablePortal
@@ -337,8 +335,7 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                                 disabled={!isFormValid || updateloading}
 
                                 className={`Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}>
-                                {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Create'}
-
+                                {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Submit'}
                             </button>
                         </div>
                     </form>

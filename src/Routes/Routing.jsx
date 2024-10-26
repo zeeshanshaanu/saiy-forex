@@ -43,7 +43,7 @@ const AppRouting = () => {
           <Route path="WithDrawals" element={<WithDrawals />} />
           {/*  */}
           <Route path="UserManagement" element={<UserManagement />} />
-          <Route path="UserPermissions" element={<UserPermissions />} />
+          <Route path="UserPermissions/:id" element={<UserPermissions />} />
           {/*  */}
           <Route path="Notifications" element={<Notifications />} />
           {/*  */}

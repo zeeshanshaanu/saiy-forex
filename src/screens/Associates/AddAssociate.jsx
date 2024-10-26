@@ -10,9 +10,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CameraOutlined } from '@ant-design/icons';
 import { createAssociate, UpdateAssociate } from '../../store/Associate/Associate';
-
-// **** //
-// **** //
 const useStyles = makeStyles({
     inputRoot: {
         '& .MuiOutlinedInput-root': {
@@ -35,7 +32,6 @@ const useStyles = makeStyles({
         },
     },
 });
-
 const level = [
     { label: 'admin' },
     { label: 'investor' },
@@ -43,36 +39,33 @@ const level = [
     { label: 'sub associate' },
 ];
 
-const AddAssociate = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
+const initialState = {
+    image: "",
+    name: "",
+    email: "",
+    level: "",
+    earn: "",
+    paid_out: "",
+    investors: []
+};
+const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
     const classes = useStyles();
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const token = useSelector((state) => state?.auth?.token);
-    // 
-    const initialState = {
-        image: "",
-        name: "",
-        email: "",
-        level: "",
-        earn: "",
-        paid_out: "",
-        investors: []
-    };
-    // 
+
     const [updateloading, setUpdateLoading] = useState(false);
     const [formData, setFormData] = useState(initialState);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
     const [loading, setLoading] = useState(false);
     const [Investors, setInvestors] = useState([]);
-
     const [selectedFile, setSelectedFile] = useState({
         file: "",
         filepreview: null,
     });
 
-    // console.log("formData-->>>>", formData);
-    // 
+
     const GetData = async () => {
         setLoading(true)
         try {
@@ -91,40 +84,42 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
             setLoading(false)
         }
     };
-
-    // const PortfolioData = async () => {
-    //     setLoading(true)
-    //     try {
-    //         const response = await axios.get(`/portfolio/${PortfolioID}`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //             withCredentials: true
-    //         });
-    //         setFormData({
-    //             name: response?.data?.data?.name,
-    //             min_investment: response?.data?.data?.min_investment,
-    //             max_investment: response?.data?.data?.max_investment,
-    //             level: response?.data?.data?.level,
-    //             investors: response?.data?.data?.investors,
-    //         });
-
-    //         setLoading(false)
-
-    //     } catch (err) {
-    //         console.error(err.response);
-    //         setLoading(false)
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     PortfolioData();
-    // }, [PortfolioID]);
-
-    // 
     useEffect(() => {
         GetData();
     }, []);
+
+
+    const AssociateData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`/Associate/${AssociateID}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            setFormData({
+                name: response?.data?.data?.name,
+                image: response?.data?.data?.image,
+                email: response?.data?.data?.email,
+                level: response?.data?.data?.level,
+                earn: response?.data?.data?.earn,
+                paid_out: response?.data?.data?.paid_out,
+                investors: response?.data?.data?.investors,
+            });
+
+            setLoading(false)
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        AssociateData();
+    }, [AssociateID]);
+
 
     const handleImageChange = (event) => {
         if (event?.target?.files[0]) {
@@ -136,32 +131,58 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
         };
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         setUpdateLoading(true);
-        const action = PortfolioID ? UpdateAssociate : createAssociate;
-        // 
-        dispatch(
-            PortfolioID ? action({ PortfolioID, formData }) : action(formData)
-        ).then((data) => {
-            if (data?.payload?.status === 'success') {
-                setAlertMessage(data?.payload?.message);
-                setAlertSeverity(data?.payload?.status);
+        const formPayload = new FormData();
+        formPayload.append('image', selectedFile.file);
+        formPayload.append('name', formData.name);
+        formPayload.append('email', formData.email);
+        formPayload.append('level', formData.level);
+        formPayload.append('earn', formData.earn);
+        formPayload.append('paid_out', formData.paid_out);
+        formPayload.append('investors', JSON.stringify(formData.investors));
+
+        try {
+            let response;
+            if (!AssociateID) {
+                response = await axios.post('Associate', formPayload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+            } else {
+                response = await axios.put(`Associate/${AssociateID}`, formPayload, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+            }
+
+            if (response?.data?.status === 'success') {
+                setAlertMessage(response?.data?.message);
+                setAlertSeverity('success');
                 setTimeout(() => {
                     setOpen(false);
-                    setFormData("")
                     setUpdateLoading(false);
-                    PortfolioID ?
-                        navigate("/MainAssociates") :
-                        onlistUpdate();
+                    {
+                        AssociateID ?
+                            navigate("/MainAssociates") :
+                            onlistUpdate();
+                    }
                 }, 2000);
             } else {
-                setAlertMessage(data?.payload?.message);
-                setAlertSeverity("error");
+
+                setAlertMessage(response?.data?.message);
+                setAlertSeverity('error');
                 setUpdateLoading(false);
-                setOpen(false);
             }
-        });
+        } catch (error) {
+            console.log(error);
+            setAlertMessage("Failed to update profile");
+            setAlertSeverity("error");
+            setUpdateLoading(false);
+        }
     };
 
     const handleChange = (event) => {
@@ -187,20 +208,17 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
     const onClose = () => {
         setOpen(false);
     };
-
     const closeAlert = () => {
         setAlertMessage(null);
         setAlertSeverity(null);
     };
-
     const isFormValid = formData.name && formData.email && formData.earn && formData.level && selectedFile.filepreview || formData.image && formData.paid_out
-    // 
     return (
         <div>
             <Drawer className="p-0 m-0 rounded-l-[10px]" header={false} open={open} onClose={onClose} closeIcon={null}>
                 <div className="flex flex-col h-full">
                     <div className="flex justify-between border-b pb-[20px]">
-                        <h2 className='text-dark font-bold my-auto text-[18px]'>{PortfolioID ? "Edit portfolio" : "Add portfolio"}</h2>
+                        <h2 className='text-dark font-bold my-auto text-[18px]'>{AssociateID ? "Edit associate" : "Add associate"}</h2>
                         <img src={CloseIcon} alt="Close" onClick={onClose} className='my-auto cursor-pointer' />
                     </div>
                     <form onSubmit={handleSubmit}>
@@ -228,8 +246,8 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                                     )}
                                 </Box>
 
-                                <div className={`mt-5 ${selectedFile?.file ? "absolute top-[2.3rem] left-[40%]" : ""}`}>
-                                    <Button component="label" className=''>
+                                <div className={selectedFile?.file ? "mt-5 absolute top-[2.3rem] left-[40%]" : "mt-5"}>
+                                    <Button component="label" >
                                         <CameraOutlined className='text-[30px] text-dark' />
                                         <input
                                             type="file"
@@ -418,7 +436,7 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
                                 disabled={!isFormValid || updateloading}
 
                                 className={`Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}>
-                                {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Create'}
+                                {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Submit'}
 
                             </button>
                         </div>

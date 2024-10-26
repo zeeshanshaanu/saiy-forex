@@ -376,22 +376,13 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                                 </div>
                             </div>
                             <div className="my-5 flex gap-5 w-full">
-                                <div className="my-auto w-2/4">
-
-                                    <button
-                                        type='submit'
-                                        className={`Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
-                                        disabled={!isFormValid || updateloading}
-                                    >
-                                        {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Update'}
-                                    </button>
-                                </div>
-                                <div className="my-auto w-2/4">
-                                    <button onClick={onClose}
-                                        className="Login_Button py-[15px] px-[30px] text-center bg-white text-dark w-full rounded-[10px] border border-lightGray">
-                                        Cancel
-                                    </button>
-                                </div>
+                                <button
+                                    type='submit'
+                                    className={`Login_Button py-[15px] text-center w-full rounded-[10px] ${isFormValid ? 'bg-dark text-white' : 'bg-gray-400 text-gray-700'}`}
+                                    disabled={!isFormValid || updateloading}
+                                >
+                                    {updateloading ? <CircularProgress size={20} color="inherit" /> : 'Update'}
+                                </button>
                             </div>
                         </form>
 
