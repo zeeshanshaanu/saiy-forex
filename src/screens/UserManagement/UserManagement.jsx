@@ -1,33 +1,56 @@
 import React, { useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button } from 'antd'
-// import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { DownloadOutlined, PlusOutlined, EyeOutlined, SettingOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
 import Logo1 from "../../assets/images/Logo1.svg"
-import Dot from "../../assets/Icons/Dot.svg"
 import { useNavigate } from 'react-router-dom';
 import CreateUser from './CreateUser.jsx'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import Loader from '../../components/Loader/Loader'
 import NoDataFound from '../../components/NoData/NodataFound'
-import CustomizedDialogs from '../../components/Dialog/Dialog'
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Lottie from 'react-lottie';
+import { CircularProgress } from '@mui/material';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import animationData from "../../assets/lottiefiles/deleteLottie.json";
+import SimpleAlert from '../../components/Alert-notification/Alert.js';
 
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    '& .MuiDialogContent-root': {
+        padding: theme.spacing(2),
+    },
+    '& .MuiDialogActions-root': {
+        padding: theme.spacing(1),
+    },
+}));
 
 const UserManagement = () => {
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
     const navigate = useNavigate()
     const [openEdit, setOpenEdit] = useState(false);
     const [loading, setLoading] = useState(false);
     const [Users, setUsers] = useState([]);
     const [anchorEl, setAnchorEl] = useState(null);
-
+    const [Deleteopen, setDeleteOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState(null);
+    const [alertSeverity, setAlertSeverity] = useState(null);
+    const [Deleteloading, setDeleteLoading] = useState(false);
+    const [userID, setUserID] = useState("");
     const token = useSelector((state) => state?.auth?.token);
-
+    const open = Boolean(anchorEl);
     const GetData = async () => {
         setLoading(true)
         try {
@@ -59,8 +82,6 @@ const UserManagement = () => {
     const RefreshInvestorlist = () => {
         GetData();
     };
-
-    const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -68,32 +89,50 @@ const UserManagement = () => {
         setAnchorEl(null);
     };
 
-    const items = [
-        {
-            label: <span className='hover:text-yellow1'><EyeOutlined /> &nbsp;View Details</span>,
-            key: '0',
-        },
-        {
-            label: <span className='hover:text-yellow1' onClick={() => navigate("/UserPermissions")}><SettingOutlined /> &nbsp;Change Permissions</span>,
-            key: '1',
-        },
-        {
-            label: <span className='hover:text-yellow1'><CloseOutlined /> &nbsp;Deactivate Account</span>,
-            key: '3',
-        },
-        {
-            label: <span className='hover:text-yellow1'>
-                <CustomizedDialogs
-                    // AssociateID={item?._id}
-                    onlistUpdate={RefreshInvestorlist}
-                />
-            </span>,
-            key: '4',
-        },
-    ];
+    const handleClickOpen = () => {
+        setDeleteOpen(true);
+    };
 
+    const handledeleteClose = () => {
+        setDeleteOpen(false);
+    };
 
+    const closeAlert = () => {
+        setAlertMessage(null);
+        setAlertSeverity(null);
+    };
 
+    const handleDelete = async () => {
+        setDeleteLoading(true)
+        try {
+
+            const response = await axios.delete(`/user/delete-user/${userID}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            console.log(response?.data);
+
+            if (response?.data?.status === 'success') {
+                setTimeout(() => {
+                    setAlertMessage(response?.data?.message);
+                    setAlertSeverity(response?.data?.status);
+                    setDeleteOpen(false);
+                    setDeleteLoading(false);
+                    RefreshInvestorlist();
+                }, 1000);
+            } else {
+                setAlertMessage(response?.data?.message);
+                setAlertSeverity("error");
+                setDeleteLoading(false);
+            }
+
+        } catch (err) {
+            console.error(err.response?.data);
+            setDeleteLoading(false)
+        }
+    };
 
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
@@ -166,57 +205,46 @@ const UserManagement = () => {
                                             <td className="py-1 px-4 text-[16px] text-dark">{item?.creationOn?.slice(0, 10) || "N/A"}</td>
 
                                             <td className="py-2 px-4 text-[16px] text-dark">
-                                                {/* <span className='cursor-pointer my-auto'
-                                                    onClick={() => navigate(`/AssociateDetails/${item?._id}`)}><RemoveRedEyeIcon /></span>
-                                                <span className='cursor-pointer my-auto'>
-                                                    <CustomizedDialogs
-                                                        UserID={item?._id}
-                                                        onlistUpdate={RefreshInvestorlist}
-                                                    />
-                                                </span> */}
 
-                                                <div>
-                                                    <span className="cursor-pointer" onClick={handleClick}>
-                                                        <MoreVertIcon />
-                                                    </span>
-                                                    <Menu
-                                                        id="basic-menu"
-                                                        anchorEl={anchorEl}
-                                                        open={open}
-                                                        onClose={handleClose}
-                                                        MenuListProps={{
-                                                            'aria-labelledby': 'basic-button',
-                                                        }}
-                                                    >
-                                                        <MenuItem>
-                                                            <span className='cursor-pointer my-auto hover:text-yellow1'
-                                                                onClick={() => navigate(`/UserPermissions/${item?._id}`)}><EyeOutlined /> &nbsp;View Details
-                                                            </span>
-                                                        </MenuItem>
+                                                <span className="cursor-pointer" onClick={handleClick}>
+                                                    <MoreVertIcon />
+                                                </span>
+                                                <Menu
+                                                    id="basic-menu"
+                                                    anchorEl={anchorEl}
+                                                    open={open}
+                                                    onClose={handleClose}
+                                                    MenuListProps={{
+                                                        'aria-labelledby': 'basic-button',
+                                                    }}
+                                                >
+                                                    <MenuItem>
+                                                        <span className='cursor-pointer my-auto hover:text-yellow1'><EyeOutlined /> &nbsp;View Details
+                                                        </span>
+                                                    </MenuItem>
 
-                                                        <MenuItem>
-                                                            <span className='cursor-pointer my-auto hover:text-yellow1'
-                                                                onClick={() => navigate(`/UserPermissions/${item?._id}`)}><SettingOutlined /> &nbsp;Change Permissions
-                                                            </span>
-                                                        </MenuItem>
+                                                    <MenuItem>
+                                                        <span className='cursor-pointer my-auto hover:text-yellow1'
+                                                            onClick={() => {
+                                                                navigate(`/UserPermissions/${item?._id}`)
+                                                            }}><SettingOutlined /> &nbsp;Change Permissions
+                                                        </span>
+                                                    </MenuItem>
 
-                                                        <MenuItem>
-                                                            <span className='cursor-pointer my-auto hover:text-yellow1'><CloseOutlined /> &nbsp;Deactivate Account
-                                                            </span>
-                                                        </MenuItem>
+                                                    <MenuItem>
+                                                        <span className='cursor-pointer my-auto hover:text-yellow1'><CloseOutlined /> &nbsp;Deactivate Account
+                                                        </span>
+                                                    </MenuItem>
+                                                    <MenuItem>
+                                                        <span className='cursor-pointer my-auto hover:text-yellow1'
 
-                                                        <MenuItem>
-                                                            <span className='cursor-pointer my-auto hover:text-yellow1'>
-                                                                <CustomizedDialogs
-                                                                    UserID={item?._id}
-                                                                    onlistUpdate={RefreshInvestorlist}
-                                                                />
-                                                            </span>
-                                                        </MenuItem>
-
-                                                    </Menu>
-                                                </div>
-
+                                                            onClick={() => {
+                                                                setUserID(item?._id);
+                                                                handleClickOpen();
+                                                            }}><DeleteOutlined /> &nbsp;Delete Account
+                                                        </span>
+                                                    </MenuItem>
+                                                </Menu>
 
                                             </td>
 
@@ -231,6 +259,56 @@ const UserManagement = () => {
                         </tbody>
                     </table>
                 </div>
+
+                <BootstrapDialog
+                    onClose={handledeleteClose}
+                    aria-labelledby="customized-dialog-title"
+                    open={Deleteopen}
+                >
+                    <div className="">
+                        <CancelOutlinedIcon className='flex justify-end cursor-pointer text-red-400 flex float-right m-2' onClick={handleClose} />
+                        <div className="px-10 py-5 text-center mt-5">
+
+                            <div>
+                                <Lottie
+                                    options={defaultOptions}
+                                    width={150}
+                                    height={100}
+                                />
+                                <h2 className="mt-4 text-[24px] font-semibold">Are you sure?</h2>
+                                <p className="my-4 text-[14px] text-dark1">Do you really want to delete these records? <br /> This process cannot be undone.</p>
+                            </div>
+
+                            <div className="mt-5 flex justify-between gap-x-5">
+                                <div className="cursor-pointer">
+                                    <button onClick={handledeleteClose}
+                                        className="font-semibold py-[8px] px-[30px] text-center bg-white 
+                                        text-dark w-full rounded-[10px] border border-lightGray">
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div className="cursor-pointer">
+                                    <button
+                                        disabled={Deleteloading}
+                                        onClick={handleDelete}
+                                        className="font-semibold py-[8px] px-[30px] text-center bg-red-400 
+                                            text-white w-full rounded-[10px] border border-red-400">
+                                        {Deleteloading ? <CircularProgress size={20} color="inherit" /> : 'Delete'}
+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </BootstrapDialog>
+                {alertMessage && (
+                    <SimpleAlert
+                        message={alertMessage}
+                        severity={alertSeverity}
+                        onClose={closeAlert}
+                    />
+                )}
                 <CreateUser openEdit={openEdit} setOpenEdit={setOpenEdit} onlistUpdate={RefreshInvestorlist} />
             </div>
         </div>

@@ -1,14 +1,45 @@
 import { Breadcrumb, Button } from 'antd'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import DummyImg from "../../assets/images/DummyImg1.png"
 import Checkbox from '@mui/material/Checkbox';
+import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 const UserPermissions = () => {
     const navigate = useNavigate()
+    const { id } = useParams()
+    const token = useSelector((state) => state?.auth?.token);
+    // 
+    const [loading, setLoading] = useState(false);
+    const [Associate, setAssociate] = useState({});
+    console.log(Associate);
+    
+    const GetData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`/user/all-Users/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            setAssociate(response?.data?.data);
+            setLoading(false)
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetData();
+    }, []);
+
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
             <div className="max-h-[100vh] overflow-auto">
@@ -43,22 +74,26 @@ const UserPermissions = () => {
                     </div>
                 </div>
                 {/*  */}
-                <div className=" mx-5 mt-[30px] lg:flex justify-between">
-                    <div className="">
-                        <div className="flex gap-3">
-                            <img src={DummyImg} alt="" className="w-[50px] h-[50px] rounded-full my-auto" />
-                            <div className=" my-auto">
-                                <h1 className="text-[20px] font-semibold">Eleanor Pena
-                                    <span className="mx-4 py-1 px-3 text-[12px] text-textgreen bg-lightgreen rounded-full text-center">Active</span>
-                                </h1>
-                                <div className="mt-[4px]">
-                                    <p className="text-lightGray text-[14px]">debbie.baker@example.com</p>
+                {loading ? "loading..."
+                    :
+                    <div className=" mx-5 mt-[30px] lg:flex justify-between">
+                        <div className="">
+                            <div className="flex gap-3">
+                                <img src={Associate?.image || DummyImg} alt={Associate?.image || DummyImg} className="w-[100px] h-[100px] rounded-[100px]" />
+
+                                <div className=" my-auto">
+                                    <h1 className="text-[20px] font-semibold">{Associate?.name || "N/A"}
+                                        <span className="mx-4 py-1 px-3 text-[12px] text-textgreen bg-lightgreen rounded-full text-center">{Associate?.status}</span>
+                                    </h1>
+                                    <div className="mt-[4px]">
+                                        <p className="text-lightGray text-[14px]">{Associate?.email || "N/A"}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div className="text-lightGray text-[16ox]">Last Updated on: {Associate?.creationOn || "N/A"}</div>
                     </div>
-                    <div className="text-lightGray text-[16ox]">Last Updated on: 15 May 2020 9:00 am</div>
-                </div>
+                }
                 {/*  */}
                 <div className=" mx-5 p-5 bg-[#F6F8FE] overflow-x-auto mt-4 rounded-[10px] my-4">
                     <table className="min-w-full ">
