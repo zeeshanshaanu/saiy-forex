@@ -81,13 +81,7 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                 withCredentials: true
             });
             const userData = response.data.user;
-
             setUser(userData);
-
-            setSelectedFile({
-                ...selectedFile,
-                filepreview: userData.image
-            })
             setFormData({
                 name: userData.name,
                 phone: userData.phone,
@@ -105,11 +99,11 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
         finally {
             setUpdateLoading(false);
         }
-    }, [token, selectedFile]);
+    }, [token]);
 
     useEffect(() => {
         GetUserProfile();
-    }, [GetUserProfile]);
+    }, [GetUserProfile, openEdit]);
 
 
     const handleSubmit = async (event) => {

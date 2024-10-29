@@ -89,7 +89,7 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
         GetData();
     }, [GetData]);
 
-    const AssociateData = useCallback(async (AssociateID) => {
+    const AssociateData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`/Associate/${AssociateID}`, {
@@ -114,15 +114,15 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
             console.error(err.response);
             setLoading(false)
         }
-         finally {
+        finally {
             setLoading(false);
         }
-    }, [token]);
+    }, [token, AssociateID]);
 
 
     useEffect(() => {
         AssociateData();
-    }, [AssociateData,AssociateID]);
+    }, [AssociateData]);
 
 
     const handleImageChange = (event) => {

@@ -75,10 +75,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
                 },
                 withCredentials: true
             });
-            setSelectedFile({
-                ...selectedFile,
-                filepreview: response?.data?.data?.image
-            })
+
             setFormData({
                 name: response?.data?.data?.name,
                 phone: response?.data?.data?.phone,
@@ -97,7 +94,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         finally {
             setLoading(false);
         }
-    }, [token, InvestorID, selectedFile]);
+    }, [token, InvestorID]);
 
     useEffect(() => {
         GetUserProfile();
@@ -192,8 +189,6 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         setAlertMessage(null);
         setAlertSeverity(null);
     };
-
-    // const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview || formData.image;
 
     let isFormValid;
 
