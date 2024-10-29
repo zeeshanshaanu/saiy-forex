@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Breadcrumb, Dropdown, Button } from 'antd'
 import Logo1 from "../../assets/images/Logo1.svg"
@@ -40,7 +40,7 @@ const AssociateDetails = () => {
         setOpen(true);
     };
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`/Associate/${id}`, {
@@ -56,11 +56,14 @@ const AssociateDetails = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token,id]);
 
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
 
     return (
         <div className="bg-[#F6F8FE]">

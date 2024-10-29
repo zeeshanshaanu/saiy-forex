@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Layout, Menu, Dropdown } from 'antd';
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import searchIcon from "../../assets/Icons/searchIcon.svg";
@@ -13,7 +13,6 @@ const { Header } = Layout
 // 
 const SidebarHeader = () => {
     const token = useSelector((state) => state?.auth?.token);
-
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     // const [loading, setLoading] = useState(false);
@@ -24,8 +23,7 @@ const SidebarHeader = () => {
     };
 
 
-    const GetUserProfile = async () => {
-        // setLoading(true)
+    const GetUserProfile = useCallback(async () => {
         try {
             const response = await axios.get("user/loggeduser", {
                 headers: {
@@ -39,13 +37,12 @@ const SidebarHeader = () => {
 
         } catch (err) {
             console.error(err.response);
-            // setLoading(false)
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         GetUserProfile();
-    }, []);
+    }, [GetUserProfile]);
 
     // 
     // 

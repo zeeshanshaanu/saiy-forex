@@ -1,5 +1,5 @@
 import { Breadcrumb, Button } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { useNavigate, useParams } from 'react-router-dom'
 import DummyImg from "../../assets/images/DummyImg1.png"
@@ -16,7 +16,7 @@ const UserPermissions = () => {
     const [loading, setLoading] = useState(false);
     const [Associate, setAssociate] = useState({});
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`/user/all-Users/${id}`, {
@@ -32,11 +32,14 @@ const UserPermissions = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token, id]);
 
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
 
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
