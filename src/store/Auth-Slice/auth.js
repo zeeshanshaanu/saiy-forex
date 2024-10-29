@@ -10,37 +10,18 @@ const initialState = {
 };
 
 // Login user
-// export const loginUser = createAsyncThunk(
-//     "/auth/login",
-//     async (formData) => {
-//         const response = await axios.post(
-//             "https://saiy-admin-backend.vercel.app/api/user/login",
-//             // "http://localhost:8000/api/user/login",
-//             formData,
-//             { withCredentials: true }
-//         );
-
-//         return response.data;
-//     }
-// );
-
 export const loginUser = createAsyncThunk(
     "/auth/login",
     async (formData) => {
-        try {
-            const response = await axios.post(
-                "https://saiy-admin-backend.netlify.app/api/user/login",
-                formData,
-                { withCredentials: true }
-            );
-            return response.data;
-        } catch (error) {
-            console.error("Login Error:", error);
-            throw error;
-        }
+        const response = await axios.post(
+            "user/login",
+            formData,
+            { withCredentials: true }
+        );
+
+        return response.data;
     }
 );
-
 
 //   logout user
 export const logoutUser = createAsyncThunk(
