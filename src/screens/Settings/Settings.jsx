@@ -48,7 +48,7 @@ const Settings = () => {
     }, []);
 
     const refreshUserProfile = () => {
-        GetUserProfile(); // This will refresh the user profile
+        GetUserProfile();
     };
 
 

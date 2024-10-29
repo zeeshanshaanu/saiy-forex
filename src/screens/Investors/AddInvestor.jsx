@@ -5,11 +5,10 @@ import { Box, CircularProgress, TextField, Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { CameraOutlined } from '@ant-design/icons';
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import SimpleAlert from '../../components/Alert-notification/Alert';
 import PDFicon from "../../assets/Icons/PDFicon.svg";
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
-import { createInvestor } from '../../store/Investors/Investor';
 import { useNavigate } from 'react-router-dom';
 
 // **** //
@@ -38,10 +37,7 @@ const useStyles = makeStyles({
 });
 
 const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
-    console.log(InvestorID);
-
     const classes = useStyles();
-    const dispatch = useDispatch();
     const navigate = useNavigate()
     const token = useSelector((state) => state?.auth?.token);
     // 
@@ -54,6 +50,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         iban: "",
         documents: []
     };
+
     const [updateloading, setUpdateLoading] = useState(false);
     const [formData, setFormData] = useState(initialState);
     const [alertMessage, setAlertMessage] = useState(null);
@@ -64,10 +61,10 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         file: "",
         filepreview: null,
     });
-    console.log("pdfFiles--->>>>", pdfFiles);
     const onClose = () => {
         setOpenEdit(false);
     };
+    console.log(loading);
 
     const GetUserProfile = async () => {
         setLoading(true)
@@ -161,44 +158,32 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         });
 
         try {
-            let response;
-            if (!InvestorID) {
-                response = await axios.post('investor', formDataToSend, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-            } else {
-                response = await axios.put(`investor/${InvestorID}`, formDataToSend, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-            }
+            const url = InvestorID ? `investor/${InvestorID}` : 'investor';
+            const method = InvestorID ? 'put' : 'post';
 
-            if (response?.data?.status === 'success') {
-                setAlertMessage(response?.data?.message);
-                setAlertSeverity('success');
-                setTimeout(() => {
-                    setOpenEdit(false);
-                    setUpdateLoading(false);
-                    {
-                        InvestorID ?
-                            navigate("/Investors") :
-                            onlistUpdate();
-                    }
-                }, 2000);
-            } else {
-                setAlertMessage(response?.data?.message);
-                setAlertSeverity('error');
+            const response = await axios[method](url, formDataToSend, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // Success handling
+            setAlertMessage(response?.data?.message);
+            setAlertSeverity('success');
+            setTimeout(() => {
+                setFormData(initialState);
+                setOpenEdit(false);
                 setUpdateLoading(false);
-            }
+                InvestorID ? navigate("/Investors") : onlistUpdate();
+            }, 2000);
+
         } catch (error) {
-            setAlertMessage("Failed to update profile");
+            setAlertMessage(error?.response?.data?.message || "Failed to update profile");
             setAlertSeverity("error");
             setUpdateLoading(false);
         }
     };
+
 
     const closeAlert = () => {
         setAlertMessage(null);

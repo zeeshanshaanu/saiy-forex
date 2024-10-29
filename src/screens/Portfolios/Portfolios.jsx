@@ -66,6 +66,7 @@ const Portfolios = () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [portfolio, setPortfolio] = useState([]);
+    const [totalInvestorsShow, settotalInvestorsShow] = useState(null);
 
     const showDrawer = () => {
         setOpen(true);
@@ -83,6 +84,14 @@ const Portfolios = () => {
             });
             console.warn(response.data?.data);
             setPortfolio(response?.data?.data);
+            // const TotalInvestorsData = response?.data?.data?.map((item) => item?.investors?.length)
+            // console.log("this is TotalInvestorsData-->>", TotalInvestorsData);
+
+            const TotalInvestorsData = response?.data?.data?.map((item) => item?.investors?.length);
+            const totalInvestorsCount = TotalInvestorsData.reduce((acc, value) => acc + value, 0);
+            settotalInvestorsShow(totalInvestorsCount);
+
+
             setLoading(false)
 
         } catch (err) {
@@ -135,7 +144,7 @@ const Portfolios = () => {
                     <div className="rounded-[10px] bg-white p-5 mt-5">
                         <img src={TotalPortfolios} alt={TotalPortfolios} />
                         <h5 className="text-lightGray mt-[12px] text-[16px]">Total Portfolios</h5>
-                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">42</h2>
+                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">{portfolio?.length}</h2>
                     </div>
                     {/*  */}
                     <div className="rounded-[10px] bg-white p-5 mt-5">
@@ -147,7 +156,7 @@ const Portfolios = () => {
                     <div className="rounded-[10px] bg-white p-5 mt-5">
                         <img src={TotalInvestors} alt={TotalInvestors} />
                         <h5 className="text-lightGray mt-[12px] text-[16px]">Total Investors</h5>
-                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">13</h2>
+                        <h2 className="text-dark text-[20px] font-bold mt-[12px]">{totalInvestorsShow}</h2>
                     </div>
                     {/*  */}
                     <div className="rounded-[10px] bg-white p-5 mt-5">
@@ -168,7 +177,7 @@ const Portfolios = () => {
                             <div key={index} className="rounded-[10px] bg-white p-5 mt-5 drop-shadow-md hover:drop-shadow-xl">
                                 <div className="pb-2 text-[16px] text-dark flex justify-between">
                                     <div className="flex gap-x-2 ">
-                                        <img src={Logo1} alt={Logo1} className='rounded-full w-[24px] h-[24px] cover my-auto' />
+                                        <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[30px] h-[30px] object-cover my-auto' />
                                         <p className='my-auto text-[16px] font-semibold'>{item?.name || "N/A"}</p>
                                     </div>
                                     <div className="flex gap-x-2">

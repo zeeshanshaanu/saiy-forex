@@ -13,11 +13,9 @@ const UserPermissions = () => {
     const navigate = useNavigate()
     const { id } = useParams()
     const token = useSelector((state) => state?.auth?.token);
-    // 
     const [loading, setLoading] = useState(false);
     const [Associate, setAssociate] = useState({});
-    console.log(Associate);
-    
+
     const GetData = async () => {
         setLoading(true)
         try {

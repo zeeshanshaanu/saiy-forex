@@ -21,7 +21,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 
-export default function CustomizedDialogs({ deleteID, onlistUpdate, PortfolioDeleteID, AssociateID, WithdrawalID, UserID }) {
+export default function CustomizedDialogs({ deleteID, onlistUpdate, PortfolioDeleteID, AssociateID, UserID, NotificationID }) {
     const [open, setOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
@@ -72,8 +72,8 @@ export default function CustomizedDialogs({ deleteID, onlistUpdate, PortfolioDel
                 });
 
             }
-            else if (WithdrawalID) {
-                response = await axios.delete(`/Withdrawal/${WithdrawalID}`, {
+            else if (NotificationID) {
+                response = await axios.delete(`/notification/${NotificationID}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

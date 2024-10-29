@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { Box, CircularProgress, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -8,13 +8,10 @@ import Switch from '@mui/material/Switch';
 import { Button } from '@mui/material';
 import { CameraOutlined } from '@ant-design/icons';
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux';
 import SimpleAlert from '../../components/Alert-notification/Alert';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Autocomplete from '@mui/material/Autocomplete';
-
-
 // **** //
 // **** //
 const useStyles = makeStyles({
@@ -42,18 +39,11 @@ const useStyles = makeStyles({
 
 const status = [
     { label: 'admin' },
-    { label: 'investor' },
-    { label: 'main associate' },
-    { label: 'sub associate' },
+    { label: 'user' },
 ];
 
 const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-
-    const token = useSelector((state) => state?.auth?.token);
-    // 
-    const [user, setUser] = useState({});
     const [passwordVisible, setPasswordVisible] = useState(false);
 
     const [selectedFile, setSelectedFile] = useState({
@@ -70,7 +60,7 @@ const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
         confirm_password: "",
         phone: "",
         address: "",
-        status: "",
+        level: "",
         fa: false
     };
 
@@ -96,44 +86,6 @@ const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
             });
         };
     }
-    // 
-
-    // const GetUserProfile = async () => {
-    //     try {
-    //         const response = await axios.get("user/loggeduser", {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //             },
-    //             withCredentials: true
-    //         });
-    //         const userData = response.data.user;
-
-    //         setUser(userData);
-
-    //         setSelectedFile({
-    //             ...selectedFile,
-    //             filepreview: userData.image
-    //         })
-    //         setFormData({
-    //             name: userData.name,
-    //             phone: userData.phone,
-    //             email: userData.email,
-    //             recoveryEmail: userData.recoveryEmail,
-    //             address: userData.address,
-    //             fa: userData.fa === "true",
-    //             image: userData.image
-    //         });
-
-
-    //     } catch (err) {
-    //         console.error(err.response);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     GetUserProfile();
-    // }, []);
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -148,7 +100,7 @@ const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
         formDataToSend.append("confirm_password", formData.confirm_password);
         formDataToSend.append("phone", formData.phone);
         formDataToSend.append("address", formData.address);
-        formDataToSend.append("status", formData.status);
+        formDataToSend.append("level", formData.level);
         formDataToSend.append("fa", formData.fa);
 
         console.log("send data to api--->>>", formData);
@@ -167,18 +119,10 @@ const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                     setSelectedFile(" ");
                 }, 2000);
 
-            } else {
-                console.log(response?.data);
-
-                setAlertMessage(response?.data?.message);
-                setAlertSeverity('error');
-                setUpdateLoading(false);
             }
         } catch (error) {
-            console.log(error);
-
-            setAlertMessage("Failed to update profile");
-            setAlertSeverity("error");
+            setAlertMessage(error?.response?.data?.message);
+            setAlertSeverity('error');
             setUpdateLoading(false);
         }
     };
@@ -214,17 +158,9 @@ const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                                         alt="Selected"
                                                         className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1' />
                                                 ) : (
-                                                    user?.image ? (
-                                                        <img
-                                                            src={user?.image}
-                                                            alt="Selected"
-                                                            className='w-full h-[150px] rounded-[10px] object-cover border-[1px] border-yellow1'
-                                                        />
-                                                    ) : (
-                                                        <Box className='w-full h-[150px] rounded-[10px] border-[1px] border-yellow1 flex justify-center items-center'>
-                                                            <p>No Image Available</p>
-                                                        </Box>
-                                                    )
+                                                    <Box className='w-full h-[150px] rounded-[10px] border-[1px] border-yellow1 flex justify-center items-center'>
+                                                        <p>No Image Available</p>
+                                                    </Box>
                                                 )}
                                             </Box>
 
@@ -467,7 +403,7 @@ const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                             disablePortal
                                             id="combo-box-demo"
                                             options={status}
-                                            renderInput={(params) => <TextField {...params} label="Withdrawal Period" />}
+                                            renderInput={(params) => <TextField {...params} label="Level/role" />}
                                             className={`input-field w-full ${classes.inputRoot}`}
                                             InputLabelProps={{
                                                 className: classes.inputLabel,
@@ -478,11 +414,11 @@ const CreateUser = ({ openEdit, setOpenEdit, onlistUpdate }) => {
                                                     },
                                                 }
                                             }}
-                                            defaultValue={formData?.status}
+                                            defaultValue={formData?.level}
                                             onChange={(event, value) =>
                                                 setFormData({
                                                     ...formData,
-                                                    status: value?.label || '',
+                                                    level: value?.label || '',
                                                 })
                                             }
                                         />

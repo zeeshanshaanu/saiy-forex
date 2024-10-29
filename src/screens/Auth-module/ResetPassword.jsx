@@ -45,10 +45,6 @@ const ResetPassword = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { id, token } = useParams();
-    // console.log(id);
-    // console.log(token);
-
-    // 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [passwordVisible2, setPasswordVisible2] = useState(false);
     const [Show, setShow] = useState(false)

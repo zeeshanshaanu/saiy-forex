@@ -15,7 +15,7 @@ const useStyles = makeStyles({
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
                 borderColor: '#F6F8FE',
-                borderRadius: '10px', // Add border radius here
+                borderRadius: '10px',
 
             },
             '&:hover fieldset': {
@@ -42,15 +42,11 @@ const ForgotScreen = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const resetlink = useSelector((state) => state?.auth?.link);
-    console.log("This is link", resetlink);
-
     const [formData, setFormData] = useState(initialState);
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
     const [loading, setLoading] = useState(false);
-
     const [Show, setShow] = useState(false)
 
     const handleSubmit = (event) => {
@@ -84,8 +80,6 @@ const ForgotScreen = () => {
     return (
         <div className='text-white Primary_Dev '>
             <div className="Main grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1">
-                {/*  */}
-                {/*  */}
                 {/*  */}
                 <div className="One bg-white">
                     <div className="py-[100px] lg:px-[120px] md:px-[60px] px-[30px]">

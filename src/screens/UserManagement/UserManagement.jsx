@@ -39,6 +39,7 @@ const UserManagement = () => {
             preserveAspectRatio: "xMidYMid slice",
         },
     };
+
     const navigate = useNavigate()
     const [openEdit, setOpenEdit] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -51,6 +52,7 @@ const UserManagement = () => {
     const [userID, setUserID] = useState("");
     const token = useSelector((state) => state?.auth?.token);
     const open = Boolean(anchorEl);
+
     const GetData = async () => {
         setLoading(true)
         try {
@@ -122,15 +124,12 @@ const UserManagement = () => {
                     setDeleteLoading(false);
                     RefreshInvestorlist();
                 }, 1000);
-            } else {
-                setAlertMessage(response?.data?.message);
-                setAlertSeverity("error");
-                setDeleteLoading(false);
             }
 
         } catch (err) {
-            console.error(err.response?.data);
-            setDeleteLoading(false)
+            setAlertMessage(err?.response?.data?.message);
+            setAlertSeverity("error");
+            setDeleteLoading(false);
         }
     };
 
@@ -172,7 +171,7 @@ const UserManagement = () => {
                                 <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Email</th>
                                 <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Phone</th>
                                 <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Address</th>
-                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Status</th>
+                                <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Level</th>
                                 <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Created&nbsp;on</th>
                                 <th className="py-2 px-4 font-[400] text-[14px] text-lightGray text-left">Actions</th>
                             </tr>
@@ -195,13 +194,9 @@ const UserManagement = () => {
                                             <td className="py-1 px-4 text-[16px] text-dark">{item?.phone || "N/A"}</td>
                                             <td className="py-1 px-4 text-[16px] text-dark">{item?.address || "N/A"}</td>
                                             <td className={`py-0 px-4 text-[16px] rounded-full text-center font-semibold 
-                                                        ${item?.status === "main associate" ? "text-textgreen bg-lightgreen" :
-                                                    item?.status === "investor" ? "text-textRed bg-lightRed" :
-                                                        item?.status === "admin" ? "text-white bg-lightGray" :
-                                                            item?.status === "sub associate" ? "text-textYellow bg-lightYellow" : null}                                 
-                                                                                 `}>
-
-                                                {item?.status || "N/A"}</td>
+                                                        ${item?.level === "admin" ? "text-textgreen bg-lightgreen" :
+                                                    item?.level === "user" ? "text-textYellow bg-lightYellow" : null}`}>
+                                                {item?.level || "N/A"}</td>
                                             <td className="py-1 px-4 text-[16px] text-dark">{item?.creationOn?.slice(0, 10) || "N/A"}</td>
 
                                             <td className="py-2 px-4 text-[16px] text-dark">

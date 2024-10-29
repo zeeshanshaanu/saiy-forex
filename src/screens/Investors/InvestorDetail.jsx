@@ -150,21 +150,23 @@ const InvestorDetail = () => {
                                     {investor?.documents?.length > 0 ?
                                         (
                                             investor?.documents?.map((docs, index) => (
-                                                <div key={index} className="mb-3 text-center my-auto bg-[#F6F8FE] p-5 rounded-lg">
-                                                    <center>
-                                                        <img src={PDFicon} alt={PDFicon} className="text-center" />
-                                                    </center>
-                                                    <p className="truncate text-ellipsis overflow-hidden mt-2 truncate">{docs?.fileName?.split("_")[1]?.slice(0, 7) || "N/A"}...</p>
-                                                    <p className='text-lightGray text-[12px] mt-3'> {docs?.fileUrl?.split("_")[1]}</p>
-                                                    <small className='text-lightGray text-[10px] mt-3'> {docs?.dateOfCreation.slice(0, 10) || "N/A"}</small>
-                                                </div>
+                                                <a href={docs?.fileUrl} target='blank'>
+                                                    <div key={index} className="mb-3 text-center my-auto bg-[#F6F8FE] p-5 rounded-lg">
+                                                        <center>
+                                                            <img src={PDFicon} alt={PDFicon} className="text-center" />
+                                                        </center>
+                                                        <p className="text-[19px] text-ellipsis overflow-hidden mt-2">{docs?.fileName}</p>
+                                                        <p className='text-lightGray text-[15px] mt-3'> {docs?.fileUrl?.split("_")[1]?.slice(0, 10)}</p>
+                                                        <small className='text-lightGray text-[15px] mt-3'> {docs?.dateOfCreation.slice(0, 10) || "N/A"}</small>
+                                                    </div>
+                                                </a>
                                             ))
                                         ) : (
                                             <div className='text-center flex justify-center w-full'>
                                                 <NoDataFound />
                                             </div>
                                         )}
-                                    {/*  */}
+
                                 </div>
                             </div>
                         </div>

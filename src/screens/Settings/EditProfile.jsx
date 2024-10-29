@@ -8,10 +8,8 @@ import Switch from '@mui/material/Switch';
 import { Button } from '@mui/material';
 import { CameraOutlined } from '@ant-design/icons';
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux';
-import { updateProfile } from '../../store/ProfileSetting/profile';
-import SimpleAlert from '../../components/Alert-notification/Alert';
-
+import {  useSelector } from 'react-redux';
+ import SimpleAlert from '../../components/Alert-notification/Alert';
 // **** //
 // **** //
 const useStyles = makeStyles({
@@ -37,16 +35,11 @@ const useStyles = makeStyles({
     },
 });
 
-
-
 const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
-
     const token = useSelector((state) => state?.auth?.token);
     // 
     const [user, setUser] = useState({});
-    // const [selectedImage, setSelectedImage] = useState(null);
     const [selectedFile, setSelectedFile] = useState({
         file: "",
         filepreview: null,
@@ -61,13 +54,8 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
         address: "",
         fa: false,
     };
-
-    // console.log("selectedImage-->>", selectedFile?.filepreview);
-
     const [updateloading, setUpdateLoading] = useState(false);
     const [formData, setFormData] = useState(initialState);
-    console.log("formData-->>>>", formData);
-
     const [alertMessage, setAlertMessage] = useState(null);
     const [alertSeverity, setAlertSeverity] = useState(null);
     // 
@@ -84,8 +72,7 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
             });
         };
     }
-    // 
-
+   
     const GetUserProfile = async () => {
         try {
             const response = await axios.get("user/loggeduser", {
@@ -134,17 +121,15 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
         formDataToSend.append("recoveryEmail", formData.recoveryEmail);
         formDataToSend.append("address", formData.address);
         formDataToSend.append("fa", formData.fa);
-
         if (selectedFile.file) {
-            formDataToSend.append("image", selectedFile.file); // Include the image file if selected
+            formDataToSend.append("image", selectedFile.file); 
         }
 
         try {
             const response = await axios.put('user/update-user-profile', formDataToSend, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data', // Make sure the request is of type multipart/form-data
-                },
+                    'Content-Type': 'multipart/form-data',                 },
             });
 
             if (response?.data?.status === 'success') {
@@ -155,14 +140,10 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                     setUpdateLoading(false);
                     onProfileUpdate();
                 }, 2000);
-            } else {
-                setAlertMessage(response?.data?.message);
-                setAlertSeverity('error');
-                setUpdateLoading(false);
-            }
+            }  
         } catch (error) {
-            setAlertMessage("Failed to update profile");
-            setAlertSeverity("error");
+            setAlertMessage(error?.response?.data?.message);
+            setAlertSeverity('error');
             setUpdateLoading(false);
         }
     };

@@ -1,8 +1,13 @@
-import React, { useState } from 'react'
-import SidebarHeader from '../../components/sidebar/Header'
-import { Dropdown } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { DownOutlined } from '@ant-design/icons'
+import { useSelector } from 'react-redux'
+import { Dropdown } from 'antd'
+import axios from 'axios'
+// 
+import SidebarHeader from '../../components/sidebar/Header'
 import Logo1 from "../../assets/images/Logo1.svg"
+import Loader from '../../components/Loader/Loader'
+import NoDataFound from '../../components/NoData/NodataFound'
 
 const items = [
     {
@@ -21,7 +26,35 @@ const items = [
 ];
 
 const ActivityLogs = () => {
-    const [Show, setShow] = useState("Employee")
+    const [level, setlevel] = useState("admin");
+    const [loading, setLoading] = useState(false);
+    const [Users, setUsers] = useState([]);
+    const token = useSelector((state) => state?.auth?.token);
+
+    const GetData = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.get(`entities?level=${level}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+            });
+            // console.warn(response.data?.data);
+            setUsers(response?.data?.data);
+
+            setLoading(false)
+
+        } catch (err) {
+            console.error(err.response);
+            setLoading(false)
+        }
+    };
+
+    useEffect(() => {
+        GetData();
+    }, [level]);
+
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
             <div className=" max-h-[100vh] overflow-auto">
@@ -46,20 +79,21 @@ const ActivityLogs = () => {
                     </div>
                 </div>
                 <div className="mx-5 my-4 lg:flex md:flex">
-                    <p className={`font-[500] p-3 cursor-pointer border rounded-l-lg ${Show === "Admin" ? "bg-yellow3" : ""}`}
-                        onClick={() => setShow("Admin")}
+
+                    <p className={`font-[500] p-3 cursor-pointer border rounded-l-lg ${level === "admin" ? "bg-yellow3" : ""}`}
+                        onClick={() => setlevel("admin")}
                     >Admin</p>
-                    <p className={`font-[500] p-3 cursor-pointer border ${Show === "Employee" ? "bg-yellow3" : ""}`}
-                        onClick={() => setShow("Employee")}
-                    >Employee</p>
-                    <p className={`font-[500] p-3 cursor-pointer border ${Show === "MainAssociates" ? "bg-yellow3" : ""}`}
-                        onClick={() => setShow("MainAssociates")}
+                    <p className={`font-[500] p-3 cursor-pointer border ${level === "user" ? "bg-yellow3" : ""}`}
+                        onClick={() => setlevel("user")}
+                    >Users</p>
+                    <p className={`font-[500] p-3 cursor-pointer border ${level === "main associate" ? "bg-yellow3" : ""}`}
+                        onClick={() => setlevel("main associate")}
                     >Main Associates</p>
-                    <p className={`font-[500] p-3 cursor-pointer border ${Show === "SubAssociates" ? "bg-yellow3" : ""}`}
-                        onClick={() => setShow("SubAssociates")}
+                    <p className={`font-[500] p-3 cursor-pointer border ${level === "sub associate" ? "bg-yellow3" : ""}`}
+                        onClick={() => setlevel("sub associate")}
                     >Sub Associates</p>
-                    <p className={`font-[500] p-3 cursor-pointer border rounded-r-lg ${Show === "Investor" ? "bg-yellow3" : ""}`}
-                        onClick={() => setShow("Investor")}
+                    <p className={`font-[500] p-3 cursor-pointer border rounded-r-lg ${level === "investor" ? "bg-yellow3" : ""}`}
+                        onClick={() => setlevel("investor")}
                     >Investor</p>
                 </div>
 
@@ -69,60 +103,33 @@ const ActivityLogs = () => {
                     <table className="min-w-full bg-white rounded-[10px] my-4">
                         <thead>
                             <tr>
-                                <th className="font-[400] text-[14px] text-lightGray text-left">Summary</th>
-                                <th className="font-[400] text-[14px] text-lightGray text-left">User</th>
+                                <th className="font-[400] text-[14px] text-lightGray text-left">Name</th>
+                                <th className="font-[400] text-[14px] text-lightGray text-left">Email</th>
                                 <th className="font-[400] text-[14px] text-lightGray text-left">Time Stamp</th>
                             </tr>
                         </thead>
-                        <tbody className="">
-                            <tr className="">
-                                <td className=" text-[16px] text-dark">Install site curbs and gutters</td>
-                                <td className="text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="">15 May 2020 9:00 am</td>
-                            </tr>
-                            <tr className="">
-                                <td className=" text-[16px] text-dark">Install site curbs and gutters</td>
-                                <td className="text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="">15 May 2020 9:00 am</td>
-                            </tr>
-                            <tr className="">
-                                <td className=" text-[16px] text-dark">Install site curbs and gutters</td>
-                                <td className="text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="">15 May 2020 9:00 am</td>
-                            </tr>
-                            <tr className="">
-                                <td className=" text-[16px] text-dark">Install site curbs and gutters</td>
-                                <td className="text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="">15 May 2020 9:00 am</td>
-                            </tr>
-                            <tr className="">
-                                <td className=" text-[16px] text-dark">Install site curbs and gutters</td>
-                                <td className="text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="">15 May 2020 9:00 am</td>
-                            </tr>
-                            <tr className="">
-                                <td className=" text-[16px] text-dark">Install site curbs and gutters</td>
-                                <td className="text-[16px] text-dark flex gap-2">
-                                    <img src={Logo1} alt="Investor" className="rounded-full w-[22px] h-[22px] cover my-auto" />
-                                    <span className="my-auto">Eleanor&nbsp;Pena</span>
-                                </td>
-                                <td className="">15 May 2020 9:00 am</td>
-                            </tr>
+                        <tbody>
+                            {loading ? (
+                                <tr>
+                                    <td colSpan="6" className="text-center my-10"><Loader /></td>
+                                </tr>
+                            ) : Users?.length > 0 ? (
+                                Users.map((item, index) => (
+
+                                    <tr key={index}>
+                                        <td className="text-[16px] text-dark flex gap-2">
+                                            <img src={item?.image || Logo1} alt={item?.image || Logo1} className='rounded-full w-[40px] h-[40px] object-cover my-auto' />
+                                            <span className="my-auto">{item?.name || "N/A"}</span>
+                                        </td>
+                                        <td className=" text-[16px] text-dark">{item?.email || "N/A"}</td>
+                                        <td className="">{item?.creationOn || "N/A"}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="6" className="text-center"><NoDataFound /></td>
+                                </tr>
+                            )}
 
                         </tbody>
                     </table>

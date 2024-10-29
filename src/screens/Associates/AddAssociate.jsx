@@ -1,15 +1,15 @@
 import { Drawer } from 'antd';
 import React, { useEffect, useState } from 'react';
-import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { Box, CircularProgress, TextField, Button, Autocomplete, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import { useDispatch, useSelector } from 'react-redux';
-import SimpleAlert from '../../components/Alert-notification/Alert';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CameraOutlined } from '@ant-design/icons';
-import { createAssociate, UpdateAssociate } from '../../store/Associate/Associate';
+
+import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
+import SimpleAlert from '../../components/Alert-notification/Alert';
 const useStyles = makeStyles({
     inputRoot: {
         '& .MuiOutlinedInput-root': {
@@ -33,8 +33,6 @@ const useStyles = makeStyles({
     },
 });
 const level = [
-    { label: 'admin' },
-    { label: 'investor' },
     { label: 'main associate' },
     { label: 'sub associate' },
 ];
@@ -51,7 +49,6 @@ const initialState = {
 const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
     const classes = useStyles();
     const navigate = useNavigate()
-    const dispatch = useDispatch();
     const token = useSelector((state) => state?.auth?.token);
 
     const [updateloading, setUpdateLoading] = useState(false);
@@ -65,6 +62,7 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
         filepreview: null,
     });
 
+    console.log(loading);
 
     const GetData = async () => {
         setLoading(true)
@@ -212,7 +210,7 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
         setAlertMessage(null);
         setAlertSeverity(null);
     };
-    const isFormValid = formData.name && formData.email && formData.earn && formData.level && selectedFile.filepreview || formData.image && formData.paid_out
+    const isFormValid = formData.name && formData.email && formData.earn && formData.level && formData.paid_out && selectedFile.filepreview || formData.image
     return (
         <div>
             <Drawer className="p-0 m-0 rounded-l-[10px]" header={false} open={open} onClose={onClose} closeIcon={null}>
