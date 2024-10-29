@@ -67,7 +67,7 @@ const LoginScreen = () => {
                 setAlertSeverity(data?.payload?.status);
                 setTimeout(() => {
                     setLoading(false);
-                    // navigate("/Dashboard")
+                    navigate("/Dashboard")
                 }, 2000);
             } else {
                 setAlertMessage(data?.payload?.message);
