@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
@@ -22,7 +22,7 @@ const Investors = () => {
 
     const token = useSelector((state) => state?.auth?.token);
 
-    const GetUserProfile = async () => {
+    const GetUserProfile = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/investor", {
@@ -38,11 +38,15 @@ const Investors = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
+
 
     useEffect(() => {
         GetUserProfile();
-    }, []);
+    }, [GetUserProfile]);
 
     const showDrawer2 = () => {
         setOpenEdit(true);

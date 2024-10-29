@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header';
 import { Button, Dropdown } from 'antd';
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
@@ -73,7 +73,7 @@ const Portfolios = () => {
     };
     const token = useSelector((state) => state?.auth?.token);
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/portfolio", {
@@ -84,9 +84,6 @@ const Portfolios = () => {
             });
             console.warn(response.data?.data);
             setPortfolio(response?.data?.data);
-            // const TotalInvestorsData = response?.data?.data?.map((item) => item?.investors?.length)
-            // console.log("this is TotalInvestorsData-->>", TotalInvestorsData);
-
             const TotalInvestorsData = response?.data?.data?.map((item) => item?.investors?.length);
             const totalInvestorsCount = TotalInvestorsData.reduce((acc, value) => acc + value, 0);
             settotalInvestorsShow(totalInvestorsCount);
@@ -98,11 +95,14 @@ const Portfolios = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
 
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
 
     const RefreshInvestorlist = () => {
         GetData();

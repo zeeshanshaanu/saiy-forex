@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Dropdown, Button } from 'antd'
 import { DownOutlined, DownloadOutlined } from '@ant-design/icons'
@@ -30,7 +30,7 @@ const WithDrawals = () => {
     const [Withdrawal, setWithdrawal] = useState([]);
     const token = useSelector((state) => state?.auth?.token);
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/Withdrawal", {
@@ -48,11 +48,15 @@ const WithDrawals = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
 
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
+
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">
             <div className="max-h-[100vh] overflow-auto">

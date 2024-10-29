@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DownOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { Dropdown } from 'antd';
@@ -41,7 +41,7 @@ const Dashboard = () => {
     const [associate, setassociate] = useState([]);
     const [Withdrawal, setWithdrawal] = useState([]);
 
-    const GetAssociateData = async () => {
+    const GetAssociateData = useCallback(async () => {
         setLoading4(true)
         try {
             const response = await axios.get("/Associate", {
@@ -57,10 +57,12 @@ const Dashboard = () => {
         } catch (err) {
             console.error(err.response);
             setLoading4(false)
+        } finally {
+            setLoading4(false);
         }
-    };
+    }, [token]);
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/portfolio", {
@@ -76,10 +78,12 @@ const Dashboard = () => {
         } catch (err) {
             console.error(err.response);
             setLoading(false)
+        } finally {
+            setLoading(false);
         }
-    };
+    }, [token]);
 
-    const GetInvestorsData = async () => {
+    const GetInvestorsData = useCallback(async () => {
         setLoading2(true)
         try {
             const response = await axios.get("/investor", {
@@ -94,10 +98,12 @@ const Dashboard = () => {
         } catch (err) {
             console.error(err.response);
             setLoading2(false)
+        } finally {
+            setLoading2(false);
         }
-    };
+    }, [token]);
 
-    const GetWithdrawalData = async () => {
+    const GetWithdrawalData = useCallback(async () => {
         setLoading3(true)
         try {
             const response = await axios.get("/Withdrawal", {
@@ -106,21 +112,23 @@ const Dashboard = () => {
                 },
                 withCredentials: true
             });
-             setWithdrawal(response?.data?.data);
+            setWithdrawal(response?.data?.data);
             setLoading3(false)
 
         } catch (err) {
             console.error(err.response);
             setLoading3(false)
+        } finally {
+            setLoading3(false);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         GetData();
         GetAssociateData();
         GetWithdrawalData();
         GetInvestorsData();
-    }, []);
+    }, [GetData, GetAssociateData, GetWithdrawalData, GetInvestorsData]);
 
     return (
         <div className="bg-[#F6F8FE]">

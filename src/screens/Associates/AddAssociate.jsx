@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box, CircularProgress, TextField, Button, Autocomplete, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -64,7 +64,7 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
 
     console.log(loading);
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/investor", {
@@ -80,14 +80,16 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
         } catch (err) {
             console.error(err.response);
             setLoading(false)
+        } finally {
+            setLoading(false);
         }
-    };
+    }, [token]);
+
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
 
-
-    const AssociateData = async () => {
+    const AssociateData = useCallback(async (AssociateID) => {
         setLoading(true)
         try {
             const response = await axios.get(`/Associate/${AssociateID}`, {
@@ -112,11 +114,15 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+         finally {
+            setLoading(false);
+        }
+    }, [token]);
+
 
     useEffect(() => {
         AssociateData();
-    }, [AssociateID]);
+    }, [AssociateData,AssociateID]);
 
 
     const handleImageChange = (event) => {
@@ -163,22 +169,15 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
                 setTimeout(() => {
                     setOpen(false);
                     setUpdateLoading(false);
-                    {
-                        AssociateID ?
-                            navigate("/MainAssociates") :
-                            onlistUpdate();
-                    }
-                }, 2000);
-            } else {
+                    AssociateID ?
+                        navigate("/MainAssociates") :
+                        onlistUpdate();
 
-                setAlertMessage(response?.data?.message);
-                setAlertSeverity('error');
-                setUpdateLoading(false);
+                }, 2000);
             }
         } catch (error) {
-            console.log(error);
-            setAlertMessage("Failed to update profile");
-            setAlertSeverity("error");
+            setAlertMessage(error?.response?.data?.message);
+            setAlertSeverity('error');
             setUpdateLoading(false);
         }
     };
@@ -210,7 +209,25 @@ const AddAssociate = ({ open, setOpen, onlistUpdate, AssociateID }) => {
         setAlertMessage(null);
         setAlertSeverity(null);
     };
-    const isFormValid = formData.name && formData.email && formData.earn && formData.level && formData.paid_out && selectedFile.filepreview || formData.image
+    // const isFormValid = formData.name && formData.email && formData.earn && formData.level && formData.paid_out && selectedFile.filepreview || formData.image
+    let isFormValid;
+
+    if (
+        formData.name &&
+        formData.email &&
+        formData.earn &&
+        formData.level &&
+        formData.paid_out &&
+        selectedFile.filepreview
+    ) {
+        isFormValid = true;
+
+    } else if (formData.image) {
+        isFormValid = true;
+    } else {
+        isFormValid = false;
+    }
+
     return (
         <div>
             <Drawer className="p-0 m-0 rounded-l-[10px]" header={false} open={open} onClose={onClose} closeIcon={null}>

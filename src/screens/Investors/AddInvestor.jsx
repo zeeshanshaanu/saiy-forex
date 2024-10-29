@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { Box, CircularProgress, TextField, Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -66,7 +66,7 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
     };
     console.log(loading);
 
-    const GetUserProfile = async () => {
+    const GetUserProfile = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`/investor/${InvestorID}`, {
@@ -94,11 +94,14 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token, InvestorID, selectedFile]);
 
     useEffect(() => {
         GetUserProfile();
-    }, [InvestorID]);
+    }, [GetUserProfile]);
 
     const handleImageChange = (event) => {
         if (event?.target?.files[0]) {
@@ -190,7 +193,25 @@ const AddInvestor = ({ openEdit, setOpenEdit, onlistUpdate, InvestorID }) => {
         setAlertSeverity(null);
     };
 
-    const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview || formData.image;
+    // const isFormValid = formData.name && formData.phone && formData.email && formData.address && formData.iban && selectedFile.filepreview || formData.image;
+
+    let isFormValid;
+
+    if (
+        formData.name &&
+        formData.email &&
+        formData.phone &&
+        formData.address &&
+        formData.iban &&
+        formData.iban &&
+        selectedFile.filepreview
+    ) {
+        isFormValid = true;
+    } else if (formData.image) {
+        isFormValid = true;
+    } else {
+        isFormValid = false;
+    }
 
     return (
         <div>

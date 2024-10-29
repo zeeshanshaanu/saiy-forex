@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button } from 'antd'
 import { PaperClipOutlined, PlusOutlined } from '@ant-design/icons'
@@ -17,7 +17,7 @@ const Notifications = () => {
     const [loading, setLoading] = useState(false);
     const [investor, setInvestor] = useState([]);
 
-    const GetUserProfile = async () => {
+    const GetUserProfile = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/notification", {
@@ -33,11 +33,14 @@ const Notifications = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
 
     useEffect(() => {
         GetUserProfile();
-    }, []);
+    }, [GetUserProfile]);
 
     const showDrawer = () => {
         setOpen(true);

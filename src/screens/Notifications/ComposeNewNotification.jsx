@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { CircularProgress, TextField, Button, Autocomplete } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -50,7 +50,8 @@ const ComposeNewNotification = ({ open, setOpen, onlistUpdate, AssociateID }) =>
     const [Investors, setInvestors] = useState([]);
     const [pdfFiles, setPdfFiles] = useState([]);
     console.log(loading);
-    const GetData = async () => {
+
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/portfolio", {
@@ -67,10 +68,14 @@ const ComposeNewNotification = ({ open, setOpen, onlistUpdate, AssociateID }) =>
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
+
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
 
     const handlePdfChange = (event) => {
         const file = event.target.files[0];

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Button } from 'antd'
 import Menu from '@mui/material/Menu';
@@ -53,7 +53,7 @@ const UserManagement = () => {
     const token = useSelector((state) => state?.auth?.token);
     const open = Boolean(anchorEl);
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/user/all-Users", {
@@ -62,20 +62,21 @@ const UserManagement = () => {
                 },
                 withCredentials: true
             });
-            console.warn(response.data?.data);
+            // console.warn(response.data?.data);
             setUsers(response?.data?.data);
-
             setLoading(false)
-
         } catch (err) {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
 
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
 
     const showDrawer = () => {
         setOpenEdit(true);

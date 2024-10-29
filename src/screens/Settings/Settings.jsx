@@ -1,6 +1,6 @@
 import { EditOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import DummyImg from "../../assets/images/DummyImg1.png"
 import ChangePassword from './ChangePassword'
@@ -24,7 +24,7 @@ const Settings = () => {
     const token = useSelector((state) => state?.auth?.token);
 
 
-    const GetUserProfile = async () => {
+    const GetUserProfile = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("user/loggeduser", {
@@ -41,11 +41,14 @@ const Settings = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
 
     useEffect(() => {
         GetUserProfile();
-    }, []);
+    }, [GetUserProfile]);
 
     const refreshUserProfile = () => {
         GetUserProfile();

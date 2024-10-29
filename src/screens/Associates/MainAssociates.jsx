@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Button, Dropdown } from 'antd'
 import { DownOutlined, PlusOutlined } from '@ant-design/icons';
 // 
@@ -13,12 +13,8 @@ import axios from 'axios';
 import Loader from '../../components/Loader/Loader';
 import NoDataFound from '../../components/NoData/NodataFound';
 import AddAssociate from './AddAssociate';
-import AddPortfolio from '../Portfolios/AddPortfolio.jsx';
 import CustomizedDialogs from '../../components/Dialog/Dialog.js';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-
-// 
-// 
 const items = [
     {
         label: <span>This Week</span>,
@@ -42,35 +38,37 @@ const MainAssociates = () => {
     const [TotalAssociate, setTotalAssociate] = useState([]);
     const [TotalSubAssociate, setTotalSubAssociate] = useState([]);
     const token = useSelector((state) => state?.auth?.token);
-    
-    const GetData = async () => {
-        setLoading(true)
+
+    const GetData = useCallback(async () => {
+        setLoading(true);
         try {
             const response = await axios.get("/Associate", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-                withCredentials: true
+                withCredentials: true,
             });
-            // console.warn(response.data?.data);
             setAssociate(response?.data?.data);
-            // 
-            const mainAssociatesCount = response?.data?.data?.filter((associate) => associate?.level === "main associate")?.length;
-            setTotalAssociate(mainAssociatesCount > 0 ? [mainAssociatesCount] : []);
-            // 
-            const SubAssociatesCount = response?.data?.data?.filter((associate) => associate?.level === "sub associate")?.length;
-            setTotalSubAssociate(SubAssociatesCount > 0 ? [SubAssociatesCount] : []);
-            setLoading(false)
 
+            const mainAssociatesCount = response?.data?.data?.filter(
+                (associate) => associate?.level === "main associate"
+            )?.length;
+            setTotalAssociate(mainAssociatesCount > 0 ? [mainAssociatesCount] : []);
+
+            const SubAssociatesCount = response?.data?.data?.filter(
+                (associate) => associate?.level === "sub associate"
+            )?.length;
+            setTotalSubAssociate(SubAssociatesCount > 0 ? [SubAssociatesCount] : []);
         } catch (err) {
             console.error(err.response);
-            setLoading(false)
+        } finally {
+            setLoading(false);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         GetData();
-    }, []);
+    }, [GetData]);
 
     const RefreshInvestorlist = () => {
         GetData();

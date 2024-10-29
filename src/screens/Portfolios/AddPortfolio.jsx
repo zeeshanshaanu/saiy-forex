@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { Box, CircularProgress, TextField, Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -72,7 +72,7 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
     });
     console.log(loading);
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get("/investor", {
@@ -89,9 +89,12 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token]);
 
-    const PortfolioData = async () => {
+    const PortfolioData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`/portfolio/${PortfolioID}`, {
@@ -114,16 +117,18 @@ const AddPortfolio = ({ open, setOpen, onlistUpdate, PortfolioID }) => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token, PortfolioID]);
 
     useEffect(() => {
         PortfolioData();
-    }, [PortfolioID]);
+    }, [PortfolioData]);
 
     useEffect(() => {
         GetData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [GetData]);
 
     const handleImageChange = (event) => {
         if (event?.target?.files[0]) {

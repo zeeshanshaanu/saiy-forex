@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DownOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { Dropdown } from 'antd'
@@ -31,7 +31,7 @@ const ActivityLogs = () => {
     const [Users, setUsers] = useState([]);
     const token = useSelector((state) => state?.auth?.token);
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`entities?level=${level}`, {
@@ -40,20 +40,21 @@ const ActivityLogs = () => {
                 },
                 withCredentials: true
             });
-            // console.warn(response.data?.data);
             setUsers(response?.data?.data);
-
             setLoading(false)
 
         } catch (err) {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token, level]);
 
     useEffect(() => {
         GetData();
-    }, [level]);
+    }, [GetData]);
 
     return (
         <div className="bg-[#F6F8FE] h-[100vh]">

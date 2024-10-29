@@ -1,5 +1,5 @@
 import { Drawer } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CloseIcon from "../../assets/Icons/DashboardCards/CloseIcon.svg";
 import { Box, CircularProgress, TextField } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -8,8 +8,8 @@ import Switch from '@mui/material/Switch';
 import { Button } from '@mui/material';
 import { CameraOutlined } from '@ant-design/icons';
 import axios from 'axios'
-import {  useSelector } from 'react-redux';
- import SimpleAlert from '../../components/Alert-notification/Alert';
+import { useSelector } from 'react-redux';
+import SimpleAlert from '../../components/Alert-notification/Alert';
 // **** //
 // **** //
 const useStyles = makeStyles({
@@ -38,7 +38,6 @@ const useStyles = makeStyles({
 const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
     const classes = useStyles();
     const token = useSelector((state) => state?.auth?.token);
-    // 
     const [user, setUser] = useState({});
     const [selectedFile, setSelectedFile] = useState({
         file: "",
@@ -72,8 +71,8 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
             });
         };
     }
-   
-    const GetUserProfile = async () => {
+
+    const GetUserProfile = useCallback(async () => {
         try {
             const response = await axios.get("user/loggeduser", {
                 headers: {
@@ -103,11 +102,14 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
         } catch (err) {
             console.error(err.response);
         }
-    };
+        finally {
+            setUpdateLoading(false);
+        }
+    }, [token, selectedFile]);
 
     useEffect(() => {
         GetUserProfile();
-    }, []);
+    }, [GetUserProfile]);
 
 
     const handleSubmit = async (event) => {
@@ -122,14 +124,15 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
         formDataToSend.append("address", formData.address);
         formDataToSend.append("fa", formData.fa);
         if (selectedFile.file) {
-            formDataToSend.append("image", selectedFile.file); 
+            formDataToSend.append("image", selectedFile.file);
         }
 
         try {
             const response = await axios.put('user/update-user-profile', formDataToSend, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data',                 },
+                    'Content-Type': 'multipart/form-data',
+                },
             });
 
             if (response?.data?.status === 'success') {
@@ -140,7 +143,7 @@ const EditProfile = ({ openEdit, setOpenEdit, onProfileUpdate }) => {
                     setUpdateLoading(false);
                     onProfileUpdate();
                 }, 2000);
-            }  
+            }
         } catch (error) {
             setAlertMessage(error?.response?.data?.message);
             setAlertSeverity('error');

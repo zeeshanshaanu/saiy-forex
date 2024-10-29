@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import TotalAllocated from "../../assets/Icons/DashboardCards/TotalAllocated.svg"
 import TotalInvestors from "../../assets/Icons/DashboardCards/TotalInvestors.svg"
 import SetRoi from "../../assets/Icons/DashboardCards/SetRoi.svg"
@@ -10,7 +10,7 @@ import SidebarHeader from '../../components/sidebar/Header'
 import { Button, Breadcrumb } from 'antd'
 import { EditOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from "react-router-dom";
-import PortfolioSetRoi from './PortfolioSetRoi'
+// import PortfolioSetRoi from './PortfolioSetRoi'
 import AddPortfolio from './AddPortfolio'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
@@ -23,19 +23,19 @@ const PortfolioDetails = () => {
     const token = useSelector((state) => state?.auth?.token);
     // 
     const [open, setOpen] = useState(false);
-    const [openEdit, setOpenEdit] = useState(false);
+    // const [openEdit, setOpenEdit] = useState(false);
     const [loading, setLoading] = useState(false);
     const [portfolio, setPortfolio] = useState([]);
 
-    const showDrawer = () => {
-        setOpenEdit(true);
-    };
-    
+    // const showDrawer = () => {
+    //     setOpenEdit(true);
+    // };
+
     const showDrawer2 = () => {
         setOpen(true);
     };
 
-    const GetData = async () => {
+    const GetData = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`/portfolio/${id}`, {
@@ -52,13 +52,14 @@ const PortfolioDetails = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token, id]);
 
     useEffect(() => {
         GetData();
-    }, []);
-
-
+    }, [GetData]);
 
     return (
         <div>
@@ -94,7 +95,7 @@ const PortfolioDetails = () => {
                             <div className="my-auto">
                                 <Button type="dark"
                                     className='bg-dark text-white h-[44px] rounded-[10px]'
-                                    onClick={showDrawer}
+                                    // onClick={showDrawer}
                                     icon={<img src={SetRoi} alt={SetRoi} className='text-white' />}>Set ROI
                                 </Button>
                             </div>
@@ -273,9 +274,7 @@ const PortfolioDetails = () => {
                 </div>
             </div>
             {/* ADD DRAWER */}
-            {/* <PortfolioSetRoi open={open} setOpen={setOpen} /> */}
             <AddPortfolio open={open} setOpen={setOpen} PortfolioID={id} />
-            {/* <EditPortfolio openEdit={openEdit} setOpenEdit={setOpenEdit} /> */}
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import SidebarHeader from '../../components/sidebar/Header'
 import { Breadcrumb, Button, Dropdown } from 'antd'
 import { EditOutlined } from '@ant-design/icons';
@@ -40,7 +40,7 @@ const InvestorDetail = () => {
     const showDrawer2 = () => {
         setOpenEdit(true);
     };
-    const GetUserProfile = async () => {
+    const GetUserProfile = useCallback(async () => {
         setLoading(true)
         try {
             const response = await axios.get(`/investor/${id}`, {
@@ -57,11 +57,15 @@ const InvestorDetail = () => {
             console.error(err.response);
             setLoading(false)
         }
-    };
+        finally {
+            setLoading(false);
+        }
+    }, [token, id]);
+
 
     useEffect(() => {
         GetUserProfile();
-    }, []);
+    }, [GetUserProfile]);
 
 
     return (
