@@ -9,6 +9,8 @@ import axios from "axios";
 
 
 axios.defaults.baseURL = "http://localhost:8000/api/";
+// axios.defaults.baseURL = "https://saiy-admin-backend.vercel.app/api/";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
